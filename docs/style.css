@@ -3,12 +3,19 @@
 body {
   max-width: 800px;
   margin: 0 auto;
-  padding: 2rem;
+  padding: 2rem 2rem 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Noto Sans JP", Meiryo, sans-serif;
   font-size: 16px;
   line-height: 1.7;
   color: #1f2328;
   background: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 /* リンク */
@@ -183,4 +190,17 @@ article { margin-top: 2rem; }
 .post-list .post-date {
   font-size: 0.85rem;
   color: #656d76;
+}
+
+/* フッター */
+footer {
+  margin-top: 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid #d1d9e0;
+  text-align: center;
+  color: #656d76;
+  font-size: 0.85rem;
+}
+footer p {
+  margin: 0;
 }

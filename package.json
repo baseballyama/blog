@@ -2,7 +2,7 @@
   "name": "blog",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/build.ts --watch & node scripts/serve.ts",
+    "dev": "rm -rf src/ogp && node scripts/build.ts --watch & node scripts/serve.ts",
     "build": "node scripts/build.ts",
     "serve": "node scripts/serve.ts"
   },
@@ -10,6 +10,7 @@
     "node": ">= 24"
   },
   "dependencies": {
+    "@fontsource/noto-sans-jp": "^5.2.9",
     "@resvg/resvg-js": "^2.6.2",
     "@types/node": "^24.0.0",
     "marked": "^17.0.0"

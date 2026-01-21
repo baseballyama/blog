@@ -4,10 +4,22 @@ import { marked } from "marked";
 import { Resvg } from "@resvg/resvg-js";
 
 const ROOT = path.join(import.meta.dirname, "..");
+const FONT_URL = "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/Japanese/NotoSansCJKjp-Bold.otf";
+const FONT_PATH = path.join(ROOT, "src", "fonts", "NotoSansCJKjp-Bold.otf");
+
+async function ensureFont(): Promise<void> {
+  if (fs.existsSync(FONT_PATH)) return;
+  console.log("Downloading font...");
+  fs.mkdirSync(path.dirname(FONT_PATH), { recursive: true });
+  const res = await fetch(FONT_URL);
+  const buffer = Buffer.from(await res.arrayBuffer());
+  fs.writeFileSync(FONT_PATH, buffer);
+  console.log("Font downloaded.");
+}
 const SRC_DIR = path.join(ROOT, "src");
 const POSTS_DIR = path.join(ROOT, "posts");
 const OUT_DIR = path.join(ROOT, "docs");
-const BASE_URL = "https://blog.baseballyama.com";
+const BASE_URL =  "https://blog.baseballyama.com/"
 
 interface Post {
   slug: string;
@@ -81,17 +93,22 @@ function generateOgImage(title: string, outputPath: string): void {
 
   const textY = 315 - (lines.length - 1) * 45;
   const textElements = lines
-    .map((line, i) => `<text x="630" y="${textY + i * 90}" text-anchor="middle" font-size="72" font-weight="bold" fill="#1f2328">${escapeXml(line)}</text>`)
+    .map((line, i) => `<text x="630" y="${textY + i * 90}" text-anchor="middle" font-size="72" font-weight="bold" fill="#1f2328" font-family="Noto Sans CJK JP">${escapeXml(line)}</text>`)
     .join("\n");
 
   const svg = `<svg width="1260" height="630" xmlns="http://www.w3.org/2000/svg">
   <rect width="1260" height="630" fill="#ffffff"/>
   <rect x="20" y="20" width="1220" height="590" fill="#f6f8fa" rx="16"/>
   ${textElements}
-  <text x="630" y="560" text-anchor="middle" font-size="32" fill="#656d76">baseballyama's Blog</text>
+  <text x="630" y="560" text-anchor="middle" font-size="32" fill="#656d76" font-family="Noto Sans CJK JP">baseballyama's Blog</text>
 </svg>`;
 
-  const resvg = new Resvg(svg);
+  const resvg = new Resvg(svg, {
+    font: {
+      fontFiles: [FONT_PATH],
+      loadSystemFonts: false,
+    },
+  });
   const png = resvg.render().asPng();
   fs.writeFileSync(outputPath, png);
 }
@@ -100,7 +117,8 @@ function escapeXml(str: string): string {
   return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 }
 
-function build(): void {
+async function build(): Promise<void> {
+  await ensureFont();
   const template = fs.readFileSync(path.join(SRC_DIR, "template.html"), "utf-8");
   const indexTemplate = fs.readFileSync(path.join(SRC_DIR, "index.html"), "utf-8");
   const posts = loadPosts();
@@ -136,7 +154,7 @@ function build(): void {
   const listItems = posts
     .map(
       (p) =>
-        `<li><a href="${BASE_URL}/posts/${p.slug}.html"><div class="post-title">${p.title}</div><div class="post-date">${p.date}</div></a></li>`
+        `<li><a href="./posts/${p.slug}.html"><div class="post-title">${p.title}</div><div class="post-date">${p.date}</div></a></li>`
     )
     .join("\n");
   const indexHtml = render(indexTemplate, {
@@ -161,7 +179,7 @@ function build(): void {
 }
 
 // Main
-build();
+await build();
 
 if (process.argv.includes("--watch")) {
   console.log("Watching for changes...");
