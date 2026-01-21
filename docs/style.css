@@ -147,6 +147,9 @@ img {
 /* 記事 */
 article { margin-top: 2rem; }
 .post-date { color: #656d76; font-size: 0.9rem; }
+.post-meta { color: #656d76; font-size: 0.9rem; }
+.post-meta a { color: #656d76; }
+.post-meta a:hover { color: #0969da; }
 
 /* 記事一覧 */
 .post-list {

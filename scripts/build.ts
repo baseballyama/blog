@@ -13,6 +13,7 @@ interface Post {
   slug: string;
   title: string;
   date: string;
+  author: string;
   description: string;
   content: string;
 }
@@ -48,6 +49,7 @@ function loadPosts(): Post[] {
       slug: file.replace(/\.md$/, ""),
       title: meta.title || file.replace(/\.md$/, ""),
       date: meta.date || "",
+      author: meta.author || "baseballyama",
       description,
       content: marked(body) as string,
     });
@@ -121,6 +123,7 @@ function build(): void {
     const html = render(template, {
       title: post.title,
       date: post.date,
+      author: post.author,
       description: post.description,
       content: post.content,
       slug: post.slug,
