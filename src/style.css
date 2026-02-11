@@ -151,6 +151,12 @@ img {
 }
 .markdown-alert-caution .markdown-alert-title { color: #cf222e; }
 
+/* Mermaid */
+pre.mermaid {
+  background: transparent;
+  text-align: center;
+}
+
 /* 記事 */
 article { margin-top: 2rem; }
 .post-date { color: #656d76; font-size: 0.9rem; }

@@ -3,6 +3,17 @@ import path from "node:path";
 import { marked } from "marked";
 import { Resvg } from "@resvg/resvg-js";
 
+marked.use({
+  renderer: {
+    code({ text, lang }) {
+      if (lang === "mermaid") {
+        return `<pre class="mermaid">${text}</pre>`;
+      }
+      return false;
+    },
+  },
+});
+
 const ROOT = path.join(import.meta.dirname, "..");
 const FONT_URL = "https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/Japanese/NotoSansCJKjp-Bold.otf";
 const FONT_PATH = path.join(ROOT, "src", "fonts", "NotoSansCJKjp-Bold.otf");
@@ -138,6 +149,7 @@ async function build(): Promise<void> {
     // docs/ogp/ にコピー
     fs.copyFileSync(ogpSrc, path.join(OUT_DIR, "ogp", `${post.slug}.png`));
 
+    const hasMermaid = post.content.includes('class="mermaid"');
     const html = render(template, {
       title: post.title,
       date: post.date,
@@ -146,6 +158,9 @@ async function build(): Promise<void> {
       content: post.content,
       slug: post.slug,
       "base-url": BASE_URL,
+      "mermaid-script": hasMermaid
+        ? '<script type="module">import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";mermaid.initialize({ startOnLoad: true });</script>'
+        : "",
     });
     fs.writeFileSync(path.join(OUT_DIR, "posts", `${post.slug}.html`), html);
   }
