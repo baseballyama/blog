@@ -28,7 +28,6 @@
 		{#each profile.bio as line}<p>{line}</p>{/each}
 	</div>
 	<div class="hero-meta">
-		<span>📍 {profile.location}</span>
 		<SocialLinks />
 	</div>
 </section>
@@ -37,11 +36,11 @@
 	<div class="section-head">
 		<h2 class="section-title">Projects</h2>
 	</div>
-	<div class="project-grid">
+	<ul class="project-list">
 		{#each projects as project (project.name)}
 			<ProjectCard {project} />
 		{/each}
-	</div>
+	</ul>
 </section>
 
 <section class="section container">
@@ -54,9 +53,8 @@
 			{#each data.latestPosts as post (post.slug)}
 				<li>
 					<a href="/posts/{post.slug}">
-						<div class="post-item-title">{post.title}</div>
-						<div class="post-item-date">{post.date}</div>
-						<p class="post-item-desc">{post.description}</p>
+						<span class="post-item-title">{post.title}</span>
+						<span class="post-item-date">{post.date}</span>
 					</a>
 				</li>
 			{/each}

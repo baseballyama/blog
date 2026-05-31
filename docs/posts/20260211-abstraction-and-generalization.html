@@ -16,23 +16,23 @@
 				}
 			})();
 		</script>
-		<link href="../_app/immutable/entry/start.pgO25jRb.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/CFAlFFzX.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/CwtMA65V.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/B6ziwAZk.js" rel="modulepreload">
-		<link href="../_app/immutable/entry/app.qaFN2C_G.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/start.58VBVCFF.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/CM8rrmJ2.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/C-FDn16k.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/APDSDVAX.js" rel="modulepreload">
+		<link href="../_app/immutable/entry/app.eXFQeVZL.js" rel="modulepreload">
 		<link href="../_app/immutable/chunks/PPVm8Dsz.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/CiX7VRXY.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/CXqS31KN.js" rel="modulepreload">
-		<link href="../_app/immutable/nodes/0.C5HU-fWe.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/C0UKrGpC.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/XmL5xhTZ.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/CyH8XypA.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/DgA-n2rd.js" rel="modulepreload">
-		<link href="../_app/immutable/nodes/4.Ds1li9B-.js" rel="modulepreload">
-		<link href="../_app/immutable/chunks/Bbh_UOzX.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Cpfx_pkq.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DvtjvhCQ.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/0.Cy88XlNI.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Die9Tws-.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/DvwafmzJ.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/5MpmipDy.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/gG6Aja9-.js" rel="modulepreload">
+		<link href="../_app/immutable/nodes/4.CYO99xqR.js" rel="modulepreload">
+		<link href="../_app/immutable/chunks/Dl64rmAk.js" rel="modulepreload">
 		<!--14u6r3i--><meta name="description" content="ソフトウェア設計に関わったことのある人であれば、「データ設計」が設計における重要な要素の一つであることに異論はないだろう。   なお本記事で言う「データ設計」は、DBのテーブル設計に限らない。ビジネス上の概念をどう整理し、境界を引くか（ド"/> <meta property="og:site_name" content="baseballyama's Blog"/> <meta property="og:title" content="抽象化・共通化にどう立ち向かうか"/> <meta property="og:description" content="ソフトウェア設計に関わったことのある人であれば、「データ設計」が設計における重要な要素の一つであることに異論はないだろう。   なお本記事で言う「データ設計」は、DBのテーブル設計に限らない。ビジネス上の概念をどう整理し、境界を引くか（ド"/> <meta property="og:type" content="article"/> <meta property="og:url" content="https://blog.baseballyama.com/posts/20260211-abstraction-and-generalization"/> <meta property="og:image" content="https://blog.baseballyama.com/ogp/20260211-abstraction-and-generalization.png"/> <meta property="og:image:width" content="1260"/> <meta property="og:image:height" content="630"/> <meta name="twitter:card" content="summary_large_image"/> <meta name="twitter:image" content="https://blog.baseballyama.com/ogp/20260211-abstraction-and-generalization.png"/><!----><title>抽象化・共通化にどう立ち向かうか — baseballyama's Blog</title>
-		<link href="../_app/immutable/assets/0.BrDKitIu.css" rel="stylesheet">
+		<link href="../_app/immutable/assets/0.Bc7532DO.css" rel="stylesheet">
 	</head>
 	<body data-sveltekit-preload-data="hover">
 		<div style="display: contents"><!--[--><!--[0--><!--[--><div class="app"><header class="site-header"><div class="container"><a href="/" class="brand">baseballyama</a> <nav class="site-nav"><a href="/">Home</a> <a href="/blog" aria-current="page">Blog</a> <button class="theme-toggle" aria-label="テーマを切り替える" title="テーマを切り替える"><!--[-1--><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"></path></svg><!--]--></button><!----></nav></div></header><!----> <main><!--[--><article class="container"><header class="article-header"><h1 class="article-title">抽象化・共通化にどう立ち向かうか</h1> <p class="article-meta">2026-02-11 / <a href="https://github.com/baseballyama" target="_blank" rel="noopener noreferrer">baseballyama</a></p></header> <div class="prose"><!----><p>ソフトウェア設計に関わったことのある人であれば、「データ設計」が設計における重要な要素の一つであることに異論はないだろう。<br>なお本記事で言う「データ設計」は、DBのテーブル設計に限らない。ビジネス上の概念をどう整理し、境界を引くか（ドメインモデリング）も含めた意味で用いる。</p>
@@ -203,15 +203,15 @@
 			
 			<script>
 				{
-					__sveltekit_ll2oyi = {
+					__sveltekit_ha8uc2 = {
 						base: new URL("..", location).pathname.slice(0, -1)
 					};
 
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("../_app/immutable/entry/start.pgO25jRb.js"),
-						import("../_app/immutable/entry/app.qaFN2C_G.js")
+						import("../_app/immutable/entry/start.58VBVCFF.js"),
+						import("../_app/immutable/entry/app.eXFQeVZL.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element, {
 							node_ids: [0, 4],

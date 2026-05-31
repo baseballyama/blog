@@ -23,9 +23,8 @@
 			{#each data.posts as post (post.slug)}
 				<li>
 					<a href="/posts/{post.slug}">
-						<div class="post-item-title">{post.title}</div>
-						<div class="post-item-date">{post.date}</div>
-						<p class="post-item-desc">{post.description}</p>
+						<span class="post-item-title">{post.title}</span>
+						<span class="post-item-date">{post.date}</span>
 					</a>
 				</li>
 			{/each}
