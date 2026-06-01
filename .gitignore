@@ -3,6 +3,9 @@ node_modules/
 
 # SvelteKit
 .svelte-kit/
+
+# svelte-check (--tsgo / --incremental) のオーバーレイ・キャッシュ
+.svelte-check/
 .env
 .env.*
 !.env.example

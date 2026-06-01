@@ -1,0 +1,5 @@
+# oxfmt 設定（既存コードのスタイルに合わせる: タブ / シングルクォート）
+# semicolons・trailing comma はデフォルト（always / 既存と一致）を使用。
+indentStyle = "tab"
+quoteStyle = "single"
+printWidth = 100

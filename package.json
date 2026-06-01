@@ -12,23 +12,30 @@
     "build": "rm -rf docs && vite build",
     "preview": "vite preview",
     "prepare": "svelte-kit sync",
-    "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-    "check:tsgo": "svelte-kit sync && svelte-check --tsgo --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+    "check": "svelte-kit sync && svelte-check --tsgo --incremental --tsconfig ./tsconfig.json",
+    "check:legacy": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+    "check:watch": "svelte-kit sync && svelte-check --tsgo --incremental --tsconfig ./tsconfig.json --watch",
+    "lint": "oxlint",
+    "lint:fix": "oxlint --fix",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "devDependencies": {
     "@rsvelte/svelte-check": "^0.1.4",
     "@sveltejs/adapter-static": "^3.0.10",
     "@sveltejs/kit": "^2.61.1",
     "@sveltejs/vite-plugin-svelte": "^7.1.2",
-    "@types/node": "^24.0.0",
+    "@types/node": "^25.9.1",
+    "@typescript/native-preview": "7.0.0-dev.20260527.2",
+    "oxfmt": "^0.52.0",
+    "oxlint": "^1.67.0",
     "svelte": "^5.56.0",
-    "typescript": "^5.7.0",
-    "vite": "^7.1.0"
+    "typescript": "^6.0.0",
+    "vite": "^7.3.0"
   },
   "dependencies": {
     "@resvg/resvg-js": "^2.6.2",
-    "marked": "^17.0.0"
+    "marked": "^18.0.0"
   },
   "pnpm": {
     "overrides": {

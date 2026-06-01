@@ -37,12 +37,14 @@
 		<h2 class="section-title">Projects</h2>
 	</div>
 	{#each projectGroups as group (group.title)}
-		<h3 class="project-group-title">{group.title}</h3>
-		<ul class="project-list">
-			{#each group.projects as project (project.name)}
-				<ProjectCard {project} />
-			{/each}
-		</ul>
+		<div class="project-group">
+			<h3 class="project-group-title">{group.title}</h3>
+			<ul class="project-list">
+				{#each group.projects as project (project.name)}
+					<ProjectCard {project} />
+				{/each}
+			</ul>
+		</div>
 	{/each}
 </section>
 
