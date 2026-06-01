@@ -186,17 +186,21 @@ main {
 	color: var(--fg);
 }
 
-/* プロジェクト（区切り線だけのリスト） */
+/* プロジェクト（2列・区切り線だけ） */
 .project-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: 2.5rem;
 }
 .project-list li {
 	padding: 1rem 0;
 	border-top: 1px solid var(--border);
 }
-.project-list li:first-child {
+/* 最初の行（2セル）の上罫線を消す */
+.project-list li:nth-child(-n + 2) {
 	border-top: none;
 }
 .project-row {
@@ -460,6 +464,16 @@ main {
 @media (max-width: 640px) {
 	.hero {
 		padding: 2.5rem 0 1rem;
+	}
+	/* プロジェクトは1列に戻す */
+	.project-list {
+		grid-template-columns: 1fr;
+	}
+	.project-list li:nth-child(2) {
+		border-top: 1px solid var(--border);
+	}
+	.project-list li:first-child {
+		border-top: none;
 	}
 }
 
