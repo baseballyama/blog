@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { profile } from '$lib/data/profile';
-	import { projects } from '$lib/data/projects';
+	import { projectGroups } from '$lib/data/projects';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '$lib/config';
@@ -36,11 +36,14 @@
 	<div class="section-head">
 		<h2 class="section-title">Projects</h2>
 	</div>
-	<ul class="project-list">
-		{#each projects as project (project.name)}
-			<ProjectCard {project} />
-		{/each}
-	</ul>
+	{#each projectGroups as group (group.title)}
+		<h3 class="project-group-title">{group.title}</h3>
+		<ul class="project-list">
+			{#each group.projects as project (project.name)}
+				<ProjectCard {project} />
+			{/each}
+		</ul>
+	{/each}
 </section>
 
 <section class="section container">
