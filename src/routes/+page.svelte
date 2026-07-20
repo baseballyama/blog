@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { profile } from '$lib/data/profile';
 	import { projectGroups } from '$lib/data/projects';
+	import { talkYears, primaryUrl } from '$lib/data/talks';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '$lib/config';
@@ -86,6 +87,58 @@
 			<ul class="project-list">
 				{#each group.projects as project (project.name)}
 					<ProjectCard {project} />
+				{/each}
+			</ul>
+		</section>
+	{/each}
+</section>
+
+<section class="section container wide" id="speaking">
+	<header class="section-head">
+		<h2 class="section-label">Speaking</h2>
+		<p class="section-note">Conference and meetup talks, newest first.</p>
+	</header>
+	{#each talkYears as year (year.year)}
+		<section class="group">
+			<div class="group-head">
+				<h3 class="group-title">{year.year}</h3>
+				<p class="group-count">
+					{year.talks.length}
+					{year.talks.length === 1 ? 'talk' : 'talks'}
+				</p>
+			</div>
+			<ul class="talk-list">
+				{#each year.talks as talk (talk.title)}
+					{@const primary = primaryUrl(talk)}
+					<li class="talk">
+						<p class="talk-meta">
+							<time datetime={talk.date}>{talk.date}</time>
+							{#if talk.eventUrl}
+								<a class="talk-event" href={talk.eventUrl} target="_blank" rel="noopener noreferrer">
+									{talk.event}
+								</a>
+							{:else}
+								<span class="talk-event">{talk.event}</span>
+							{/if}
+							{#if talk.slidesUrl && talk.videoUrl}
+								<a class="talk-link" href={talk.videoUrl} target="_blank" rel="noopener noreferrer">
+									Video
+								</a>
+							{/if}
+							{#if talk.repoUrl}
+								<a class="talk-link" href={talk.repoUrl} target="_blank" rel="noopener noreferrer">
+									Source
+								</a>
+							{/if}
+						</p>
+						{#if primary}
+							<a class="talk-title" href={primary} target="_blank" rel="noopener noreferrer">
+								{talk.title}
+							</a>
+						{:else}
+							<span class="talk-title">{talk.title}</span>
+						{/if}
+					</li>
 				{/each}
 			</ul>
 		</section>
