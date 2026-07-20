@@ -1,3 +1,26 @@
 node_modules/
-.playwright-mcp
+.playwright-mcp/
+
+# SvelteKit
+.svelte-kit/
+build/
+
+# svelte-check (--tsgo / --incremental) のオーバーレイ・キャッシュ
+.svelte-check/
+.env
+.env.*
+!.env.example
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# OGP 用フォントのダウンロードキャッシュ
+.cache/
+
+# 作業用スクリーンショット・デバッグスクリプト
+/*.png
+/_*.cjs
+/_*.mjs
+
+# 旧ビルドシステムの名残
 src/fonts/
+src/ogp/
