@@ -13,22 +13,35 @@
 	const hasTranslation = $derived(post.locales.includes(other));
 	const ogImage = $derived(`${SITE_URL}/ogp/${post.locale}/${post.slug}.png`);
 
-	onMount(async () => {
-		if (!post.hasMermaid) return;
-		try {
-			// mermaid は CDN から動的に読み込み、クライアントでのみ描画する。
-			// URL を変数に切り出して TS のモジュール解決対象から外す (型は any になる)。
-			const mermaidUrl = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
-			const mermaid = (await import(/* @vite-ignore */ mermaidUrl)).default;
-			const isDark = document.documentElement.dataset.theme === 'dark';
-			mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'neutral' });
-			await mermaid.run({ querySelector: 'pre.mermaid' });
-		} catch {
-			// 読み込み・描画に失敗したら、隠してあるソースを見せる（CSS 側の条件を外す）
-			for (const node of document.querySelectorAll('pre.mermaid:not([data-processed])')) {
-				node.setAttribute('data-processed', 'error');
-			}
+	/** 描画待ちで隠しているブロックを、ソース表示に戻す */
+	function revealMermaidSource() {
+		for (const node of document.querySelectorAll('pre.mermaid:not([data-processed])')) {
+			node.setAttribute('data-processed', 'error');
 		}
+	}
+
+	onMount(() => {
+		if (!post.hasMermaid) return;
+
+		// 何が起きても白紙のままにしない。描画が終わらなければソースを見せる。
+		const failsafe = setTimeout(revealMermaidSource, 5000);
+
+		// mermaid は自前のバンドルから動的 import する（CDN に依存しない）。
+		// 図のあるページでだけ読み込まれるよう、静的 import にはしない。
+		(async () => {
+			try {
+				const { default: mermaid } = await import('mermaid');
+				const isDark = document.documentElement.dataset.theme === 'dark';
+				mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'neutral' });
+				await mermaid.run({ querySelector: 'pre.mermaid' });
+			} catch {
+				revealMermaidSource();
+			} finally {
+				clearTimeout(failsafe);
+			}
+		})();
+
+		return () => clearTimeout(failsafe);
 	});
 </script>
 
