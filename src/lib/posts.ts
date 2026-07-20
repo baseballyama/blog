@@ -11,17 +11,17 @@ const marked = new Marked({
 				type: 'html',
 				block: true,
 				pre: false,
-				text: `<pre class="mermaid">${token.text}</pre>\n`
+				text: `<pre class="mermaid">${token.text}</pre>\n`,
 			});
 		}
-	}
+	},
 });
 
 // posts/*.md をビルド時に読み込む（raw 文字列）。
 const rawPosts = import.meta.glob('/posts/*.md', {
 	query: '?raw',
 	import: 'default',
-	eager: true
+	eager: true,
 }) as Record<string, string>;
 
 export interface PostMeta {
@@ -59,7 +59,11 @@ const posts: Post[] = Object.entries(rawPosts)
 		// walkTokens で code→html を同期変換しているため parse() は同期的に文字列を返す。
 		const html = marked.parse(body) as string;
 		const description =
-			meta.description || body.replace(/[#*`\n]/g, ' ').slice(0, 120).trim();
+			meta.description ||
+			body
+				.replace(/[#*`\n]/g, ' ')
+				.slice(0, 120)
+				.trim();
 		return {
 			slug,
 			title: meta.title || slug,
@@ -67,10 +71,10 @@ const posts: Post[] = Object.entries(rawPosts)
 			author: meta.author || AUTHOR,
 			description,
 			html,
-			hasMermaid: html.includes('class="mermaid"')
+			hasMermaid: html.includes('class="mermaid"'),
 		} satisfies Post;
 	})
-	.sort((a, b) => (b.date > a.date ? 1 : -1));
+	.toSorted((a, b) => (b.date > a.date ? 1 : -1));
 
 /** 本文を含む全記事（日付の降順） */
 export function getAllPosts(): Post[] {
@@ -84,7 +88,7 @@ export function getPostMetas(): PostMeta[] {
 		title,
 		date,
 		author,
-		description
+		description,
 	}));
 }
 

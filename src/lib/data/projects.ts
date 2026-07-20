@@ -30,7 +30,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'Rust',
 				stars: 30,
 				url: 'https://github.com/baseballyama/rsvelte',
-				homepage: 'https://baseballyama.github.io/rsvelte/'
+				homepage: 'https://baseballyama.github.io/rsvelte/',
 			},
 			{
 				name: 'eslint-plugin-svelte',
@@ -39,7 +39,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 402,
 				url: 'https://github.com/sveltejs/eslint-plugin-svelte',
-				homepage: 'https://sveltejs.github.io/eslint-plugin-svelte/'
+				homepage: 'https://sveltejs.github.io/eslint-plugin-svelte/',
 			},
 			{
 				name: 'svelte-eslint-parser',
@@ -48,22 +48,23 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 119,
 				url: 'https://github.com/sveltejs/svelte-eslint-parser',
-				homepage: 'https://sveltejs.github.io/svelte-eslint-parser/'
+				homepage: 'https://sveltejs.github.io/svelte-eslint-parser/',
 			},
 			{
 				name: 'svelte-preprocess-delegate-events',
 				description: 'on:* でイベントを委譲できる Svelte プリプロセッサ。',
 				language: 'JavaScript',
 				stars: 53,
-				url: 'https://github.com/baseballyama/svelte-preprocess-delegate-events'
+				url: 'https://github.com/baseballyama/svelte-preprocess-delegate-events',
 			},
 			{
 				name: 'kumiki',
-				description: 'Svelte 5 向けの、ヘッドレスで合成可能・高アクセシビリティな UI プリミティブ。',
+				description:
+					'Svelte 5 向けの、ヘッドレスで合成可能・高アクセシビリティな UI プリミティブ。',
 				language: 'TypeScript',
 				stars: 4,
 				url: 'https://github.com/baseballyama/kumiki',
-				homepage: 'https://baseballyama.github.io/kumiki/'
+				homepage: 'https://baseballyama.github.io/kumiki/',
 			},
 			{
 				name: 'vite-devtools-svelte',
@@ -71,7 +72,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'Svelte',
 				stars: 4,
 				url: 'https://github.com/baseballyama/vite-devtools-svelte',
-				homepage: 'https://baseballyama.github.io/vite-devtools-svelte/'
+				homepage: 'https://baseballyama.github.io/vite-devtools-svelte/',
 			},
 			{
 				name: 'svelte-ast-print-playground',
@@ -79,7 +80,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'Svelte',
 				stars: 1,
 				url: 'https://github.com/baseballyama/svelte-ast-print-playground',
-				homepage: 'https://baseballyama.github.io/svelte-ast-print-playground'
+				homepage: 'https://baseballyama.github.io/svelte-ast-print-playground',
 			},
 			{
 				name: 'svelte-shaker',
@@ -87,9 +88,9 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 0,
 				url: null,
-				private: true
-			}
-		]
+				private: true,
+			},
+		],
 	},
 	{
 		title: 'Linting & language tooling',
@@ -101,7 +102,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 11,
 				url: 'https://github.com/baseballyama/eslint-plugin-postgresql',
-				homepage: 'https://baseballyama.github.io/eslint-plugin-postgresql/'
+				homepage: 'https://baseballyama.github.io/eslint-plugin-postgresql/',
 			},
 			{
 				name: 'postgresql-eslint-parser',
@@ -110,7 +111,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 7,
 				url: 'https://github.com/baseballyama/postgresql-eslint-parser',
-				homepage: 'https://baseballyama.github.io/postgresql-eslint-parser/'
+				homepage: 'https://baseballyama.github.io/postgresql-eslint-parser/',
 			},
 			{
 				name: 'jsonnet-eslint-parser',
@@ -118,7 +119,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 0,
 				url: null,
-				private: true
+				private: true,
 			},
 			{
 				name: 'vue3-eslint-parser',
@@ -126,9 +127,9 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 0,
 				url: null,
-				private: true
-			}
-		]
+				private: true,
+			},
+		],
 	},
 	{
 		title: 'Libraries',
@@ -139,7 +140,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 10,
 				url: 'https://github.com/baseballyama/xlsx-kit',
-				homepage: 'https://baseballyama.github.io/xlsx-kit/'
+				homepage: 'https://baseballyama.github.io/xlsx-kit/',
 			},
 			{
 				name: 'pptx-kit',
@@ -147,7 +148,7 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 0,
 				url: 'https://github.com/baseballyama/pptx-kit',
-				homepage: 'https://baseballyama.github.io/pptx-kit/'
+				homepage: 'https://baseballyama.github.io/pptx-kit/',
 			},
 			{
 				name: 'fast-leiden',
@@ -156,9 +157,9 @@ export const projectGroups: ProjectGroup[] = [
 				language: 'TypeScript',
 				stars: 0,
 				url: 'https://github.com/baseballyama/fast-leiden',
-				homepage: 'https://www.npmjs.com/package/fast-leiden'
-			}
-		]
+				homepage: 'https://www.npmjs.com/package/fast-leiden',
+			},
+		],
 	},
 	{
 		title: 'Tools',
@@ -168,8 +169,8 @@ export const projectGroups: ProjectGroup[] = [
 				description: 'Hono RPC 向けの、型を解析して使われていないエンドポイントを検出するツール。',
 				language: 'TypeScript',
 				stars: 2,
-				url: 'https://github.com/baseballyama/hono-shaking'
-			}
-		]
-	}
+				url: 'https://github.com/baseballyama/hono-shaking',
+			},
+		],
+	},
 ];

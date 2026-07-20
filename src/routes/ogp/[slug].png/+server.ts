@@ -49,7 +49,7 @@ function buildSvg(title: string): string {
 	const texts = lines
 		.map(
 			(line, i) =>
-				`<text x="630" y="${textY + i * 90}" text-anchor="middle" font-size="72" font-weight="bold" fill="#1f2328" font-family="Noto Sans CJK JP">${escapeXml(line)}</text>`
+				`<text x="630" y="${textY + i * 90}" text-anchor="middle" font-size="72" font-weight="bold" fill="#1f2328" font-family="Noto Sans CJK JP">${escapeXml(line)}</text>`,
 		)
 		.join('\n');
 
@@ -69,14 +69,14 @@ export const GET: RequestHandler = async ({ params }) => {
 	await ensureFont();
 
 	const resvg = new Resvg(buildSvg(post.title), {
-		font: { fontFiles: [FONT_PATH], loadSystemFonts: false }
+		font: { fontFiles: [FONT_PATH], loadSystemFonts: false },
 	});
 	const png = resvg.render().asPng();
 
 	return new Response(new Uint8Array(png), {
 		headers: {
 			'Content-Type': 'image/png',
-			'Cache-Control': 'public, max-age=604800'
-		}
+			'Cache-Control': 'public, max-age=604800',
+		},
 	});
 };

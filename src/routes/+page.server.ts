@@ -3,6 +3,6 @@ import type { PageServerLoad } from './$types';
 
 export const load: PageServerLoad = () => {
 	return {
-		latestPosts: getPostMetas().slice(0, 3)
+		latestPosts: getPostMetas().slice(0, 3),
 	};
 };
