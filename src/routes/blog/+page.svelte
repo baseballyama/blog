@@ -17,11 +17,11 @@
 </svelte:head>
 
 <div class="section section--first container wide">
-	<div class="rail">
-		<h1 class="rail-title">Blog</h1>
-		<p class="rail-note">{description}</p>
-	</div>
-	<div class="rail-body">
+	<header class="section-head">
+		<h1 class="section-label">Blog</h1>
+		<p class="section-note">{description}</p>
+	</header>
+	<div class="section-body">
 		{#if data.posts.length}
 			<ul class="post-list">
 				{#each data.posts as post (post.slug)}
