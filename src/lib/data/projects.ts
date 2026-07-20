@@ -121,13 +121,6 @@ const groups: ProjectGroupSource[] = [
 				language: 'TypeScript',
 				repo: 'baseballyama/jsonnet-eslint-parser',
 			},
-			{
-				name: 'vue3-eslint-parser',
-				description: 'A faster, more capable ESLint parser for Vue 3.',
-				language: 'TypeScript',
-				repo: null,
-				private: true,
-			},
 		],
 	},
 	{
@@ -135,7 +128,7 @@ const groups: ProjectGroupSource[] = [
 		note: 'General-purpose packages: file formats and native bindings.',
 		projects: [
 			{
-				name: 'xlsx-kit',
+				name: '@office-kit/xlsx',
 				description:
 					'A JavaScript library for reading and writing Excel (XLSX), inspired by openpyxl.',
 				language: 'TypeScript',
@@ -143,14 +136,14 @@ const groups: ProjectGroupSource[] = [
 				homepage: 'https://office-kit.github.io/xlsx/',
 			},
 			{
-				name: 'pptx-kit',
+				name: '@office-kit/pptx',
 				description: 'A JavaScript library for reading and writing PowerPoint (PPTX).',
 				language: 'TypeScript',
 				repo: 'office-kit/pptx',
 				homepage: 'https://office-kit.github.io/pptx/',
 			},
 			{
-				name: 'docx-kit',
+				name: '@office-kit/docx',
 				description: 'A JavaScript library for reading and writing Word (DOCX).',
 				language: 'TypeScript',
 				repo: 'office-kit/docx',
