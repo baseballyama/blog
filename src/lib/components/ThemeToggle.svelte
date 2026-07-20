@@ -20,7 +20,7 @@
 	}
 </script>
 
-<button class="theme-toggle" onclick={toggle} aria-label="テーマを切り替える" title="テーマを切り替える">
+<button class="theme-toggle" onclick={toggle} aria-label="Toggle theme" title="Toggle theme">
 	{#if theme === 'dark'}
 		<!-- sun -->
 		<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">

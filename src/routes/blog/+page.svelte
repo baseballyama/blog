@@ -3,33 +3,38 @@
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
+
+	const description = 'Posts on compilers, tooling and building software.';
 </script>
 
 <svelte:head>
 	<title>Blog — {SITE_NAME}</title>
-	<meta name="description" content="baseballyama の技術ブログ記事一覧。" />
+	<meta name="description" content={description} />
 	<meta property="og:title" content="Blog — {SITE_NAME}" />
-	<meta property="og:description" content="baseballyama の技術ブログ記事一覧。" />
+	<meta property="og:description" content={description} />
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="{SITE_URL}/blog" />
 </svelte:head>
 
-<section class="section container">
-	<div class="section-head">
-		<h1 class="section-title">Blog</h1>
+<div class="section section--first container wide">
+	<div class="rail">
+		<h1 class="rail-title">Blog</h1>
+		<p class="rail-note">{description}</p>
 	</div>
-	{#if data.posts.length}
-		<ul class="post-list">
-			{#each data.posts as post (post.slug)}
-				<li>
-					<a href="/posts/{post.slug}">
-						<span class="post-item-title">{post.title}</span>
-						<span class="post-item-date">{post.date}</span>
-					</a>
-				</li>
-			{/each}
-		</ul>
-	{:else}
-		<p>まだ記事がありません。</p>
-	{/if}
-</section>
+	<div class="rail-body">
+		{#if data.posts.length}
+			<ul class="post-list">
+				{#each data.posts as post (post.slug)}
+					<li>
+						<a href="/posts/{post.slug}">
+							<span class="post-item-title">{post.title}</span>
+							<span class="post-item-date">{post.date}</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+		{:else}
+			<p class="empty">No posts yet.</p>
+		{/if}
+	</div>
+</div>

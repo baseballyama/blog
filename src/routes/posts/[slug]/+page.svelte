@@ -50,5 +50,5 @@
 		{@html post.html}
 	</div>
 
-	<a class="back-link" href="/blog">← Blog 一覧へ戻る</a>
+	<a class="back-link" href="/blog">← Back to blog</a>
 </article>
