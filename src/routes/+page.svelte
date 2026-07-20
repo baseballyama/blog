@@ -22,6 +22,14 @@
 
 <section class="hero container wide">
 	<div class="hero-main">
+		<img
+			class="hero-avatar"
+			src={profile.avatar}
+			alt={profile.name}
+			width="96"
+			height="96"
+			decoding="async"
+		/>
 		<p class="hero-eyebrow">{profile.title} — {profile.location}</p>
 		<h1 class="hero-name">{profile.name}</h1>
 		<p class="hero-focus">

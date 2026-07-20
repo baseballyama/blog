@@ -184,6 +184,15 @@ main {
 	align-items: start;
 	padding-block: 5rem 0;
 }
+.hero-avatar {
+	display: block;
+	width: 96px;
+	height: 96px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin: 0 0 1.5rem;
+	border: 1px solid var(--border);
+}
 .hero-eyebrow {
 	font-family: var(--font-mono);
 	font-size: 0.78rem;
@@ -867,6 +876,11 @@ a.talk-title:hover {
 @media (max-width: 640px) {
 	.hero {
 		padding-block: 3rem 0;
+	}
+	.hero-avatar {
+		width: 76px;
+		height: 76px;
+		margin-bottom: 1.25rem;
 	}
 	.fact {
 		grid-template-columns: 1fr;
