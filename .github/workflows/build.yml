@@ -31,8 +31,10 @@ jobs:
       - run: pnpm install --frozen-lockfile
 
       # SvelteKit (rsvelte コンパイラ経由) でビルドし、build/ に静的出力する。
-      # OGP 画像用の日本語フォントはビルド時にダウンロードされる。
+      # ビルド前に GitHub のスター数を再取得し、OGP 画像用の日本語フォントもダウンロードされる。
       - run: pnpm build
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
 
       - run: pnpm check
 

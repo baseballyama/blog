@@ -18,53 +18,78 @@
 	<meta property="og:url" content={SITE_URL} />
 </svelte:head>
 
-<section class="hero container">
-	<h1 class="hero-name">
-		{profile.name}<span class="hero-handle">@{profile.handle}</span>
-	</h1>
-	<p class="hero-title">{profile.title}</p>
-	<p class="hero-tagline">{profile.tagline}</p>
-	<div class="hero-bio">
-		{#each profile.bio as line}<p>{line}</p>{/each}
-	</div>
+<section class="hero container wide">
+	<p class="hero-eyebrow">{profile.title} — {profile.location}</p>
+	<h1 class="hero-name">{profile.name}</h1>
+	<p class="hero-focus">
+		{#each profile.focus as item, i (item)}
+			{#if i > 0}<span class="sep" aria-hidden="true">/</span>{/if}<span>{item}</span>
+		{/each}
+	</p>
+
+	<dl class="facts">
+		{#each profile.facts as fact (fact.label)}
+			<div class="fact">
+				<dt>{fact.label}</dt>
+				<dd>
+					{#if fact.href}
+						<a href={fact.href} target="_blank" rel="noopener noreferrer">{fact.value}</a>
+					{:else}
+						{fact.value}
+					{/if}
+				</dd>
+			</div>
+		{/each}
+	</dl>
+
 	<div class="hero-meta">
 		<SocialLinks />
 	</div>
 </section>
 
-<section class="section container">
-	<div class="section-head">
-		<h2 class="section-title">Projects</h2>
+<section class="section container wide" id="projects">
+	<div class="rail">
+		<h2 class="rail-title">Projects</h2>
+		<p class="rail-note">Open source I build and maintain, grouped by what it is for.</p>
 	</div>
-	{#each projectGroups as group (group.title)}
-		<div class="project-group">
-			<h3 class="project-group-title">{group.title}</h3>
-			<ul class="project-list">
-				{#each group.projects as project (project.name)}
-					<ProjectCard {project} />
-				{/each}
-			</ul>
-		</div>
-	{/each}
+	<div class="rail-body">
+		{#each projectGroups as group (group.title)}
+			<section class="project-group">
+				<header class="group-head">
+					<h3 class="group-title">{group.title}</h3>
+					<span class="group-count">{group.projects.length}</span>
+				</header>
+				<p class="group-note">{group.note}</p>
+				<ul class="project-list">
+					{#each group.projects as project (project.name)}
+						<ProjectCard {project} />
+					{/each}
+				</ul>
+			</section>
+		{/each}
+	</div>
 </section>
 
-<section class="section container">
-	<div class="section-head">
-		<h2 class="section-title">Latest posts</h2>
-		<a class="section-link" href="/blog">すべての記事 →</a>
+<section class="section container wide" id="writing">
+	<div class="rail">
+		<h2 class="rail-title">Writing</h2>
+		<p class="rail-note">Notes on compilers, tooling and building software.</p>
 	</div>
-	{#if data.latestPosts.length}
-		<ul class="post-list">
-			{#each data.latestPosts as post (post.slug)}
-				<li>
-					<a href="/posts/{post.slug}">
-						<span class="post-item-title">{post.title}</span>
-						<span class="post-item-date">{post.date}</span>
-					</a>
-				</li>
-			{/each}
-		</ul>
-	{:else}
-		<p>まだ記事がありません。</p>
-	{/if}
+	<div class="rail-body">
+		{#if data.latestPosts.length}
+			<ul class="post-list">
+				{#each data.latestPosts as post (post.slug)}
+					<li>
+						<a href="/posts/{post.slug}">
+							<span class="post-item-title">{post.title}</span>
+							<span class="post-item-date">{post.date}</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+			<a class="more-link" href="/blog">All posts →</a>
+		{:else}
+			<p class="empty">No posts yet.</p>
+		{/if}
+	</div>
 </section>

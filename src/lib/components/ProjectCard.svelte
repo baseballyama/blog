@@ -4,21 +4,30 @@
 	let { project }: { project: Project } = $props();
 </script>
 
-<li>
+<li class="project">
 	<div class="project-row">
-		<span class="project-name">
-			{project.name}
-			{#if project.stars > 0}<span class="star">★ {project.stars}</span>{/if}
-		</span>
-		<span class="project-links">
-			<span class="project-tag">{project.language}</span>
+		{#if project.url}
+			<a class="project-name" href={project.url} target="_blank" rel="noopener noreferrer">
+				{project.name}
+			</a>
+		{:else}
+			<span class="project-name is-private">{project.name}</span>
+		{/if}
+		<span class="project-meta">
+			<span class="project-lang">{project.language}</span>
 			{#if project.url}
-				<a href={project.url} target="_blank" rel="noopener noreferrer">GitHub</a>
+				<span class="project-stars">
+					<span class="star-glyph" aria-hidden="true">★</span>
+					<span class="visually-hidden">stars:</span>
+					{project.stars}
+				</span>
 			{:else if project.private}
-				<span class="project-tag">private</span>
+				<span class="project-private">private</span>
 			{/if}
 			{#if project.homepage}
-				<a href={project.homepage} target="_blank" rel="noopener noreferrer">Docs</a>
+				<a class="project-docs" href={project.homepage} target="_blank" rel="noopener noreferrer">
+					Docs
+				</a>
 			{/if}
 		</span>
 	</div>

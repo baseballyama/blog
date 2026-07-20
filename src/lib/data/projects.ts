@@ -1,176 +1,191 @@
-export interface Project {
+import starCounts from './stars.json';
+
+interface ProjectSource {
 	name: string;
-	/** 日本語の短い説明 */
 	description: string;
 	language: string;
-	stars: number;
-	/** GitHub URL。private の場合は null */
-	url: string | null;
+	/** GitHub の 'owner/name'。private リポジトリは null */
+	repo: string | null;
 	/** ドキュメント / デモ / npm へのリンク */
-	homepage?: string | null;
+	homepage?: string;
 	private?: boolean;
 }
 
-export interface ProjectGroup {
-	/** 区分の見出し */
+interface ProjectGroupSource {
 	title: string;
+	/** 区分が何を集めたものかの一行説明 */
+	note: string;
+	projects: ProjectSource[];
+}
+
+export interface Project extends ProjectSource {
+	url: string | null;
+	/** scripts/fetch-stars.mjs がビルド時に更新する */
+	stars: number;
+}
+
+export interface ProjectGroup extends ProjectGroupSource {
 	projects: Project[];
 }
 
-// stars はビルド時点のスナップショット（手動更新）。
-// 区分ごと、区分内は概ね注力度・スター数の順。
-export const projectGroups: ProjectGroup[] = [
+// 区分内は概ね注力度・スター数の順。
+const groups: ProjectGroupSource[] = [
 	{
 		title: 'Svelte',
+		note: 'Compilers, parsers and tooling for the Svelte ecosystem.',
 		projects: [
 			{
 				name: 'rsvelte',
 				description:
-					'Rust 製の Svelte コンパイラ。公式 Svelte 5 コンパイラのテストスイートを 100% パスし、OXC エコシステムへのネイティブ統合を目指す。このサイトも rsvelte でビルドしています。',
+					'A Svelte compiler written in Rust. Passes 100% of the official Svelte 5 compiler test suite and integrates natively with the OXC ecosystem. This site is built with it.',
 				language: 'Rust',
-				stars: 30,
-				url: 'https://github.com/baseballyama/rsvelte',
+				repo: 'baseballyama/rsvelte',
 				homepage: 'https://baseballyama.github.io/rsvelte/',
 			},
 			{
 				name: 'eslint-plugin-svelte',
 				description:
-					'Svelte 向けの ESLint プラグイン（sveltejs 公式）。コアチームメンバーとして開発・メンテナンスに参加。',
+					'The official ESLint plugin for Svelte. I develop and maintain it as a Svelte core team member.',
 				language: 'TypeScript',
-				stars: 402,
-				url: 'https://github.com/sveltejs/eslint-plugin-svelte',
+				repo: 'sveltejs/eslint-plugin-svelte',
 				homepage: 'https://sveltejs.github.io/eslint-plugin-svelte/',
 			},
 			{
 				name: 'svelte-eslint-parser',
 				description:
-					'Svelte コードを ESTree 互換 AST に変換する ESLint パーサー（sveltejs 公式）。',
+					'The official ESLint parser that turns Svelte components into an ESTree-compatible AST.',
 				language: 'TypeScript',
-				stars: 119,
-				url: 'https://github.com/sveltejs/svelte-eslint-parser',
+				repo: 'sveltejs/svelte-eslint-parser',
 				homepage: 'https://sveltejs.github.io/svelte-eslint-parser/',
 			},
 			{
 				name: 'svelte-preprocess-delegate-events',
-				description: 'on:* でイベントを委譲できる Svelte プリプロセッサ。',
+				description: 'A Svelte preprocessor that delegates events declared with on:*.',
 				language: 'JavaScript',
-				stars: 53,
-				url: 'https://github.com/baseballyama/svelte-preprocess-delegate-events',
-			},
-			{
-				name: 'kumiki',
-				description:
-					'Svelte 5 向けの、ヘッドレスで合成可能・高アクセシビリティな UI プリミティブ。',
-				language: 'TypeScript',
-				stars: 4,
-				url: 'https://github.com/baseballyama/kumiki',
-				homepage: 'https://baseballyama.github.io/kumiki/',
+				repo: 'baseballyama/svelte-preprocess-delegate-events',
 			},
 			{
 				name: 'vite-devtools-svelte',
-				description: 'Svelte 5 DevTools。Vite DevTools プラグインとしても、単体としても動作する。',
+				description: 'DevTools for Svelte 5. Runs as a Vite DevTools plugin or on its own.',
 				language: 'Svelte',
-				stars: 4,
-				url: 'https://github.com/baseballyama/vite-devtools-svelte',
+				repo: 'baseballyama/vite-devtools-svelte',
 				homepage: 'https://baseballyama.github.io/vite-devtools-svelte/',
 			},
 			{
 				name: 'svelte-ast-print-playground',
-				description: 'svelte-ast-print のプレイグラウンド。',
+				description: 'A playground for svelte-ast-print.',
 				language: 'Svelte',
-				stars: 1,
-				url: 'https://github.com/baseballyama/svelte-ast-print-playground',
+				repo: 'baseballyama/svelte-ast-print-playground',
 				homepage: 'https://baseballyama.github.io/svelte-ast-print-playground',
 			},
 			{
 				name: 'svelte-shaker',
-				description: 'Svelte コンポーネントの TreeShaker。',
+				description: 'A tree shaker for Svelte components.',
 				language: 'TypeScript',
-				stars: 0,
-				url: null,
+				repo: null,
 				private: true,
 			},
 		],
 	},
 	{
 		title: 'Linting & language tooling',
+		note: 'Parsers and lint rules for languages beyond JavaScript.',
 		projects: [
 			{
 				name: 'eslint-plugin-postgresql',
 				description:
-					'PostgreSQL ファイル向けの ESLint プラグイン。SQL のスタイル・性能・セキュリティのベストプラクティスを強制する。',
+					'An ESLint plugin for PostgreSQL files that enforces style, performance and security practices in SQL.',
 				language: 'TypeScript',
-				stars: 11,
-				url: 'https://github.com/baseballyama/eslint-plugin-postgresql',
+				repo: 'baseballyama/eslint-plugin-postgresql',
 				homepage: 'https://baseballyama.github.io/eslint-plugin-postgresql/',
+			},
+			{
+				name: 'oxlint-plugins',
+				description: 'A collection of fast oxlint plugins, built together with @ubugeeei.',
+				language: 'Rust',
+				repo: 'ubugeeei-prod/oxlint-plugins',
+				homepage: 'https://ubugeeei-prod.github.io/oxlint-plugins/',
 			},
 			{
 				name: 'postgresql-eslint-parser',
 				description:
-					'PostgreSQL SQL を ESTree 互換 AST に変換する ESLint パーサー。PostgreSQL 固有の構文・拡張に対応。',
+					'An ESLint parser that turns PostgreSQL SQL into an ESTree-compatible AST, covering PostgreSQL-specific syntax and extensions.',
 				language: 'TypeScript',
-				stars: 7,
-				url: 'https://github.com/baseballyama/postgresql-eslint-parser',
+				repo: 'baseballyama/postgresql-eslint-parser',
 				homepage: 'https://baseballyama.github.io/postgresql-eslint-parser/',
 			},
 			{
 				name: 'jsonnet-eslint-parser',
-				description: 'go-jsonnet (WASM) を用いた、Jsonnet / libsonnet 向けの ESLint パーサー。',
+				description: 'An ESLint parser for Jsonnet and libsonnet, powered by go-jsonnet on WASM.',
 				language: 'TypeScript',
-				stars: 0,
-				url: null,
+				repo: null,
 				private: true,
 			},
 			{
 				name: 'vue3-eslint-parser',
-				description: 'より高速で強力な、Vue 3 向けの ESLint パーサー。',
+				description: 'A faster, more capable ESLint parser for Vue 3.',
 				language: 'TypeScript',
-				stars: 0,
-				url: null,
+				repo: null,
 				private: true,
 			},
 		],
 	},
 	{
 		title: 'Libraries',
+		note: 'General-purpose packages: file formats and native bindings.',
 		projects: [
 			{
 				name: 'xlsx-kit',
-				description: 'openpyxl にインスパイアされた、Excel (XLSX) 操作の JavaScript ライブラリ。',
+				description:
+					'A JavaScript library for reading and writing Excel (XLSX), inspired by openpyxl.',
 				language: 'TypeScript',
-				stars: 10,
-				url: 'https://github.com/baseballyama/xlsx-kit',
+				repo: 'baseballyama/xlsx-kit',
 				homepage: 'https://baseballyama.github.io/xlsx-kit/',
 			},
 			{
 				name: 'pptx-kit',
-				description: 'PowerPoint (PPTX) 操作の JavaScript ライブラリ。',
+				description: 'A JavaScript library for reading and writing PowerPoint (PPTX).',
 				language: 'TypeScript',
-				stars: 0,
-				url: 'https://github.com/baseballyama/pptx-kit',
+				repo: 'baseballyama/pptx-kit',
 				homepage: 'https://baseballyama.github.io/pptx-kit/',
 			},
 			{
 				name: 'fast-leiden',
 				description:
-					'ネイティブ igraph/leidenalg バインディングによる、高速な Leiden コミュニティ検出 (Node.js)。',
+					'Fast Leiden community detection for Node.js, via native igraph and leidenalg bindings.',
 				language: 'TypeScript',
-				stars: 0,
-				url: 'https://github.com/baseballyama/fast-leiden',
+				repo: 'baseballyama/fast-leiden',
 				homepage: 'https://www.npmjs.com/package/fast-leiden',
 			},
 		],
 	},
 	{
 		title: 'Tools',
+		note: 'Small utilities that each solve one problem.',
 		projects: [
 			{
 				name: 'hono-shaking',
-				description: 'Hono RPC 向けの、型を解析して使われていないエンドポイントを検出するツール。',
+				description: 'Finds unused Hono RPC endpoints by analysing types.',
 				language: 'TypeScript',
-				stars: 2,
-				url: 'https://github.com/baseballyama/hono-shaking',
+				repo: 'baseballyama/hono-shaking',
 			},
 		],
 	},
 ];
+
+const stars: Record<string, number> = starCounts;
+
+export const projectGroups: ProjectGroup[] = groups.map((group) => ({
+	title: group.title,
+	note: group.note,
+	projects: group.projects.map((project) => ({
+		name: project.name,
+		description: project.description,
+		language: project.language,
+		repo: project.repo,
+		homepage: project.homepage,
+		private: project.private,
+		url: project.repo ? `https://github.com/${project.repo}` : null,
+		stars: project.repo ? (stars[project.repo] ?? 0) : 0,
+	})),
+}));
