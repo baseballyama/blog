@@ -10,11 +10,9 @@
 	onMount(async () => {
 		if (!post.hasMermaid) return;
 		// mermaid は CDN から動的に読み込み、クライアントでのみ描画する。
-		const mermaid = (
-			await import(
-				/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs'
-			)
-		).default;
+		// URL を変数に切り出して TS のモジュール解決対象から外す (型は any になる)。
+		const mermaidUrl = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
+		const mermaid = (await import(/* @vite-ignore */ mermaidUrl)).default;
 		const isDark = document.documentElement.dataset.theme === 'dark';
 		mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'neutral' });
 		await mermaid.run({ querySelector: 'pre.mermaid' });
