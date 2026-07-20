@@ -7,7 +7,7 @@
 :root {
 	--max-width: 720px;
 	--wide-width: 940px;
-	--rail-width: 190px;
+	--rail-width: 210px;
 	--rail-gap: 3.5rem;
 	--font-sans:
 		system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans',
@@ -219,80 +219,104 @@ main {
 	text-decoration-color: var(--accent);
 }
 
-/* セクション（左レール + 本体） */
+/* セクション見出し（ページ幅いっぱいの帯）。
+   セクション = 極小の等幅大文字、区分 = 大きなサンセリフ、項目 = 等幅と、
+   書体の"種類"ごと変えて階層が一目で分かるようにしている。 */
 .section {
+	position: relative;
+	padding-top: 2.25rem;
+	padding-bottom: 1rem;
+	border-top: 2px solid var(--fg);
+	margin-top: 4.5rem;
+}
+/* 区切り線の左端に色を差し、セクションの開始位置を目印にする */
+.section::before {
+	content: '';
+	position: absolute;
+	top: -2px;
+	left: 1.5rem;
+	width: 3.5rem;
+	height: 2px;
+	background: var(--accent);
+}
+.section-head {
+	display: flex;
+	align-items: baseline;
+	gap: 1.25rem;
+	flex-wrap: wrap;
+	margin-bottom: 3rem;
+}
+.section-label {
+	font-family: var(--font-mono);
+	font-size: 0.8rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--fg);
+	margin: 0;
+	white-space: nowrap;
+}
+.section-note {
+	margin: 0;
+	font-size: 0.85rem;
+	color: var(--fg-faint);
+}
+
+/* 区分（Svelte / Libraries など）。見出しは左の余白側に置き、
+   項目リストと縦に交差しないようにする */
+.group {
 	display: grid;
 	grid-template-columns: var(--rail-width) 1fr;
 	gap: var(--rail-gap);
-	padding-top: 3rem;
-	padding-bottom: 1rem;
-	border-top: 1px solid var(--border);
-	margin-top: 1rem;
+	padding-top: 2.5rem;
+	margin-top: 2.5rem;
+	border-top: 1px solid var(--border-strong);
 }
-.rail {
+.group:first-of-type {
+	padding-top: 0;
+	margin-top: 0;
+	border-top: none;
+}
+.group-head {
 	position: sticky;
 	top: 2.5rem;
 	align-self: start;
 }
-.rail-title {
-	font-family: var(--font-mono);
-	font-size: 0.82rem;
-	font-weight: 600;
-	text-transform: uppercase;
-	letter-spacing: 0.12em;
-	color: var(--fg);
-	margin: 0;
-}
-.rail-title::before {
-	content: '';
-	display: block;
-	width: 1.75rem;
-	height: 2px;
-	background: var(--accent);
-	margin-bottom: 0.9rem;
-}
-.rail-note {
-	margin: 0.6rem 0 0;
-	font-size: 0.82rem;
-	line-height: 1.6;
-	color: var(--fg-faint);
-}
-
-/* プロジェクト */
-.project-group + .project-group {
-	margin-top: 3.5rem;
-}
-.group-head {
-	display: flex;
-	align-items: baseline;
-	gap: 0.75rem;
-}
 .group-title {
-	font-size: 1.15rem;
-	font-weight: 650;
-	letter-spacing: -0.015em;
+	font-size: 1.35rem;
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	line-height: 1.2;
 	margin: 0;
 }
 .group-count {
 	font-family: var(--font-mono);
-	font-size: 0.75rem;
+	font-size: 0.72rem;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
 	color: var(--fg-faint);
 	font-variant-numeric: tabular-nums;
+	margin: 0.5rem 0 0;
 }
 .group-note {
-	margin: 0.2rem 0 1rem;
-	font-size: 0.88rem;
+	margin: 0.75rem 0 0;
+	font-size: 0.82rem;
+	line-height: 1.6;
 	color: var(--fg-muted);
 }
+
+/* プロジェクト。罫線は項目と項目の"間"だけに引く。
+   リストの上下は区分の区切り線と二重になるので引かない */
 .project-list {
 	list-style: none;
 	padding: 0;
 	margin: 0;
-	border-top: 1px solid var(--border);
 }
 .project {
 	padding: 0.95rem 0;
-	border-bottom: 1px solid var(--border);
+}
+.project + .project {
+	border-top: 1px solid var(--border);
 }
 .project-row {
 	display: flex;
@@ -416,6 +440,10 @@ a.project-name:hover {
 	border-top: none;
 	margin-top: 0;
 	padding-top: 4.5rem;
+}
+/* 区切り線が無いので、線の目印も出さない */
+.section--first::before {
+	display: none;
 }
 
 /* フッター */
@@ -623,15 +651,17 @@ a.project-name:hover {
 
 /* レスポンシブ */
 @media (max-width: 880px) {
-	.section {
+	.group {
 		grid-template-columns: 1fr;
-		gap: 1.75rem;
+		gap: 1.25rem;
 	}
-	.rail {
+	.group-head {
 		position: static;
 	}
-	.rail-note {
-		max-width: 34rem;
+	.section-head {
+		gap: 0.4rem;
+		flex-direction: column;
+		margin-bottom: 2.25rem;
 	}
 }
 

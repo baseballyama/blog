@@ -65,6 +65,14 @@ const groups: ProjectGroupSource[] = [
 				repo: 'baseballyama/svelte-preprocess-delegate-events',
 			},
 			{
+				name: 'svelte-shaker',
+				description:
+					'Build-time dead code elimination for Svelte 5, via whole-program partial evaluation.',
+				language: 'TypeScript',
+				repo: 'baseballyama/svelte-shaker',
+				homepage: 'https://baseballyama.github.io/svelte-shaker/',
+			},
+			{
 				name: 'vite-devtools-svelte',
 				description: 'DevTools for Svelte 5. Runs as a Vite DevTools plugin or on its own.',
 				language: 'Svelte',
@@ -77,13 +85,6 @@ const groups: ProjectGroupSource[] = [
 				language: 'Svelte',
 				repo: 'baseballyama/svelte-ast-print-playground',
 				homepage: 'https://baseballyama.github.io/svelte-ast-print-playground',
-			},
-			{
-				name: 'svelte-shaker',
-				description: 'A tree shaker for Svelte components.',
-				language: 'TypeScript',
-				repo: null,
-				private: true,
 			},
 		],
 	},
@@ -139,15 +140,22 @@ const groups: ProjectGroupSource[] = [
 				description:
 					'A JavaScript library for reading and writing Excel (XLSX), inspired by openpyxl.',
 				language: 'TypeScript',
-				repo: 'baseballyama/xlsx-kit',
-				homepage: 'https://baseballyama.github.io/xlsx-kit/',
+				repo: 'office-kit/xlsx',
+				homepage: 'https://office-kit.github.io/xlsx/',
 			},
 			{
 				name: 'pptx-kit',
 				description: 'A JavaScript library for reading and writing PowerPoint (PPTX).',
 				language: 'TypeScript',
-				repo: 'baseballyama/pptx-kit',
-				homepage: 'https://baseballyama.github.io/pptx-kit/',
+				repo: 'office-kit/pptx',
+				homepage: 'https://office-kit.github.io/pptx/',
+			},
+			{
+				name: 'docx-kit',
+				description: 'A JavaScript library for reading and writing Word (DOCX).',
+				language: 'TypeScript',
+				repo: 'office-kit/docx',
+				homepage: 'https://office-kit.github.io/docx/',
 			},
 			{
 				name: 'fast-leiden',

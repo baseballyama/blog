@@ -48,34 +48,35 @@
 </section>
 
 <section class="section container wide" id="projects">
-	<div class="rail">
-		<h2 class="rail-title">Projects</h2>
-		<p class="rail-note">Open source I build and maintain, grouped by what it is for.</p>
-	</div>
-	<div class="rail-body">
-		{#each projectGroups as group (group.title)}
-			<section class="project-group">
-				<header class="group-head">
-					<h3 class="group-title">{group.title}</h3>
-					<span class="group-count">{group.projects.length}</span>
-				</header>
+	<header class="section-head">
+		<h2 class="section-label">Projects</h2>
+		<p class="section-note">Open source I build and maintain, grouped by what it is for.</p>
+	</header>
+	{#each projectGroups as group (group.title)}
+		<section class="group">
+			<div class="group-head">
+				<h3 class="group-title">{group.title}</h3>
+				<p class="group-count">
+					{group.projects.length}
+					{group.projects.length === 1 ? 'project' : 'projects'}
+				</p>
 				<p class="group-note">{group.note}</p>
-				<ul class="project-list">
-					{#each group.projects as project (project.name)}
-						<ProjectCard {project} />
-					{/each}
-				</ul>
-			</section>
-		{/each}
-	</div>
+			</div>
+			<ul class="project-list">
+				{#each group.projects as project (project.name)}
+					<ProjectCard {project} />
+				{/each}
+			</ul>
+		</section>
+	{/each}
 </section>
 
 <section class="section container wide" id="writing">
-	<div class="rail">
-		<h2 class="rail-title">Writing</h2>
-		<p class="rail-note">Notes on compilers, tooling and building software.</p>
-	</div>
-	<div class="rail-body">
+	<header class="section-head">
+		<h2 class="section-label">Writing</h2>
+		<p class="section-note">Notes on compilers, tooling and building software.</p>
+	</header>
+	<div class="section-body">
 		{#if data.latestPosts.length}
 			<ul class="post-list">
 				{#each data.latestPosts as post (post.slug)}
