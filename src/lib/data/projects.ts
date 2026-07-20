@@ -119,8 +119,7 @@ const groups: ProjectGroupSource[] = [
 				name: 'jsonnet-eslint-parser',
 				description: 'An ESLint parser for Jsonnet and libsonnet, powered by go-jsonnet on WASM.',
 				language: 'TypeScript',
-				repo: null,
-				private: true,
+				repo: 'baseballyama/jsonnet-eslint-parser',
 			},
 			{
 				name: 'vue3-eslint-parser',

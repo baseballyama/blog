@@ -149,9 +149,13 @@ main {
 	height: 16px;
 }
 
-/* ヒーロー */
+/* ヒーロー。右側に最新記事を置き、Writing がページ下部に埋もれないようにする */
 .hero {
-	padding-block: 5rem 3rem;
+	display: grid;
+	grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+	gap: 4rem;
+	align-items: start;
+	padding-block: 5rem 0;
 }
 .hero-eyebrow {
 	font-family: var(--font-mono);
@@ -182,6 +186,54 @@ main {
 }
 .hero-meta {
 	margin-top: 2rem;
+}
+
+/* ヒーロー右の最新記事 */
+.hero-side {
+	padding-top: 0.4rem;
+}
+.side-label {
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.14em;
+	color: var(--fg-faint);
+	margin: 0 0 1rem;
+}
+.side-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border-top: 1px solid var(--border);
+}
+.side-list li {
+	border-bottom: 1px solid var(--border);
+}
+.side-list a {
+	display: block;
+	padding: 0.8rem 0;
+}
+.side-list a:hover {
+	text-decoration: none;
+}
+.side-date {
+	display: block;
+	font-family: var(--font-mono);
+	font-size: 0.72rem;
+	color: var(--fg-faint);
+	font-variant-numeric: tabular-nums;
+}
+.side-title {
+	display: block;
+	margin-top: 0.15rem;
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+.side-list a:hover .side-title {
+	color: var(--accent);
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 /* 事実の行（旧・自己紹介文の置き換え） */
@@ -651,6 +703,13 @@ a.project-name:hover {
 
 /* レスポンシブ */
 @media (max-width: 880px) {
+	.hero {
+		grid-template-columns: 1fr;
+		gap: 2.5rem;
+	}
+	.hero-side {
+		padding-top: 0;
+	}
 	.group {
 		grid-template-columns: 1fr;
 		gap: 1.25rem;
@@ -667,7 +726,7 @@ a.project-name:hover {
 
 @media (max-width: 640px) {
 	.hero {
-		padding-block: 3rem 2rem;
+		padding-block: 3rem 0;
 	}
 	.fact {
 		grid-template-columns: 1fr;

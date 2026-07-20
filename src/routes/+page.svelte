@@ -19,32 +19,53 @@
 </svelte:head>
 
 <section class="hero container wide">
-	<p class="hero-eyebrow">{profile.title} — {profile.location}</p>
-	<h1 class="hero-name">{profile.name}</h1>
-	<p class="hero-focus">
-		{#each profile.focus as item, i (item)}
-			{#if i > 0}<span class="sep" aria-hidden="true">/</span>{/if}<span>{item}</span>
-		{/each}
-	</p>
+	<div class="hero-main">
+		<p class="hero-eyebrow">{profile.title} — {profile.location}</p>
+		<h1 class="hero-name">{profile.name}</h1>
+		<p class="hero-focus">
+			{#each profile.focus as item, i (item)}
+				{#if i > 0}<span class="sep" aria-hidden="true">/</span>{/if}<span>{item}</span>
+			{/each}
+		</p>
 
-	<dl class="facts">
-		{#each profile.facts as fact (fact.label)}
-			<div class="fact">
-				<dt>{fact.label}</dt>
-				<dd>
-					{#if fact.href}
-						<a href={fact.href} target="_blank" rel="noopener noreferrer">{fact.value}</a>
-					{:else}
-						{fact.value}
-					{/if}
-				</dd>
-			</div>
-		{/each}
-	</dl>
+		<dl class="facts">
+			{#each profile.facts as fact (fact.label)}
+				<div class="fact">
+					<dt>{fact.label}</dt>
+					<dd>
+						{#if fact.href}
+							<a href={fact.href} target="_blank" rel="noopener noreferrer">{fact.value}</a>
+						{:else}
+							{fact.value}
+						{/if}
+					</dd>
+				</div>
+			{/each}
+		</dl>
 
-	<div class="hero-meta">
-		<SocialLinks />
+		<div class="hero-meta">
+			<SocialLinks />
+		</div>
 	</div>
+
+	<aside class="hero-side">
+		<h2 class="side-label">Latest writing</h2>
+		{#if data.latestPosts.length}
+			<ul class="side-list">
+				{#each data.latestPosts as post (post.slug)}
+					<li>
+						<a href="/posts/{post.slug}">
+							<span class="side-date">{post.date}</span>
+							<span class="side-title">{post.title}</span>
+						</a>
+					</li>
+				{/each}
+			</ul>
+			<a class="more-link" href="/blog">All posts →</a>
+		{:else}
+			<p class="empty">No posts yet.</p>
+		{/if}
+	</aside>
 </section>
 
 <section class="section container wide" id="projects">
@@ -69,28 +90,4 @@
 			</ul>
 		</section>
 	{/each}
-</section>
-
-<section class="section container wide" id="writing">
-	<header class="section-head">
-		<h2 class="section-label">Writing</h2>
-		<p class="section-note">Notes on compilers, tooling and building software.</p>
-	</header>
-	<div class="section-body">
-		{#if data.latestPosts.length}
-			<ul class="post-list">
-				{#each data.latestPosts as post (post.slug)}
-					<li>
-						<a href="/posts/{post.slug}">
-							<span class="post-item-title">{post.title}</span>
-							<span class="post-item-date">{post.date}</span>
-						</a>
-					</li>
-				{/each}
-			</ul>
-			<a class="more-link" href="/blog">All posts →</a>
-		{:else}
-			<p class="empty">No posts yet.</p>
-		{/if}
-	</div>
 </section>
