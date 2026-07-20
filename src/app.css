@@ -199,18 +199,6 @@ main {
 	line-height: 1.05;
 	margin: 0;
 }
-.hero-focus {
-	display: flex;
-	flex-wrap: wrap;
-	align-items: baseline;
-	gap: 0.6rem;
-	margin: 1rem 0 0;
-	font-size: 1.05rem;
-	color: var(--fg-muted);
-}
-.hero-focus .sep {
-	color: var(--accent);
-}
 .hero-meta {
 	margin-top: 2rem;
 }

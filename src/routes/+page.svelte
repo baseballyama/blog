@@ -24,11 +24,6 @@
 	<div class="hero-main">
 		<p class="hero-eyebrow">{profile.title} — {profile.location}</p>
 		<h1 class="hero-name">{profile.name}</h1>
-		<p class="hero-focus">
-			{#each profile.focus as item, i (item)}
-				{#if i > 0}<span class="sep" aria-hidden="true">/</span>{/if}<span>{item}</span>
-			{/each}
-		</p>
 
 		<dl class="facts">
 			{#each profile.facts as fact (fact.label)}

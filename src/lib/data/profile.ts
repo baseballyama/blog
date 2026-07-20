@@ -9,8 +9,6 @@ export interface Profile {
 	handle: string;
 	title: string;
 	location: string;
-	/** 専門領域。ヒーローで区切って並べる */
-	focus: string[];
 	facts: ProfileFact[];
 }
 
@@ -19,7 +17,6 @@ export const profile: Profile = {
 	handle: 'baseballyama',
 	title: 'Software Engineer',
 	location: 'Tokyo, Japan',
-	focus: ['Compilers', 'Parsers', 'Static analysis'],
 	facts: [
 		{
 			label: 'Work',
