@@ -11,9 +11,12 @@ permissions:
   pages: write
   id-token: write
 
+# ref ごとに直列化する。PR は同一ブランチへの連続 push で古い run を打ち切り、
+# main は途中キャンセルせず順番に流す。Pages への実デプロイの直列化は
+# deploy ジョブ側の concurrency (group: pages) で行う。
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: build-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
 
 jobs:
   build:
@@ -46,6 +49,9 @@ jobs:
     if: github.ref == 'refs/heads/main'
     needs: build
     runs-on: ubuntu-latest
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
