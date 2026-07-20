@@ -820,6 +820,12 @@ a.talk-title:hover {
 	padding: 0;
 	text-align: center;
 }
+/* mermaid は CDN から遅延読み込みするため、描画前の生テキストを見せない。
+   描画に失敗した場合は data-processed="error" を付けて元のテキストに戻す。
+   JS 無効時は app.html の noscript 側で表示する。 */
+.prose pre.mermaid:not([data-processed]) {
+	visibility: hidden;
+}
 
 /* GitHub Alerts */
 .prose .markdown-alert {

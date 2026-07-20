@@ -51,25 +51,25 @@ Even when you are dealing with the same "shark" and "dolphin," the reasonable de
 
 ```mermaid
 classDiagram
-    class 動物 {
-        +名前: string
+    class Animal {
+        +name: string
     }
-    class 魚類 {
-        +呼吸方法: string = "エラ呼吸"
+    class Fish {
+        +breathing: string = "gills"
     }
-    class 哺乳類 {
-        +呼吸方法: string = "肺呼吸"
+    class Mammal {
+        +breathing: string = "lungs"
     }
-    class サメ {
-        +移動方法: string = "泳ぐ"
+    class Shark {
+        +locomotion: string = "swim"
     }
-    class イルカ {
-        +移動方法: string = "泳ぐ"
+    class Dolphin {
+        +locomotion: string = "swim"
     }
-    動物 <|-- 魚類
-    動物 <|-- 哺乳類
-    魚類 <|-- サメ
-    哺乳類 <|-- イルカ
+    Animal <|-- Fish
+    Animal <|-- Mammal
+    Fish <|-- Shark
+    Mammal <|-- Dolphin
 ```
 
 ### B: An underwater creature racing game
@@ -78,23 +78,23 @@ On the other hand, for an underwater creature racing game, being able to handle 
 
 ```mermaid
 classDiagram
-    class 水中生物 {
-        +名前: string
-        +速度: int
-        +スタミナ: int
+    class AquaticAnimal {
+        +name: string
+        +speed: int
+        +stamina: int
     }
-    class サメ {
-        +名前: string = "サメ"
-        +速度: int = 80
-        +スタミナ: int = 70
+    class Shark {
+        +name: string = "Shark"
+        +speed: int = 80
+        +stamina: int = 70
     }
-    class イルカ {
-        +名前: string = "イルカ"
-        +速度: int = 75
-        +スタミナ: int = 85
+    class Dolphin {
+        +name: string = "Dolphin"
+        +speed: int = 75
+        +stamina: int = 85
     }
-    水中生物 <|-- サメ
-    水中生物 <|-- イルカ
+    AquaticAnimal <|-- Shark
+    AquaticAnimal <|-- Dolphin
 ```
 
 As you can see, even when you are dealing with the same shark and dolphin, the result of data design changes depending on what kind of system you are building. And what you consolidate changes along with it.
@@ -121,28 +121,28 @@ For example, suppose there is a system that manages the selling price of product
 
 ```mermaid
 classDiagram
-    class 商品 {
-        +名前: string
-        +税抜価格: decimal
-        +販売価格(): decimal
+    class Product {
+        +name: string
+        +priceExcludingTax: decimal
+        +sellingPrice(): decimal
     }
 ```
 
-At this point, you would be tempted to implement `販売価格()` as shared logic, something like "price before tax × 1.10."
+At this point, you would be tempted to implement `sellingPrice()` as shared logic, something like "price before tax × 1.10."
 
 But if the premise later changes to "the tax rate differs by product type," as with the introduction of a reduced tax rate, that simple shared implementation breaks down.
 
 ```mermaid
 classDiagram
-    class 商品 {
-        +名前: string
-        +税抜価格: decimal
-        +税区分: 税区分
-        +販売価格(): decimal
+    class Product {
+        +name: string
+        +priceExcludingTax: decimal
+        +taxCategory: TaxCategory
+        +sellingPrice(): decimal
     }
 
-    class 税区分 {
-        +税率: decimal
+    class TaxCategory {
+        +taxRate: decimal
     }
 ```
 
