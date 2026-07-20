@@ -2,6 +2,7 @@
 	"baseballyama/eslint-plugin-postgresql": 11,
 	"baseballyama/fast-leiden": 0,
 	"baseballyama/hono-shaking": 4,
+	"baseballyama/jsonnet-eslint-parser": 0,
 	"baseballyama/postgresql-eslint-parser": 7,
 	"baseballyama/rsvelte": 108,
 	"baseballyama/svelte-ast-print-playground": 1,
