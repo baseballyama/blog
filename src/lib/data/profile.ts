@@ -21,12 +21,11 @@ export const profile: Profile = {
 	location: 'Tokyo, Japan',
 	focus: ['Compilers', 'Parsers', 'Static analysis'],
 	facts: [
-		{ label: 'Work', value: 'Tech Lead at flyle', href: 'https://flyle.io' },
-		{ label: 'Open source', value: 'Svelte core team', href: 'https://svelte.dev' },
 		{
-			label: 'Building',
-			value: 'rsvelte, a Svelte compiler in Rust',
-			href: 'https://github.com/baseballyama/rsvelte',
+			label: 'Work',
+			value: 'VP of Technology & Executive Officer at flyle',
+			href: 'https://flyle.io',
 		},
+		{ label: 'Open source', value: 'Svelte core team', href: 'https://svelte.dev' },
 	],
 };

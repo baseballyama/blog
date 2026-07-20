@@ -17,27 +17,38 @@
 
 :root,
 [data-theme='light'] {
-	--bg: #ffffff;
-	--surface: #f7f7f8;
-	--fg: #14161a;
-	--fg-muted: #565c66;
-	--fg-faint: #8b919c;
-	--border: #e4e6ea;
-	--border-strong: #c9ccd2;
+	--bg: #f6f2e9;
+	--surface: #efe9dc;
+	--fg: #1b1815;
+	--fg-muted: #5c554b;
+	--fg-faint: #8a8275;
+	--border: #ddd5c5;
+	--border-strong: #c1b7a3;
 	--accent: #ff3e00;
-	--code-bg: #f4f4f4;
+	--code-bg: #efe9dc;
+	/* 和紙: 繊維の粒 / 簀の目 / 漉きムラ */
+	--paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.055'/%3E%3C/svg%3E");
+	--paper-laid: rgba(90, 74, 46, 0.018);
+	--paper-chain: rgba(90, 74, 46, 0.012);
+	--paper-mottle-a: rgba(163, 140, 98, 0.09);
+	--paper-mottle-b: rgba(120, 132, 110, 0.07);
 }
 
 [data-theme='dark'] {
-	--bg: #0f1113;
-	--surface: #16191c;
-	--fg: #e9eaec;
-	--fg-muted: #9ba2ad;
-	--fg-faint: #6b727d;
-	--border: #24272c;
-	--border-strong: #383c43;
+	--bg: #14120f;
+	--surface: #1b1815;
+	--fg: #ece7dd;
+	--fg-muted: #a2998b;
+	--fg-faint: #746b5e;
+	--border: #2b2721;
+	--border-strong: #403930;
 	--accent: #ff6a33;
-	--code-bg: #1c1f22;
+	--code-bg: #1c1915;
+	--paper-grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23g)' opacity='0.045'/%3E%3C/svg%3E");
+	--paper-laid: rgba(255, 244, 222, 0.012);
+	--paper-chain: rgba(255, 244, 222, 0.008);
+	--paper-mottle-a: rgba(150, 126, 84, 0.07);
+	--paper-mottle-b: rgba(96, 110, 96, 0.05);
 }
 
 html {
@@ -50,9 +61,25 @@ body {
 	font-size: 16px;
 	line-height: 1.75;
 	color: var(--fg);
-	background: var(--bg);
 	-webkit-font-smoothing: antialiased;
 	text-rendering: optimizeLegibility;
+	/* 和紙の質感。粒 → 簀の目 → 漉きムラ の順に重ねる */
+	background-color: var(--bg);
+	background-image:
+		var(--paper-grain),
+		repeating-linear-gradient(90deg, var(--paper-laid) 0 1px, transparent 1px 6px),
+		repeating-linear-gradient(0deg, var(--paper-chain) 0 1px, transparent 1px 120px),
+		radial-gradient(55rem 38rem at 12% -8%, var(--paper-mottle-a), transparent 70%),
+		radial-gradient(45rem 32rem at 88% 18%, var(--paper-mottle-b), transparent 70%),
+		radial-gradient(50rem 34rem at 45% 105%, var(--paper-mottle-a), transparent 70%);
+	background-size:
+		200px 200px,
+		auto,
+		auto,
+		auto,
+		auto,
+		auto;
+	background-attachment: fixed;
 }
 
 a {
@@ -432,6 +459,51 @@ a.project-name:hover {
 	line-height: 1.6;
 	margin: 0.35rem 0 0;
 	max-width: 46rem;
+}
+
+/* 登壇 */
+.talk-list {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+.talk {
+	padding: 0.95rem 0;
+}
+.talk + .talk {
+	border-top: 1px solid var(--border);
+}
+.talk-meta {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 0.5rem 1rem;
+	margin: 0;
+	font-family: var(--font-mono);
+	font-size: 0.75rem;
+	color: var(--fg-faint);
+	font-variant-numeric: tabular-nums;
+}
+.talk-event {
+	color: var(--fg-muted);
+}
+a.talk-event:hover,
+.talk-link:hover {
+	color: var(--accent);
+}
+.talk-link {
+	color: var(--fg-faint);
+}
+.talk-title {
+	display: inline-block;
+	margin-top: 0.3rem;
+	font-size: 1rem;
+	line-height: 1.55;
+}
+a.talk-title:hover {
+	color: var(--accent);
+	text-decoration: underline;
+	text-underline-offset: 3px;
 }
 
 /* 記事リスト */

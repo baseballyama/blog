@@ -49,15 +49,15 @@ function buildSvg(title: string): string {
 	const texts = lines
 		.map(
 			(line, i) =>
-				`<text x="630" y="${textY + i * 90}" text-anchor="middle" font-size="72" font-weight="bold" fill="#1f2328" font-family="Noto Sans CJK JP">${escapeXml(line)}</text>`,
+				`<text x="630" y="${textY + i * 90}" text-anchor="middle" font-size="72" font-weight="bold" fill="#1b1815" font-family="Noto Sans CJK JP">${escapeXml(line)}</text>`,
 		)
 		.join('\n');
 
 	return `<svg width="1260" height="630" xmlns="http://www.w3.org/2000/svg">
-  <rect width="1260" height="630" fill="#ffffff"/>
-  <rect x="20" y="20" width="1220" height="590" fill="#f6f8fa" rx="16"/>
+  <rect width="1260" height="630" fill="#f6f2e9"/>
+  <rect x="20" y="20" width="1220" height="590" fill="#efe9dc" rx="16"/>
   ${texts}
-  <text x="630" y="560" text-anchor="middle" font-size="32" fill="#656d76" font-family="Noto Sans CJK JP">baseballyama's Blog</text>
+  <text x="630" y="560" text-anchor="middle" font-size="32" fill="#5c554b" font-family="Noto Sans CJK JP">baseballyama's Blog</text>
 </svg>`;
 }
 
