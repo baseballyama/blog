@@ -29,6 +29,11 @@ export const LOCALE_LABEL: Record<Locale, string> = {
 	ja: '日本語',
 };
 
+/** 読了時間の表示。記事本文の言語ではなく、UI の言語に合わせる */
+export function readingTime(locale: Locale, minutes: number): string {
+	return locale === 'ja' ? `約 ${minutes} 分` : `${minutes} min read`;
+}
+
 /** UI 文言。記事本文は Markdown 側で持つ */
 export const UI = {
 	en: {

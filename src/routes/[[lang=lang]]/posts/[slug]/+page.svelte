@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { SITE_URL, SITE_NAME } from '$lib/config';
-	import { UI, LOCALE_LABEL, blogPath, postPath, otherLocale } from '$lib/i18n';
+	import { UI, LOCALE_LABEL, blogPath, postPath, otherLocale, readingTime } from '$lib/i18n';
 	import LocaleNotice from '$lib/components/LocaleNotice.svelte';
 	import type { PageData } from './$types';
 
@@ -84,6 +84,7 @@
 			<a href="https://github.com/{post.author}" target="_blank" rel="noopener noreferrer"
 				>{post.author}</a
 			>
+			/ {readingTime(locale, post.readingMinutes)}
 			{#if hasTranslation}
 				<a class="lang-switch" href={postPath(other, post.slug)} hreflang={other}>
 					{LOCALE_LABEL[other]}
