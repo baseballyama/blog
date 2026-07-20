@@ -2,6 +2,7 @@
 	import { profile } from '$lib/data/profile';
 	import { projectGroups } from '$lib/data/projects';
 	import { talkYears, primaryUrl } from '$lib/data/talks';
+	import { DEFAULT_LOCALE, blogPath, postPath } from '$lib/i18n';
 	import ProjectCard from '$lib/components/ProjectCard.svelte';
 	import SocialLinks from '$lib/components/SocialLinks.svelte';
 	import { SITE_URL, SITE_NAME, SITE_DESCRIPTION } from '$lib/config';
@@ -55,14 +56,14 @@
 			<ul class="side-list">
 				{#each data.latestPosts as post (post.slug)}
 					<li>
-						<a href="/posts/{post.slug}">
+						<a href={postPath(DEFAULT_LOCALE, post.slug)}>
 							<span class="side-date">{post.date}</span>
 							<span class="side-title">{post.title}</span>
 						</a>
 					</li>
 				{/each}
 			</ul>
-			<a class="more-link" href="/blog">All posts →</a>
+			<a class="more-link" href={blogPath(DEFAULT_LOCALE)}>All posts →</a>
 		{:else}
 			<p class="empty">No posts yet.</p>
 		{/if}
