@@ -7,18 +7,16 @@ const config = {
 	// (Rust 製 rsvelte コンパイラ経由) に差し替わる。
 	preprocess: vitePreprocess(),
 	kit: {
-		// GitHub Pages は `docs/` を配信するため、ビルド成果物を docs/ に出力する。
+		// ビルド成果物は build/ に出力し、CI (GitHub Actions) から GitHub Pages にデプロイする。
 		adapter: adapter({
-			pages: 'docs',
-			assets: 'docs',
 			fallback: undefined,
 			precompress: false,
-			strict: true
+			strict: true,
 		}),
 		paths: {
-			base: ''
-		}
-	}
+			base: '',
+		},
+	},
 };
 
 export default config;

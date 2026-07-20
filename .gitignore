@@ -3,6 +3,7 @@ node_modules/
 
 # SvelteKit
 .svelte-kit/
+build/
 
 # svelte-check (--tsgo / --incremental) のオーバーレイ・キャッシュ
 .svelte-check/
