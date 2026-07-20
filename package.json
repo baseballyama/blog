@@ -18,7 +18,8 @@
 	},
 	"dependencies": {
 		"@resvg/resvg-js": "^2.6.2",
-		"marked": "^18.0.0"
+		"marked": "^18.0.0",
+		"mermaid": "^11.16.0"
 	},
 	"devDependencies": {
 		"@rsvelte/svelte-check": "^0.3.10",
