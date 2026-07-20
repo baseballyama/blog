@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import { SITE_URL, SITE_NAME } from '$lib/config';
 	import { UI, LOCALE_LABEL, blogPath, postPath, otherLocale } from '$lib/i18n';
 	import LocaleNotice from '$lib/components/LocaleNotice.svelte';
@@ -20,10 +19,16 @@
 		}
 	}
 
-	onMount(() => {
-		if (!post.hasMermaid) return;
+	// onMount ではなく $effect で描画する。記事間・言語間の遷移は同じルート
+	// ([[lang=lang]]/posts/[slug]) なのでコンポーネントが再マウントされず、
+	// onMount だと 2 回目以降の本文が描画されないまま隠れてしまう。
+	$effect(() => {
+		// post が変わるたびに描画し直す（本文の差し替えを追跡するため参照する）
+		const current = post;
+		if (!current.hasMermaid) return;
 
-		// 何が起きても白紙のままにしない。描画が終わらなければソースを見せる。
+		let cancelled = false;
+		// 読み込みが返ってこない場合に備えた保険。白紙のままにはしない。
 		const failsafe = setTimeout(revealMermaidSource, 5000);
 
 		// mermaid は自前のバンドルから動的 import する（CDN に依存しない）。
@@ -31,17 +36,23 @@
 		(async () => {
 			try {
 				const { default: mermaid } = await import('mermaid');
+				if (cancelled) return;
 				const isDark = document.documentElement.dataset.theme === 'dark';
 				mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'neutral' });
 				await mermaid.run({ querySelector: 'pre.mermaid' });
 			} catch {
-				revealMermaidSource();
+				// 握りつぶす。下の revealMermaidSource() でソースを見せる
 			} finally {
 				clearTimeout(failsafe);
+				// 描画されなかったブロックが残っていればソースを表示する
+				if (!cancelled) revealMermaidSource();
 			}
 		})();
 
-		return () => clearTimeout(failsafe);
+		return () => {
+			cancelled = true;
+			clearTimeout(failsafe);
+		};
 	});
 </script>
 
