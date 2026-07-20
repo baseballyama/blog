@@ -33,6 +33,8 @@ export interface PostMeta {
 	date: string;
 	author: string;
 	description: string;
+	/** 本文から見積もった読了時間（分） */
+	readingMinutes: number;
 	/** 翻訳が存在する言語 */
 	locales: Locale[];
 	/** 要求された言語が無く、別言語で代替していれば true */
@@ -57,6 +59,23 @@ function parseFrontmatter(raw: string): { meta: Record<string, string>; body: st
 		}
 	}
 	return { meta, body: match[2] };
+}
+
+/** 日本語は 1 分あたりの文字数、英語は 1 分あたりの語数で見積もる */
+const CJK_CHARS_PER_MINUTE = 500;
+const WORDS_PER_MINUTE = 220;
+/** ひらがな・カタカナ・漢字・半角カナ */
+const CJK = /[぀-ヿ㐀-鿿ｦ-ﾟ]/g;
+
+/**
+ * 本文から読了時間を分で見積もる。日英が混在するので、CJK は文字数・それ以外は語数で
+ * 別々に数えて合算する。mermaid は図として読むので文字数には数えない。
+ */
+function estimateReadingMinutes(body: string): number {
+	const text = body.replace(/```mermaid[\s\S]*?```/g, ' ').replace(/[#*`~>|[\]()]/g, ' ');
+	const chars = text.match(CJK)?.length ?? 0;
+	const words = text.replace(CJK, ' ').split(/\s+/).filter(Boolean).length;
+	return Math.max(1, Math.round(chars / CJK_CHARS_PER_MINUTE + words / WORDS_PER_MINUTE));
 }
 
 type Entry = Omit<Post, 'locales' | 'isFallback'>;
@@ -88,6 +107,7 @@ for (const [path, raw] of Object.entries(rawPosts)) {
 		date: meta.date || '',
 		author: meta.author || AUTHOR,
 		description,
+		readingMinutes: estimateReadingMinutes(body),
 		html,
 		hasMermaid: html.includes('class="mermaid"'),
 	};

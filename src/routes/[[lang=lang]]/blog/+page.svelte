@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { SITE_URL, SITE_NAME } from '$lib/config';
-	import { UI, LOCALE_LABEL, blogPath, postPath, otherLocale } from '$lib/i18n';
+	import { UI, LOCALE_LABEL, blogPath, postPath, otherLocale, readingTime } from '$lib/i18n';
 	import LocaleNotice from '$lib/components/LocaleNotice.svelte';
 	import type { PageData } from './$types';
 
@@ -43,7 +43,9 @@
 					<li>
 						<a href={postPath(locale, post.slug)}>
 							<span class="post-item-title" lang={post.locale}>{post.title}</span>
-							<span class="post-item-date">{post.date}</span>
+							<span class="post-item-date"
+								>{post.date} · {readingTime(locale, post.readingMinutes)}</span
+							>
 						</a>
 					</li>
 				{/each}
