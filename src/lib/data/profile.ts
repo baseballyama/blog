@@ -23,7 +23,7 @@ export const profile: Profile = {
 	facts: [
 		{
 			label: 'Work',
-			value: 'VP of Technology & Executive Officer at flyle',
+			value: 'VP of Technology & Executive Officer at Flyle',
 			href: 'https://flyle.io',
 		},
 		{ label: 'Open source', value: 'Svelte core team', href: 'https://svelte.dev' },
