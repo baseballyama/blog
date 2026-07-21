@@ -13,7 +13,7 @@ In Svelte projects, these static checks are especially slow. To solve this, I am
 - Rust and other native toolchains are delivering order-of-magnitude speedups in parts of the static-analysis stack, but the Svelte-specific parts of `.svelte` processing (parsing, transformation, linting, formatting) still rely on JavaScript implementations
 - rsvelte is a set of Rust implementations that aims to be a drop-in replacement for the Svelte toolchain. It does not introduce any language-level extensions. It is early stage, and maturity varies by package
 - On Flyle's production frontend, with 8,795 files in the official check scope, replacing the official svelte-check path with rsvelte-check cut type checking from 51.4s to 30.6s (1.7x, about 56% less CPU, while keeping the JavaScript implementation of TypeScript 5.9.3). Switching the check engine to tsgo brought it to 9.0s (5.7x combined)
-- With an identical set of 37 Svelte-specific rules, rsvelte-lint is about 20x faster, and all 382 diagnostics match
+- With an identical set of Svelte-specific rules, rsvelte-lint is about 20x faster, and all 382 diagnostics match
 - With eight simultaneous checks, the type-checking gap narrows because the TypeScript phase common to both setups dominates. Shorter individual runs should still reduce overlap in normal use, though this remains to be verified with real agent traces
 
 ## 1. Why check speed matters now
@@ -117,7 +117,8 @@ Main conditions: Apple M4 Pro (12 cores) / 48GB, Node.js 24.13.1, rsvelte commit
 <li>Check tools write overlay artifacts into the workspace, and these affect later runs. So flowbite measurements use a fresh workspace per run via APFS clonefile: no tool caches, non-incremental (OS page caches are not controlled)</li>
 <li>The flowbite workload reports about 900 errors in both tools (js 885 / rs 926; 669 match by file and message). The setup (<code>pnpm install --ignore-scripts</code>, adding typescript / @typescript/native-preview, <code>svelte-kit sync</code>) does not reproduce the full library-development environment, which causes module-resolution errors. These numbers are not a healthy CI result but <strong>a reference for performance trends</strong></li>
 <li>Flyle measurements reset state before every run via <code>svelte-kit sync</code> and overlay removal, taking the median of 5 runs after 1 warmup</li>
-<li>Lint setup: the ESLint side applies eslint-plugin-svelte (flat/recommended) plus the TS parser to all 1,296 files under <code>src</code>, with all non-svelte rules and unused-directive reporting disabled. The rsvelte-lint side runs a config that imports the 37 svelte/* rules at identical severities from ESLint's resolved config (based on <code>extends: ["none"]</code>, with the default-enabled no-unused-props also disabled)</li>
+<li>Lint setup: the ESLint side applies eslint-plugin-svelte (flat/recommended) plus the TS parser to all 1,296 files under <code>src</code>, with all non-svelte rules and unused-directive reporting disabled. The rsvelte-lint side runs a config that imports the 37 svelte/* rules at identical severities from ESLint's resolved config (based on <code>extends: ["none"]</code>)</li>
+<li>One of the 37 rules, <code>svelte/no-unused-props</code>, is excluded from the comparison. The ESLint implementation needs TypeScript type information and detects nothing in this setup, while rsvelte-lint detects 11 findings without type information. To keep the workload and output identical on both sides, I disabled it on the rsvelte side</li>
 </ul>
 </details>
 
@@ -160,7 +161,7 @@ The 1.9x gap at N=1 shrinks as concurrency rises, and it nearly disappears with 
 
 #### 3.3.4 Svelte-specific linting
 
-I used the same paired-run methodology for linting (see "Measurement details" for the setup). This is not a comparison of the full ESLint configuration. I enabled the same 37 Svelte-specific rules at identical severities on both sides and disabled every other rule. Both tools produced **exactly the same 382 diagnostics**.
+I used the same paired-run methodology for linting (see "Measurement details" for the setup). This is not a comparison of the full ESLint configuration. I enabled the Svelte-specific rules of flat/recommended at identical severities on both sides and disabled every other rule. There is one exception: `svelte/no-unused-props` needs TypeScript type information in the ESLint implementation and detects nothing in this setup, while rsvelte-lint detects 11 findings without type information. To keep the workload and output identical, I disabled that rule on the rsvelte side and excluded it from the comparison (details in "Measurement details"). With that, both tools produced **exactly the same 382 diagnostics**.
 
 | | wall time | CPU time | peak RSS |
 |---|---:|---:|---:|

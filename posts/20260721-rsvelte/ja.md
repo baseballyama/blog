@@ -116,7 +116,8 @@ rsvelte は静的検査基盤を構成する各ツールを個別のパッケー
 <li>flowbite の計測は、検査ツールがワークスペースに書き込むオーバーレイ成果物が次の実行に影響するため、実行ごとに APFS clonefile で新品のワークスペースを用意した、ツールキャッシュなし・非インクリメンタル実行(OS のページキャッシュ等は制御していない)</li>
 <li>flowbite ワークロードは両実装とも約 900 件のエラーを報告する(js 885 / rs 926、ファイルとメッセージ単位の一致 669 件)。セットアップ(<code>pnpm install --ignore-scripts</code> + typescript / @typescript/native-preview の追加 + <code>svelte-kit sync</code>)がライブラリ開発用の完全な環境を再現していないためで、正常な CI 結果ではなく<strong>性能傾向を確認する参考値</strong>である</li>
 <li>Flyle の計測は実行ごとに <code>svelte-kit sync</code> とオーバーレイ削除で状態をリセットし、1 回のウォームアップ後 5 回の中央値を採った</li>
-<li>Lint の設定: ESLint 側は eslint-plugin-svelte(flat/recommended)+ TS パーサーを <code>src</code> の全 1,296 ファイルに適用し、svelte/* 以外のルールと未使用ディレクティブ報告は無効化。rsvelte-lint 側は ESLint の解決済み設定から svelte/* ルール 37 個を同一重大度でインポートした設定(<code>extends: ["none"]</code> ベース、デフォルト有効の no-unused-props も無効化)で実行</li>
+<li>Lint の設定: ESLint 側は eslint-plugin-svelte(flat/recommended)+ TS パーサーを <code>src</code> の全 1,296 ファイルに適用し、svelte/* 以外のルールと未使用ディレクティブ報告は無効化。rsvelte-lint 側は ESLint の解決済み設定から svelte/* ルール 37 個を同一重大度でインポートした設定(<code>extends: ["none"]</code> ベース)で実行</li>
+<li>37 ルールのうち <code>svelte/no-unused-props</code> だけは比較から除外した。ESLint 実装は TypeScript の型情報を必要とし、この環境では何も検出しない一方、rsvelte-lint は型情報なしで 11 件検出するため、両側の仕事量と出力を揃える目的で rsvelte 側で無効化した</li>
 </ul>
 </details>
 
@@ -159,7 +160,7 @@ N=1 で 1.9 倍あった差は並列度を上げるほど縮み、8 件を同時
 
 #### 3.3.4 Svelte 固有 Lint
 
-Lint も同じ厳密さで測った(設定は「計測手法の詳細」参照)。これは ESLint 構成全体の置き換えではなく、**共通の Svelte 固有ルール 37 個を同一重大度で揃え、それ以外のルールは両側とも無効化した比較**である。実行ルール集合を一致させた結果、診断は両実装とも **382 件で完全に一致**した。
+Lint も同じ交互実行の方法で測った(設定は「計測手法の詳細」参照)。これは ESLint 構成全体の置き換えではなく、**flat/recommended の Svelte 固有ルールを同一重大度で揃え、それ以外のルールは両側とも無効化した比較**である。1 つだけ例外がある。`svelte/no-unused-props` は ESLint 実装が型情報を必要としこの環境では何も検出しないが、rsvelte-lint は型情報なしで 11 件検出する。両側の仕事量と出力を揃えるため、このルールは rsvelte 側で無効化して比較から外した(詳細は「計測手法の詳細」)。その結果、診断は両実装とも **382 件で完全に一致**した。
 
 | | wall time | CPU 時間 | peak RSS |
 |---|---:|---:|---:|
