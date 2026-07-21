@@ -3,16 +3,16 @@ title: rsvelte: Rebuilding the Svelte Toolchain in Rust for the AI Era
 date: 2026-07-21
 ---
 
-At [Flyle](https://flyle.io), running multiple AI agents in parallel has become a normal part of development. In this style, agents run type checking and linting after each implementation step, so static checks run far more often than when only humans wrote code. When checks run in parallel, they use up CPU and memory, and each check gets even slower. An agent cannot start its next fix until the check finishes, so **the time a static check takes sets a lower bound on the duration of each iteration**.
+At [Flyle](https://flyle.io), running multiple AI agents in parallel has become a normal part of development. In this style, agents run type checking and linting after each implementation step, so static checks run far more often than they did in primarily human-driven development. When checks run in parallel, they compete for CPU and memory, increasing the latency of each run. An agent cannot start its next fix until the check finishes, so **the time a static check takes sets a lower bound on the duration of each iteration**.
 
-In Svelte projects, these static checks are especially slow. To solve this, I am building [rsvelte](https://github.com/baseballyama/rsvelte), a project that rebuilds the Svelte toolchain in Rust. This article explains why this matters now and what rsvelte does.
+In Svelte projects, these static checks are especially slow. To solve this, I am building [rsvelte](https://github.com/baseballyama/rsvelte), a project to rebuild the Svelte toolchain in Rust. This article explains why this matters now and what rsvelte does.
 
 ## tl;dr
 
 - AI agents run static checks on every loop iteration, so check time sets a lower bound on iteration time, and CPU/memory usage limits how many agents can run in parallel
 - Rust and other native toolchains are delivering order-of-magnitude speedups in parts of the static-analysis stack, but the Svelte-specific parts of `.svelte` processing (parsing, transformation, linting, formatting) still rely on JavaScript implementations
 - rsvelte is a set of Rust implementations that aims to be a drop-in replacement for the Svelte toolchain. It does not introduce any language-level extensions. It is early stage, and maturity varies by package
-- On Flyle's production frontend, with 8,795 files in the official check scope, replacing the official svelte-check path with rsvelte-check cut type checking from 51.4s to 30.6s (1.7x, about 56% less CPU, with TypeScript kept on JS 5.9.3). Switching the check engine to tsgo brought it to 9.0s (5.7x combined)
+- On Flyle's production frontend, with 8,795 files in the official check scope, replacing the official svelte-check path with rsvelte-check cut type checking from 51.4s to 30.6s (1.7x, about 56% less CPU, while keeping the JavaScript implementation of TypeScript 5.9.3). Switching the check engine to tsgo brought it to 9.0s (5.7x combined)
 - With an identical set of 37 Svelte-specific rules, rsvelte-lint is about 20x faster, and all 382 diagnostics match
 - With eight simultaneous checks, the type-checking gap narrows because the TypeScript phase common to both setups dominates. Shorter individual runs should still reduce overlap in normal use, though this remains to be verified with real agent traces
 
@@ -32,19 +32,19 @@ Static checks mattered before AI too. But it was rare for one developer to launc
 
 Agents work differently from humans. Some agents, like Codex CLI, do not use a Language Server at all. Even when an agent can use one, like Claude Code, parallel instances do not necessarily share a Language Server. If each instance starts its own, the analysis work and memory usage multiply with the number of instances. Also, LSP diagnostics and settings do not always match CI, so in many setups you still need a CLI check identical to CI as the final quality gate. An agent runs checks many times in a single task, and running multiple agents in parallel multiplies the number of concurrent checks. In short, static checks used to run at low frequency and low parallelism. Now they run at high frequency and high parallelism.
 
-To be precise, this is not a problem unique to AI. CI and pre-commit hooks have run full CLI checks for a long time, and slow full checks are a well-known problem. What changed is the frequency and the parallelism. Workloads limited by static analysis had been growing slowly for years; parallel development with AI agents made the problem visible in its most extreme form. That is why this article talks about AI, but the argument below applies to any workload that runs many full CLI checks.
+To be precise, this is not a problem unique to AI. CI and pre-commit hooks have run full CLI checks for a long time, and slow full checks are a well-known problem. What changed is the frequency and the parallelism. Static-analysis-heavy workflows had already been becoming more common for years; parallel development with AI agents made the problem visible in its most extreme form. That is why this article talks about AI, but the argument below applies to any workload that runs many full CLI checks.
 
 ### 1.3 Slowness costs you in two ways
 
 Slow checks cost you in two connected ways: latency and resource usage.
 
-The first is **latency**. In a loop that waits for check results before deciding the next fix, check time is the critical path. If a check takes 5 minutes, one iteration takes at least 5 minutes. In my experience, projects where the full check suite takes several minutes are common. Even on Flyle's production frontend, measured later in this article, type checking alone takes about 51 seconds (3.3). Run that check five times in one task, and the waiting time multiplies accordingly.
+The first is **latency**. In a loop that waits for check results before deciding the next fix, check time is the critical path. If a check takes 5 minutes, one iteration takes at least 5 minutes. In my experience, projects where the full check suite takes several minutes are common. Even on Flyle's production frontend, measured later in this article, type checking alone takes about 51 seconds (3.3). Run that check five times in one task, and you spend more than four minutes waiting on type checking alone.
 
 The second is **resources**. The current Svelte check stack uses a lot of CPU and memory across its whole process tree, including the TypeScript engine and the transformation step. In the measurements below (3.3), the current JS setup used a peak of 4.2GB of memory and about 105 CPU-seconds for one type check of Flyle's production frontend. Running several checks in parallel can exhaust the CPU and memory of a developer machine. So check resource usage becomes one of the main limits on how many agents you can run at once.
 
 ### 1.4 Why "just use CI" and "just buy a bigger machine" are not enough
 
-Moving checks to CI only delays the feedback. Agents use check results to decide their next fix, so fast feedback inside the loop matters. If implementation continues without checks, new work piles up on top of wrong assumptions, and fixing errors found in bulk later costs more. A check works as a harness only when it is inside the loop.
+Moving checks to CI only delays the feedback. Agents use check results to decide their next fix, so fast feedback inside the loop matters. If implementation continues without checks, new work piles up on top of wrong assumptions, and fixing errors found in bulk later costs more. To guide the next implementation step, the check needs to run inside the loop.
 
 A bigger machine does help. But if each check process uses the same amount of resources, the cores and memory you need grow with the parallelism. Making the tools more efficient increases the number of agents the same hardware can support.
 
@@ -58,7 +58,7 @@ Static-analysis tools are increasingly being rewritten in Rust, Go, and other na
 - [tsgo](https://github.com/microsoft/typescript-go), a Go port of the TypeScript compiler, claims about 10x faster type checking than tsc ([A 10x Faster TypeScript](https://devblogs.microsoft.com/typescript/typescript-native-port/))
 - [Biome](https://biomejs.dev/) applies the same native-toolchain approach to formatting and linting
 
-This speedup is not just "write it in Rust and it gets fast." It comes from the whole design: parallel-first architecture, no repeated parsing, and memory-efficient data structures, on top of the language itself.
+This speedup is not just "write it in Rust and it gets fast." It comes from the whole design: parallel-first architecture, avoiding unnecessary repeated parsing, and memory-efficient data structures, on top of the language itself.
 
 The important point is that when speed changes this much, behavior changes too. Checks that take 10 minutes overlap across parallel agents and fight over resources. Shorter checks reduce the window in which concurrent runs can overlap, making resource contention less likely. Better latency can also relieve the resource problem by reducing overlap.
 
@@ -67,7 +67,7 @@ The important point is that when speed changes this much, behavior changes too. 
 Svelte-specific processing has not fully caught this wave.
 
 - **Linting**: oxlint has an alpha-stage feature that extracts and checks the script part of `.svelte` files, but there is no foundation yet for checking Svelte-specific semantics across templates and styles. Svelte-specific rules still depend on the JavaScript-based eslint-plugin-svelte + ESLint
-- **Formatting**: oxfmt's Svelte support delegates the Svelte structure to the JavaScript-based prettier-plugin-svelte and handles embedded JS/CSS with oxc. So parsing and formatting the `.svelte` structure still pays Prettier's cost
+- **Formatting**: oxfmt's Svelte support delegates the Svelte structure to the JavaScript-based prettier-plugin-svelte and handles embedded JS/CSS with oxc. The `.svelte` structure is therefore still parsed and formatted through the Prettier-based path
 - **Type checking**: svelte-check converts `.svelte` files to TypeScript with svelte2tsx and passes them to a check engine. The engine can now be sped up with `--tsgo`, but the transformation and orchestration remain JavaScript-based
 
 In other words, even the official tools can now speed up the TypeScript part with tsgo, but the Svelte-specific work (Svelte parsing, svelte2tsx transformation, template linting, formatting) still relies on JavaScript implementations. This is not unique to Svelte. Frameworks with their own template languages, such as Vue, face the same problem.
@@ -84,7 +84,7 @@ The reason is to make switching and rollback cost as close to zero as possible i
 
 Compatibility is backed by verification, not by declaration. The compiler passes 100% of the 3,500+ in-scope fixtures of the official Svelte v5.56.4 test suite (the Svelte 4 to 5 migrator and a few individual fixtures are out of scope). On top of that, code from about 30 real-world repositories (about 12,000 units) is continuously compiled with both the official compiler and rsvelte, and the outputs are compared. The known structural differences currently stand at 8 for client output and 0 for server output (both as of commit `76ac14b3`; the README and dashboard in the repository may show different numbers depending on when they were updated). CI treats this list as a ratchet that forbids increases, and each difference has its cause documented.
 
-That said, how close each package is to drop-in status varies a lot. Passing 100% of fixtures does not mean full public-API compatibility. Constraints remain around function-valued options such as CSS hash functions, and the status of each package is in the table in 3.2. Strictly speaking, the current state is not "a finished drop-in replacement" but "a set of compatible implementations moving toward drop-in status through continuous verification."
+That said, how close each package is to drop-in status varies a lot. Passing 100% of fixtures does not mean full public-API compatibility. Constraints remain around options that accept functions, such as cssHash, and the status of each package is in the table in 3.2. Strictly speaking, the current state is not "a finished drop-in replacement" but "a set of compatible implementations moving toward drop-in status through continuous verification."
 
 ### 3.2 Components
 
@@ -123,11 +123,11 @@ Main conditions: Apple M4 Pro (12 cores) / 48GB, Node.js 24.13.1, rsvelte commit
 
 #### 3.3.1 End-to-end type checking (Flyle production)
 
-Start with the end-to-end experience of a user (or an agent). I measured on Flyle's production frontend (a SvelteKit app; the official svelte-check includes 8,795 files in its check scope). The effect splits into two steps.
+Start with the end-to-end experience of a user (or an agent). I measured on Flyle's production frontend (a SvelteKit app; the official svelte-check includes 8,795 files in its check scope). The total improvement comes from two changes.
 
 ```
 svelte-check + TypeScript LS   51.4s   <- current CI configuration
-      | switch to rsvelte (TypeScript stays on JS 5.9.3)
+      | switch to rsvelte-check, keep TypeScript 5.9.3 (JavaScript)
 rsvelte-check + tsc            30.6s   (1.7x; CPU time: 104.9s -> 45.9s, about 56% less)
       | switch the check engine to tsgo
 rsvelte-check + tsgo            9.0s   (5.7x combined; CPU time: 32.1s)
@@ -139,15 +139,15 @@ rsvelte-check + tsgo            9.0s   (5.7x combined; CPU time: 32.1s)
 | rsvelte-check + tsc | 30.6s (29.8-36.2) | 45.9s | 3.8GB | 0.12GB |
 | rsvelte-check + tsgo | 9.0s (8.6-9.9) | 32.1s | 5.5GB | 0.12GB |
 
-**Replacing the official svelte-check path with rsvelte-check gives 1.7x** (this replacement includes both the Rust implementation of the Svelte side and the change of execution path from the Language Service to the tsc CLI). **Adding tsgo brings the combined total to 5.7x**. Both tools report 0 errors, with 44 vs 41 warnings. The 3-warning difference comes from a single file at the workspace boundary that only the official version includes in its scope (the rs side does not print a checked-file count in machine-readable output, so the file sets could not be fully reconciled). On memory: rsvelte-check itself peaks at **about 0.12GB** with either engine, and in the rsvelte setups the TS engine takes most of the memory (most of the 5.5GB total in the tsgo setup comes from the tsgo process; comparing tsc to tsc, the total also drops from 4.2GB to 3.8GB). The official svelte-check's `--tsgo` did not work correctly on this repository: it shrank the check scope to 355 files and reported 1,581 spurious errors, so I excluded it from the comparison (confirmed with svelte-check 4.7.3).
+**Replacing the official svelte-check path with rsvelte-check produces a 1.7x speedup** (this replacement includes both the Rust implementation of the Svelte side and the change of execution path from the Language Service to the tsc CLI). **Adding tsgo brings the combined speedup to 5.7x**. Both tools report 0 errors, with 44 vs 41 warnings. The 3-warning difference comes from a single file at the workspace boundary that only the official version includes in its scope (the rs side does not print a checked-file count in machine-readable output, so the file sets could not be fully reconciled). On memory: rsvelte-check itself peaks at **about 0.12GB** with either engine, and in the rsvelte setups the TS engine takes most of the memory (most of the 5.5GB total in the tsgo setup comes from the tsgo process; comparing the two setups that both use the JavaScript TypeScript implementation, total peak RSS drops from 4.2GB to 3.8GB). The official svelte-check's `--tsgo` did not work correctly on this repository: it shrank the check scope to 355 files and reported 1,581 spurious errors, so I excluded it from the comparison (I reproduced the issue with svelte-check 4.7.3).
 
 #### 3.3.2 Comparison with tsgo on both sides (flowbite-svelte)
 
-Two comparisons cannot run on the Flyle repository: tsgo vs tsgo (because the official `--tsgo` malfunctions there) and parallel execution (which needs N independent workspace copies, impractical for a 17GB production monorepo). I ran both on [flowbite-svelte](https://github.com/themesberg/flowbite-svelte) (commit `85f20a0`, 1,296 real `.svelte` files), where the official `--tsgo` works. One important limitation: this setup does not reproduce flowbite's full development environment, so both tools report roughly 900 module-resolution-related diagnostics. The numbers are useful for performance trends, not for correctness parity (details in "Measurement details" above). With tsgo on both sides, **10 interleaved pairs** (execution order alternates per pair, fresh workspace every run) gave a js median of 3.96s (3.84-4.16), an rs median of 2.12s (2.03-2.36), and a median within-pair ratio of **1.9x** (1.72-1.96). This is much smaller than the engine-level multipliers because, end to end, the TypeScript-checking phase common to both setups takes most of the wall time.
+Two comparisons were not practical on the Flyle repository: tsgo vs tsgo (because the official `--tsgo` malfunctions there) and parallel execution (which needs N independent workspace copies, impractical for a 17GB production monorepo). I ran both on [flowbite-svelte](https://github.com/themesberg/flowbite-svelte) (commit `85f20a0`, 1,296 `.svelte` files from a real-world project), where the official `--tsgo` works. One important limitation: this setup does not reproduce flowbite's full development environment, so both tools report roughly 900 module-resolution-related diagnostics. The numbers are useful for performance trends, not for correctness parity (details in "Measurement details" above). With tsgo on both sides, **10 interleaved pairs** (execution order alternates per pair, fresh workspace every run) gave a median of 3.96s (3.84-4.16) for the official svelte-check, 2.12s (2.03-2.36) for rsvelte-check, and a median within-pair ratio of **1.9x** (1.72-1.96). This is much smaller than the engine-level multipliers because, end to end, the TypeScript-checking phase common to both setups takes most of the wall time.
 
 #### 3.3.3 Parallel execution
 
-Next, the measurement most directly tied to this article's argument: **N check processes launched at the same time on one machine** (flowbite-svelte, tsgo on both sides; the svelte-check + Language Service setup was excluded because its run-to-run variance under parallelism was too large for stable numbers). Table values are "batch completion time until all N finish / total CPU time / total peak RSS."
+Next, the measurement most directly tied to this article's argument: **N check processes launched at the same time on one machine** (flowbite-svelte, tsgo on both sides; the svelte-check + Language Service setup was excluded because its run-to-run variance under parallelism was too large for stable numbers). Table values are "elapsed time until all N runs complete / total CPU time / peak aggregate RSS across all concurrently running process trees."
 
 | Concurrency | svelte-check + tsgo | rsvelte-check + tsgo |
 |---|---|---|
@@ -156,22 +156,22 @@ Next, the measurement most directly tied to this article's argument: **N check p
 | 4 | 8.1s / 39.7s / 4.2GB | 6.7s / 28.6s / 4.3GB |
 | 8 | 14.1s / 86.0s / 6.9GB | 13.5s / 67.8s / 6.7GB |
 
-The 1.9x gap at N=1 shrinks as concurrency rises, and it nearly disappears with 8 simultaneous checks (14.1s vs 13.5s). This result suggests that **under high load where checks always overlap, the TypeScript-checking phase common to both setups becomes the bottleneck** (per-check CPU, total CPU time divided by 8, is still about 21% lower at 10.8 vs 8.5 CPU-seconds, and total RSS is similar; capping rayon threads at 12/N made no significant difference). In real use, however, check start times are spread out, so I believe shorter individual runs reduce the overlap itself. This simultaneous-launch benchmark does not measure that directly; verifying it with real agent execution logs is future work.
+The 1.9x gap at N=1 shrinks as concurrency rises, and it nearly disappears with 8 simultaneous checks (14.1s vs 13.5s). This result suggests that **under a high-load simultaneous-start workload, the TypeScript-checking phase common to both setups becomes the bottleneck** (per-check CPU, total CPU time divided by 8, is still about 21% lower at 10.8 vs 8.5 CPU-seconds, and total RSS is similar; capping rayon threads at 12/N made no significant difference). In real use, however, check start times are spread out, so I believe shorter individual runs reduce the overlap itself. This simultaneous-launch benchmark does not measure that directly; verifying it with real agent execution logs is future work.
 
 #### 3.3.4 Svelte-specific linting
 
-I used the same paired-run methodology for linting (see "Measurement details" for the setup). This is not a replacement of a whole ESLint setup. It is a comparison with the 37 shared Svelte-specific rules at identical severities, with every other rule disabled on both sides. With identical rule sets and severities on both sides, the two tools produced **the same 382 diagnostics**.
+I used the same paired-run methodology for linting (see "Measurement details" for the setup). This is not a comparison of the full ESLint configuration. It is a comparison with the 37 shared Svelte-specific rules at identical severities, with every other rule disabled on both sides. With identical rule sets and severities on both sides, the two tools produced **the same 382 diagnostics**.
 
 | | wall time | CPU time | peak RSS |
 |---|---:|---:|---:|
 | ESLint + eslint-plugin-svelte | 5.02s | 8.4s | 0.86GB |
 | rsvelte-lint | 0.25s | 1.7s | 0.05GB |
 
-The median ratio across 10 interleaved pairs was **19.4x** (range 18.0-23.5). Unlike type checking, this comparison has no large shared TypeScript phase dominating the end-to-end runtime, so the difference stays this large even end to end. Memory also drops sharply, from 0.86GB to 0.05GB.
+The median ratio across 10 interleaved pairs was **19.4x** (range 18.0-23.5). Unlike type checking, this comparison has no large shared TypeScript phase dominating the end-to-end runtime, so the speedup remains close to 20x even end to end. Memory also drops sharply, from 0.86GB to 0.05GB.
 
 #### 3.3.5 Engine-level performance
 
-Finally, as the explanation of why this gets so fast, here is engine-level throughput (3,857 real `.svelte` files from the official Svelte test suite, pre-loaded into memory; median of 10 runs after 3 warmups):
+Finally, as the explanation of why this gets so fast, here is engine-level throughput (3,857 `.svelte` files drawn from the official Svelte test suite, pre-loaded into memory; median of 10 runs after 3 warmups):
 
 | Task | JS | rsvelte (1 thread) | rsvelte (multi) | Multiplier (multi) |
 |---|---:|---:|---:|---:|
@@ -190,7 +190,7 @@ This answers the two costs raised in 1.3. **Latency**: one production type check
 
 rsvelte is pre-1.0 and early stage; APIs may change without notice. Known constraints and per-package maturity are in the table in 3.2. With that in mind, each tool can be adopted on its own. See the [rsvelte README](https://github.com/baseballyama/rsvelte#readme) for setup instructions.
 
-Because the goal is a drop-in replacement, you can run it alongside the existing tools and compare the output. I recommend starting with type checking, which does not rewrite your sources, run alongside the official version. The formatter has known output differences, so starting with `--check` comparisons or an isolated branch is safer.
+Because the goal is a drop-in replacement, you can run it alongside the existing tools and compare the output. I recommend starting with rsvelte-check because it does not rewrite source files. Run it alongside the official checker and compare the diagnostics. For the formatter, start in `--check` mode or on an isolated branch, because known output differences remain.
 
 ## 5. Where this is heading
 
@@ -201,9 +201,9 @@ Because the goal is a drop-in replacement, you can run it alongside the existing
 ## Summary
 
 - As AI agents take on more implementation work, static checks increasingly run inside every implementation loop. Check time sets a lower bound on iteration time, and check resource usage limits parallelism
-- Rust and other native toolchains are solving this, but the Svelte-specific parts of `.svelte` processing still rely on JavaScript implementations
+- Rust and other native toolchains are delivering major speedups across the static-analysis stack, but the Svelte-specific parts of `.svelte` processing still rely on JavaScript implementations
 - rsvelte is a set of Rust implementations that aims to be a drop-in replacement for the Svelte toolchain. It aims to preserve Svelte's language semantics and compiler behavior exactly, and it puts low-cost switching and rollback first. Maturity varies by package
-- On Flyle's production frontend, switching to rsvelte-check while keeping JavaScript TypeScript made type checking 1.7x faster (51.4s to 30.6s, about 56% less CPU), and 5.7x combined with tsgo (9.0s). Svelte-specific linting with an identical rule set is about 20x faster. rsvelte-check itself uses about 0.12GB of memory; the TS engine takes most of the rest. You can try it alongside the official tools while comparing diagnostic differences
+- On Flyle's production frontend, switching to rsvelte-check while keeping the JavaScript implementation of TypeScript made type checking 1.7x faster (51.4s to 30.6s, about 56% less CPU), and 5.7x combined with tsgo (9.0s). Svelte-specific linting with an identical rule set is about 20x faster. rsvelte-check itself peaks at about 0.12GB; in rsvelte-based configurations, the TypeScript engine consumes most of the total memory. You can try it alongside the official tools while comparing diagnostic differences
 
 rsvelte is still a work in progress. If you try it and find problems, I would be glad to get issues and feedback on [GitHub](https://github.com/baseballyama/rsvelte).
 
