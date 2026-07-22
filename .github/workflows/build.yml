@@ -33,6 +33,13 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
+      # oxlint による静的解析。CI では --deny-warnings を付けて warning も
+      # 失敗扱いにする (ローカルの `pnpm lint` は開発体験のため warning 非致命のまま)。
+      - run: pnpm lint --deny-warnings
+
+      # oxfmt によるフォーマット検査。差分があれば失敗する。
+      - run: pnpm format:check
+
       # SvelteKit (rsvelte コンパイラ経由) でビルドし、build/ に静的出力する。
       # ビルド前に GitHub のスター数を再取得し、OGP 画像用の日本語フォントもダウンロードされる。
       - run: pnpm build
