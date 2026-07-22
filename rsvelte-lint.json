@@ -1,0 +1,10 @@
+{
+	"extends": ["recommended"],
+	"rules": {
+		"svelte/block-lang": ["warn", { "script": "ts" }],
+		"svelte/no-unused-class-name": "off",
+		"svelte/no-navigation-without-resolve": "off",
+		"svelte/no-navigation-without-base": "off",
+		"svelte/no-at-const-tags": "off"
+	}
+}

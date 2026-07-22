@@ -43,9 +43,7 @@
 					<li>
 						<a href={postPath(locale, post.slug)}>
 							<span class="post-item-title" lang={post.locale}>{post.title}</span>
-							<span class="post-item-date"
-								>{post.date} · {readingTime(locale, post.readingMinutes)}</span
-							>
+							<span class="post-item-date">{post.date} · {readingTime(locale, post.readingMinutes)}</span>
 						</a>
 					</li>
 				{/each}
