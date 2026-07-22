@@ -230,5 +230,5 @@ Rather than immediately implementing a shared function just because you found sh
 
 ---
 
-At [flyle, Inc.](https://herp.careers/v1/flyle), where I serve as tech lead, we are currently hiring software engineers.  
+At [Flyle, Inc.](https://herp.careers/v1/flyle), where I serve as VP of Technology, we are currently hiring software engineers.  
 If this article resonated with you, if you are curious about how we bring these ideas into actual practice, or if you are interested in our business, let us talk in a casual interview.
