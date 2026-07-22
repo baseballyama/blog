@@ -26,8 +26,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       '@rsvelte/svelte-check':
-        specifier: ^0.3.10
-        version: 0.3.10
+        specifier: ^0.4.0
+        version: 0.4.1
       '@sveltejs/adapter-static':
         specifier: ^3.0.10
         version: 3.0.10(@sveltejs/kit@2.70.1(@rsvelte/vite-plugin-svelte@0.4.1)(svelte@5.56.7)(typescript@6.0.3)(vite@7.3.6(@types/node@25.9.5)))
@@ -719,30 +719,35 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/svelte-check-darwin-arm64@0.3.10':
-    resolution: {integrity: sha512-3arx5sb+Iazwlcj55Sk8pRq8eG09+oGckbv9ko99edQWa9ZF2xyjU56mcP7ar5TDhprSF2xGdn3XhRNM1JaNnQ==}
+  '@rsvelte/svelte-check-darwin-arm64@0.4.1':
+    resolution: {integrity: sha512-ay3af9pnvJyYZ0qAs+J0mxX2qPLpmz2d8Ux7G4alI16EdjR516IG4hBFDjbY+onpiH9Vp0mNr+cOraJcv/cCaw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/svelte-check-darwin-x64@0.3.10':
-    resolution: {integrity: sha512-tPCLoihLm7uOa9cgoo7Lz7CojXCxu3GQugMTyH/0oJTVXN0D4sTZlWKQtymHlGQBow7dc88ovFzXF3BT2ff0SQ==}
+  '@rsvelte/svelte-check-darwin-x64@0.4.1':
+    resolution: {integrity: sha512-GVzgVp4VgPjj5guYTzwJhJn22qtrKMty5wwnv0/6AhD6sk1k3jDmfwsjT8o42QWjK1iuBP1ITiNhkF7wpM85Lg==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/svelte-check-linux-arm64-gnu@0.3.10':
-    resolution: {integrity: sha512-X6wiOYcCX60WJyZTr3cl4d5oRr8XdqrCwdPL+34lE1kYqVfbIAPHlvypNMx457VCdrQhJD4i0qq6V94xOg+c9g==}
+  '@rsvelte/svelte-check-linux-arm64-gnu@0.4.1':
+    resolution: {integrity: sha512-RxUmTtZZF8D+TLgv5NG7puTFDdkUW2ZPR67rF3Tt5SorwxB0fFBVmZuXRy38jicbyYZ0/cjP8WiUNu7IhcTllg==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/svelte-check-linux-x64-gnu@0.3.10':
-    resolution: {integrity: sha512-/CsVX7KotbgxMLCmt9zNRS11t+jy/KIsqwnoHVYNMxLXU17JOSU644scRrUDujQxy8/9qM3nOevXjdBGwykT0A==}
+  '@rsvelte/svelte-check-linux-x64-gnu@0.4.1':
+    resolution: {integrity: sha512-hXtmyslOlLwmxm+xGajk/ahnOHK/2hmYGFDz9TJzal94sLh4MYkC+U5UjET15Z1LCVmAgoR9Bqh8O3cNJQt2hw==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/svelte-check@0.3.10':
-    resolution: {integrity: sha512-C58onVReFlkfCZY2Vvf4M0n9zMf8pJ7nVEGjcfZuHalgiFAosqeaqebcxSnKTDL6ApcxlTvNIkguIz9rQt+JYg==}
+  '@rsvelte/svelte-check-win32-x64-msvc@0.4.1':
+    resolution: {integrity: sha512-Ju7e/dtFpjOis8Ejc7bGgkZBq1rufoLBioy5l/XEjrZwSrgTNoC4Lj8uIi2CiXKecGfgNp9WPJWZgZ73mwU1LQ==}
+    cpu: [x64]
+    os: [win32]
+
+  '@rsvelte/svelte-check@0.4.1':
+    resolution: {integrity: sha512-czHLm6qyW/+Z6insJJjsq3N32JCasyIDq9hA88uH1OrkHYL3tx3M3OcfhAgyMa7Wiy1SLcAfrR1PjkgmPEFiBA==}
     hasBin: true
 
   '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.2.6':
@@ -1819,24 +1824,28 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.62.2':
     optional: true
 
-  '@rsvelte/svelte-check-darwin-arm64@0.3.10':
+  '@rsvelte/svelte-check-darwin-arm64@0.4.1':
     optional: true
 
-  '@rsvelte/svelte-check-darwin-x64@0.3.10':
+  '@rsvelte/svelte-check-darwin-x64@0.4.1':
     optional: true
 
-  '@rsvelte/svelte-check-linux-arm64-gnu@0.3.10':
+  '@rsvelte/svelte-check-linux-arm64-gnu@0.4.1':
     optional: true
 
-  '@rsvelte/svelte-check-linux-x64-gnu@0.3.10':
+  '@rsvelte/svelte-check-linux-x64-gnu@0.4.1':
     optional: true
 
-  '@rsvelte/svelte-check@0.3.10':
+  '@rsvelte/svelte-check-win32-x64-msvc@0.4.1':
+    optional: true
+
+  '@rsvelte/svelte-check@0.4.1':
     optionalDependencies:
-      '@rsvelte/svelte-check-darwin-arm64': 0.3.10
-      '@rsvelte/svelte-check-darwin-x64': 0.3.10
-      '@rsvelte/svelte-check-linux-arm64-gnu': 0.3.10
-      '@rsvelte/svelte-check-linux-x64-gnu': 0.3.10
+      '@rsvelte/svelte-check-darwin-arm64': 0.4.1
+      '@rsvelte/svelte-check-darwin-x64': 0.4.1
+      '@rsvelte/svelte-check-linux-arm64-gnu': 0.4.1
+      '@rsvelte/svelte-check-linux-x64-gnu': 0.4.1
+      '@rsvelte/svelte-check-win32-x64-msvc': 0.4.1
 
   '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.2.6':
     optional: true

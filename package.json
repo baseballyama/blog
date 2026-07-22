@@ -23,7 +23,7 @@
 	},
 	"devDependencies": {
 		"@fontsource-variable/jetbrains-mono": "^5.3.0",
-		"@rsvelte/svelte-check": "^0.3.10",
+		"@rsvelte/svelte-check": "^0.4.0",
 		"@sveltejs/adapter-static": "^3.0.10",
 		"@sveltejs/kit": "^2.61.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
