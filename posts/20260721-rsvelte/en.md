@@ -67,7 +67,7 @@ The important point is that when speed changes this much, behavior changes too. 
 Svelte-specific processing has not fully caught this wave.
 
 - **Linting**: oxlint has an alpha-stage feature that extracts and checks the script part of `.svelte` files, but it does not yet provide a foundation for checking Svelte-specific semantics across templates and styles. Svelte-specific rules still depend on the JavaScript-based eslint-plugin-svelte + ESLint
-- **Formatting**: oxfmt's Svelte support delegates the Svelte structure to the JavaScript-based prettier-plugin-svelte and handles embedded JS/CSS with oxc. The `.svelte` structure is therefore still parsed and formatted through the Prettier-based path
+- **Formatting**: oxfmt's Svelte support delegates the Svelte structure to the JavaScript-based prettier-plugin-svelte and hands only embedded JS/TS to oxc_formatter (embedded CSS goes through Prettier's built-in CSS formatter). The `.svelte` structure and embedded CSS are therefore still parsed and formatted through the Prettier-based path
 - **Type checking**: svelte-check converts `.svelte` files to TypeScript with svelte2tsx and passes them to a check engine. The engine can now be sped up with `--tsgo`, but the transformation and orchestration remain JavaScript-based
 
 In other words, even the official tools can now speed up the TypeScript part with tsgo, but the Svelte-specific work (Svelte parsing, svelte2tsx transformation, template linting, formatting) still relies on JavaScript implementations. This is not unique to Svelte. Frameworks with their own template languages, such as Vue, face the same problem.
