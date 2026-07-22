@@ -41,18 +41,5 @@
 	"engines": {
 		"node": ">= 22.12"
 	},
-	"packageManager": "pnpm@10.34.5",
-	"pnpm": {
-		"overrides": {
-			"@sveltejs/vite-plugin-svelte": "npm:@rsvelte/vite-plugin-svelte@^0.4.1",
-			"@rsvelte/vite-plugin-svelte-native": "^0.2.6"
-		},
-		"onlyBuiltDependencies": [
-			"@resvg/resvg-js",
-			"@rsvelte/fmt",
-			"@rsvelte/lint",
-			"@rsvelte/vite-plugin-svelte-native",
-			"esbuild"
-		]
-	}
+	"packageManager": "pnpm@11.15.1"
 }

@@ -1,0 +1,31 @@
+# pnpm 11 no longer reads the `pnpm` field in package.json.
+# Non-auth settings (overrides / build allowlist / supply-chain policy) live here.
+# https://pnpm.io/settings
+
+# Swap the upstream Svelte Vite plugin for the rsvelte compiler build.
+# This override is the core of this repository.
+overrides:
+  '@sveltejs/vite-plugin-svelte': 'npm:@rsvelte/vite-plugin-svelte@^0.4.1'
+  '@rsvelte/vite-plugin-svelte-native': '^0.2.6'
+
+# Replaces onlyBuiltDependencies (removed in v11); map of name -> allowed.
+allowBuilds:
+  '@resvg/resvg-js': true
+  '@rsvelte/fmt': true
+  '@rsvelte/lint': true
+  '@rsvelte/vite-plugin-svelte-native': true
+  esbuild: true
+
+# Supply-chain protection: pnpm 11 defaults minimumReleaseAge to 1440 (24h).
+# We keep the 24h gate but exclude packages this repo intentionally adopts on
+# release day. All of them enter the repo only via a Renovate PR gated by CI:
+#   - @rsvelte/*        : first-party packages authored by the repo owner
+#   - oxfmt / @oxfmt/*  : oxc formatter + its platform binding scope
+#   - oxlint / @oxlint/*: oxc linter + its platform binding scope
+minimumReleaseAge: 1440
+minimumReleaseAgeExclude:
+  - '@rsvelte/*'
+  - 'oxfmt'
+  - '@oxfmt/*'
+  - 'oxlint'
+  - '@oxlint/*'
