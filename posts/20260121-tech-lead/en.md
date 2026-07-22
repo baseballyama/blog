@@ -3,7 +3,7 @@ title: What It Takes to Be a Tech Lead
 date: 2026-01-21
 ---
 
-At [flyle](https://flyle.io/jp), where I work, I have been involved in technical decision-making as a tech lead for a long time.
+At [Flyle](https://flyle.io/jp), where I work, I have been involved in technical decision-making as a tech lead for a long time.
 
 Going forward (or in the near future), there will be more occasions to split up the role or to grow the next person who takes it on. So today, I want to lay out what I think a tech lead needs.
 
@@ -13,7 +13,7 @@ In a for-profit company, product development is not an end in itself; it is a me
 
 That requires the ability to use tools like SWOT analysis to lay out your company's strengths, weaknesses, opportunities, and threats, and then translate that into criteria you can actually judge technology choices against.
 
-At flyle, for example, we defined the competitive advantage of our new product as "being able to analyze large volumes of data quickly." The important part here is not letting the strength stay an abstract slogan, but defining it in a form you can use for design and investment decisions.
+At Flyle, for example, we defined the competitive advantage of our new product as "being able to analyze large volumes of data quickly." The important part here is not letting the strength stay an abstract slogan, but defining it in a form you can use for design and investment decisions.
 
 Concretely, we defined "large volumes of data" as X0,000 records per tenant, and "quickly" as aggregation completing within roughly X seconds (the actual numbers are not public). This put technology selection in a state where it could be evaluated against performance requirements we had to meet, rather than a vague sense of "fast enough."
 
