@@ -118,7 +118,12 @@
 						<p class="talk-meta">
 							<time datetime={talk.date}>{talk.date}</time>
 							{#if talk.eventUrl}
-								<a class="talk-event" href={talk.eventUrl} target="_blank" rel="noopener noreferrer">
+								<a
+									class="talk-event"
+									href={talk.eventUrl}
+									target="_blank"
+									rel="noopener noreferrer"
+								>
 									{talk.event}
 								</a>
 							{:else}

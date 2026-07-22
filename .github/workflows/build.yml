@@ -33,11 +33,15 @@ jobs:
 
       - run: pnpm install --frozen-lockfile
 
-      # oxlint による静的解析。CI では --deny-warnings を付けて warning も
-      # 失敗扱いにする (ローカルの `pnpm lint` は開発体験のため warning 非致命のまま)。
-      - run: pnpm lint --deny-warnings
+      # 静的解析。JS/TS は oxlint、.svelte は rsvelte-lint (rsvelte コンパイラの
+      # warning/a11y + eslint-plugin-svelte 互換ルール) が担当する。CI 用の
+      # `lint:ci` は oxlint に --deny-warnings、rsvelte-lint に --max-warnings 0 を
+      # 付けて warning も失敗扱いにする (ローカルの `pnpm lint` は開発体験のため
+      # warning 非致命のまま)。
+      - run: pnpm lint:ci
 
-      # oxfmt によるフォーマット検査。差分があれば失敗する。
+      # rsvelte-fmt によるフォーマット検査。.svelte はネイティブ整形し、それ以外は
+      # oxfmt へ委譲する。差分があれば失敗する。
       - run: pnpm format:check
 
       # SvelteKit (rsvelte コンパイラ経由) でビルドし、build/ に静的出力する。

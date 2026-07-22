@@ -70,11 +70,7 @@
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:image" content={ogImage} />
 	{#each post.locales as available (available)}
-		<link
-			rel="alternate"
-			hreflang={available}
-			href="{SITE_URL}{postPath(available, post.slug)}"
-		/>
+		<link rel="alternate" hreflang={available} href="{SITE_URL}{postPath(available, post.slug)}" />
 	{/each}
 	<link rel="alternate" hreflang="x-default" href="{SITE_URL}{postPath('en', post.slug)}" />
 </svelte:head>
@@ -107,8 +103,8 @@
 		{/if}
 	</header>
 
-	<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 	<div class="prose" lang={post.locale}>
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html post.html}
 	</div>
 
