@@ -21,6 +21,10 @@ export function postPath(locale: Locale, slug: string): string {
 	return `${localePrefix(locale)}/posts/${slug}`;
 }
 
+export function rssPath(locale: Locale): string {
+	return `${localePrefix(locale)}/rss.xml`;
+}
+
 export const otherLocale = (locale: Locale): Locale => (locale === 'en' ? 'ja' : 'en');
 
 /** 言語切り替えボタンなどに出す表示名（その言語自身の表記） */

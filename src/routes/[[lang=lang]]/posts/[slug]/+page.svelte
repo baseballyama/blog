@@ -1,6 +1,14 @@
 <script lang="ts">
 	import { SITE_URL, SITE_NAME } from '$lib/config';
-	import { UI, LOCALE_LABEL, blogPath, postPath, otherLocale, readingTime } from '$lib/i18n';
+	import {
+		UI,
+		LOCALE_LABEL,
+		blogPath,
+		postPath,
+		otherLocale,
+		readingTime,
+		rssPath,
+	} from '$lib/i18n';
 	import LocaleNotice from '$lib/components/LocaleNotice.svelte';
 	import type { PageData } from './$types';
 
@@ -73,6 +81,12 @@
 		<link rel="alternate" hreflang={available} href="{SITE_URL}{postPath(available, post.slug)}" />
 	{/each}
 	<link rel="alternate" hreflang="x-default" href="{SITE_URL}{postPath('en', post.slug)}" />
+	<link
+		rel="alternate"
+		type="application/rss+xml"
+		title={SITE_NAME}
+		href="{SITE_URL}{rssPath(locale)}"
+	/>
 </svelte:head>
 
 <article class="container">
