@@ -6,7 +6,7 @@ settings:
 
 overrides:
   '@sveltejs/vite-plugin-svelte': npm:@rsvelte/vite-plugin-svelte@^0.4.1
-  '@rsvelte/vite-plugin-svelte-native': ^0.2.6
+  '@rsvelte/vite-plugin-svelte-native': ^0.3.0
 
 importers:
 
@@ -801,35 +801,35 @@ packages:
     resolution: {integrity: sha512-czHLm6qyW/+Z6insJJjsq3N32JCasyIDq9hA88uH1OrkHYL3tx3M3OcfhAgyMa7Wiy1SLcAfrR1PjkgmPEFiBA==}
     hasBin: true
 
-  '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.2.6':
-    resolution: {integrity: sha512-Tpe0aZtBhOdlr2BcL/hPoFRPymXYuIHALcpzNyJrpgCRjH2iVLKD3FJ9NocofrxZJSiOF6ETHG3hWfF2C572pw==}
+  '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.3.0':
+    resolution: {integrity: sha512-znJdoDAQgqiBDlI4iqQyDhc02Gep0OjmuXZoxPsWs3GUJUqApvE8DcH6l9oBNr7qkR5s3k0DDnhgOjaGVbrkTw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/vite-plugin-svelte-native-darwin-x64@0.2.6':
-    resolution: {integrity: sha512-Sma1/6R04/Td27ywnu16VmNu9LGWT54m3FVs64kXTnQsLEaue4zaZ7Y1LQ+UjU2O1HCL4ak4Ptipsl35W7SP9Q==}
+  '@rsvelte/vite-plugin-svelte-native-darwin-x64@0.3.0':
+    resolution: {integrity: sha512-iqwGnFDvpTgUXNupQMDSTEWEj6MVTUp4fOAvGWGnJ2L1MPK/krpVq5985PDtQ8xaLSLxnchLJZTLNz0eWKQFmA==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/vite-plugin-svelte-native-linux-arm64-gnu@0.2.6':
-    resolution: {integrity: sha512-PYAh2NQZ0Cxz4a4Q18QJQsaZPz6IpZ9WYjotpD4io+29ien4X1fQSxA4wgf/3hujuTrEY91/Y3Gxd4DKFjyZUQ==}
+  '@rsvelte/vite-plugin-svelte-native-linux-arm64-gnu@0.3.0':
+    resolution: {integrity: sha512-6y0b8/Q5Fw2zoRPljLRcu9nF8YD5WrQMwxgHwX/M3GAVeB8/Pzv8mVH4j6v+S/DnGyHqU9ZpxpY63Zt1wBNR6A==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/vite-plugin-svelte-native-linux-x64-gnu@0.2.6':
-    resolution: {integrity: sha512-PSGbH1uMNeWnos5LD0//Ntapxda20gbKJU0UvRNllJhr/26+HFCtG11ioSDSeyknWIU7vep2zA7/yhfyrwzSeQ==}
+  '@rsvelte/vite-plugin-svelte-native-linux-x64-gnu@0.3.0':
+    resolution: {integrity: sha512-E39Df/VfQMWILgY0mdvXiZ8DJFC4QLhIQfeYoZwVGsLCHAfFquYLCONjAUnrCsaNQXZ/7s7Z97AchXe9dQMYsw==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/vite-plugin-svelte-native-win32-x64-msvc@0.2.6':
-    resolution: {integrity: sha512-58g0OspWB/eVrcGSoB1TSF5QOb4e7vPXfLuAQKQGzef4Upx61E2gcJ2fuN4mTbKOjjtd2bpk/e6+M/GbyJd9uA==}
+  '@rsvelte/vite-plugin-svelte-native-win32-x64-msvc@0.3.0':
+    resolution: {integrity: sha512-TUCoEW96pxqleHv2Vuf8beMedaZGON33PqFAVltGQKzM1iL37mT4nebzC+G9xcve7cnUTsS3I2Du6LBC5nanmQ==}
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/vite-plugin-svelte-native@0.2.6':
-    resolution: {integrity: sha512-2zEXxCaELaiDoQmglYKuzy2Zk2ClkyJPtGxDFlEZWZExfxtSmBEwK6WSjumK+sAddsCo2qvmsaumFTknQ0jcxA==}
+  '@rsvelte/vite-plugin-svelte-native@0.3.0':
+    resolution: {integrity: sha512-24VtZwqI0bI11xE/H7sPkQHiZGCR24C1tmI4mWEOJ/bMUbx/nbaoIAC/2D3RGtuFH1qpAVIHvsw4FM0nRD51Og==}
 
   '@rsvelte/vite-plugin-svelte@0.4.1':
     resolution: {integrity: sha512-u8XB94/z8bZCi2IqZEU8HjWWE8Y6XkP4M78F7vWrBWKH/lcr10wAwDJLJXI7SrLGhysDaqUmb8/74BhxbOJ60A==}
@@ -2033,32 +2033,32 @@ snapshots:
       '@rsvelte/svelte-check-linux-x64-gnu': 0.4.1
       '@rsvelte/svelte-check-win32-x64-msvc': 0.4.1
 
-  '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.2.6':
+  '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.3.0':
     optional: true
 
-  '@rsvelte/vite-plugin-svelte-native-darwin-x64@0.2.6':
+  '@rsvelte/vite-plugin-svelte-native-darwin-x64@0.3.0':
     optional: true
 
-  '@rsvelte/vite-plugin-svelte-native-linux-arm64-gnu@0.2.6':
+  '@rsvelte/vite-plugin-svelte-native-linux-arm64-gnu@0.3.0':
     optional: true
 
-  '@rsvelte/vite-plugin-svelte-native-linux-x64-gnu@0.2.6':
+  '@rsvelte/vite-plugin-svelte-native-linux-x64-gnu@0.3.0':
     optional: true
 
-  '@rsvelte/vite-plugin-svelte-native-win32-x64-msvc@0.2.6':
+  '@rsvelte/vite-plugin-svelte-native-win32-x64-msvc@0.3.0':
     optional: true
 
-  '@rsvelte/vite-plugin-svelte-native@0.2.6':
+  '@rsvelte/vite-plugin-svelte-native@0.3.0':
     optionalDependencies:
-      '@rsvelte/vite-plugin-svelte-native-darwin-arm64': 0.2.6
-      '@rsvelte/vite-plugin-svelte-native-darwin-x64': 0.2.6
-      '@rsvelte/vite-plugin-svelte-native-linux-arm64-gnu': 0.2.6
-      '@rsvelte/vite-plugin-svelte-native-linux-x64-gnu': 0.2.6
-      '@rsvelte/vite-plugin-svelte-native-win32-x64-msvc': 0.2.6
+      '@rsvelte/vite-plugin-svelte-native-darwin-arm64': 0.3.0
+      '@rsvelte/vite-plugin-svelte-native-darwin-x64': 0.3.0
+      '@rsvelte/vite-plugin-svelte-native-linux-arm64-gnu': 0.3.0
+      '@rsvelte/vite-plugin-svelte-native-linux-x64-gnu': 0.3.0
+      '@rsvelte/vite-plugin-svelte-native-win32-x64-msvc': 0.3.0
 
   '@rsvelte/vite-plugin-svelte@0.4.1(@rsvelte/vite-plugin-svelte@0.4.1)(svelte@5.56.7)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1))':
     dependencies:
-      '@rsvelte/vite-plugin-svelte-native': 0.2.6
+      '@rsvelte/vite-plugin-svelte-native': 0.3.0
       '@sveltejs/vite-plugin-svelte-inspector': 5.0.2(@rsvelte/vite-plugin-svelte@0.4.1)(svelte@5.56.7)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1))
       deepmerge: 4.3.1
       magic-string: 0.30.21
