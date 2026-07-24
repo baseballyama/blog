@@ -29,8 +29,8 @@ importers:
         specifier: ^0.6.2
         version: 0.6.2(oxfmt@0.60.0(svelte@5.56.7))
       '@rsvelte/lint':
-        specifier: ^0.8.2
-        version: 0.8.2
+        specifier: ^0.9.0
+        version: 0.9.1
       '@rsvelte/svelte-check':
         specifier: ^0.4.0
         version: 0.4.1
@@ -739,35 +739,35 @@ packages:
       oxfmt:
         optional: true
 
-  '@rsvelte/lint-darwin-arm64@0.8.2':
-    resolution: {integrity: sha512-TvS8zfUYcaA1799ly9uFJKKGTG8MGnAdQhjGeEnMrKiQA4cT5bL3ll6BpeydluUcT+q0NhU47xUC64ED5FhHIQ==}
+  '@rsvelte/lint-darwin-arm64@0.9.1':
+    resolution: {integrity: sha512-VkHNwuPxI0Va3JoA6cDsZdqQgutzcRnxCkRbduPcBiebHwydU2MLABucNCS7UFEJY2/M7ygcQDr8Ib6cAqMkDA==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/lint-darwin-x64@0.8.2':
-    resolution: {integrity: sha512-Ba2cH9tnP/jyoOoq6cHPtu8uApYWEQeVOH0BW+tbdJOStgdgakxVCgJD/n0aGxlf+i06fD4YPlNaQhlDmY23uA==}
+  '@rsvelte/lint-darwin-x64@0.9.1':
+    resolution: {integrity: sha512-6rgV6TWZGaO6K+YVn30cepVKZGpPzoOnuMS42crWcJNZYJRM9CjBQGKDPE+N3Cz2c1TO+ybA43klFHvclZ3SaQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/lint-linux-arm64-gnu@0.8.2':
-    resolution: {integrity: sha512-RuZxUqQMZsc2hXX5m25LXlnHHT0LaWcRUIS23GKoB3p+eXZ3RdaaXJ04Gk/QMzAhY9Lbnf7+/nr8bv3C0zwIYA==}
+  '@rsvelte/lint-linux-arm64-gnu@0.9.1':
+    resolution: {integrity: sha512-WwGLm6lQ+xZkZV2jAq13UvE14raAjjhI1on6XVOTb1vlRpQ6anjjXNuRWpNsylsxQDoobFqeBKNwS9t+46DX+A==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/lint-linux-x64-gnu@0.8.2':
-    resolution: {integrity: sha512-eoD8tJbv4yyvkpZJQzqIpG6+suRTmaev7/lcIEM68gDlg0JGEmpaz5hEK6avsE9UAWnJswNx79FpiE8Ej/7FzA==}
+  '@rsvelte/lint-linux-x64-gnu@0.9.1':
+    resolution: {integrity: sha512-szMFZhpLsoOpNo7N6VLW0oZJZ2NlYFAaphn3LyTt8gI6ajRbbqQ3A7hXj8GRAPsDruTxL/N6Bl0adU4vYpJaHg==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/lint-win32-x64-msvc@0.8.2':
-    resolution: {integrity: sha512-329RKhMH0WAc+UT9N7B4DpRexrnk2O8ZsBLIKiyqF15kJiXA2Hkp01y/6IH/J2sBaqlOoFsJnZLxl90bc8TnAA==}
+  '@rsvelte/lint-win32-x64-msvc@0.9.1':
+    resolution: {integrity: sha512-Lz7CE4dFOTX8sVPru4x7jsejY47JDExQKEtc9WGziX8N2XwkUN9x+dWUI8NvpEprPneoemL7iWZOmfzlU2weXw==}
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/lint@0.8.2':
-    resolution: {integrity: sha512-XSNHaLBT7W0IVh5dGXnLGICShLk7sNggKxGYNuh5edo3LhJcuIN8TT3UWKTIB32Ko82vI77OFB9j+BavBYY8nA==}
+  '@rsvelte/lint@0.9.1':
+    resolution: {integrity: sha512-DR14VvSf4MwkiJGsIqo6NZ+W8FQfuGZiDDBl2D1tWhDigz66Z+4xSt7UZB9RB5qACmkeHDlhar6AnsAAtWlpHA==}
     hasBin: true
 
   '@rsvelte/svelte-check-darwin-arm64@0.4.1':
@@ -1987,28 +1987,28 @@ snapshots:
       '@rsvelte/fmt-win32-x64-msvc': 0.6.2
       oxfmt: 0.60.0(svelte@5.56.7)
 
-  '@rsvelte/lint-darwin-arm64@0.8.2':
+  '@rsvelte/lint-darwin-arm64@0.9.1':
     optional: true
 
-  '@rsvelte/lint-darwin-x64@0.8.2':
+  '@rsvelte/lint-darwin-x64@0.9.1':
     optional: true
 
-  '@rsvelte/lint-linux-arm64-gnu@0.8.2':
+  '@rsvelte/lint-linux-arm64-gnu@0.9.1':
     optional: true
 
-  '@rsvelte/lint-linux-x64-gnu@0.8.2':
+  '@rsvelte/lint-linux-x64-gnu@0.9.1':
     optional: true
 
-  '@rsvelte/lint-win32-x64-msvc@0.8.2':
+  '@rsvelte/lint-win32-x64-msvc@0.9.1':
     optional: true
 
-  '@rsvelte/lint@0.8.2':
+  '@rsvelte/lint@0.9.1':
     optionalDependencies:
-      '@rsvelte/lint-darwin-arm64': 0.8.2
-      '@rsvelte/lint-darwin-x64': 0.8.2
-      '@rsvelte/lint-linux-arm64-gnu': 0.8.2
-      '@rsvelte/lint-linux-x64-gnu': 0.8.2
-      '@rsvelte/lint-win32-x64-msvc': 0.8.2
+      '@rsvelte/lint-darwin-arm64': 0.9.1
+      '@rsvelte/lint-darwin-x64': 0.9.1
+      '@rsvelte/lint-linux-arm64-gnu': 0.9.1
+      '@rsvelte/lint-linux-x64-gnu': 0.9.1
+      '@rsvelte/lint-win32-x64-msvc': 0.9.1
 
   '@rsvelte/svelte-check-darwin-arm64@0.4.1':
     optional: true
