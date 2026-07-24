@@ -1,11 +1,5 @@
-# pnpm 11 no longer reads the `pnpm` field in package.json.
-# Non-auth settings (overrides / build allowlist / supply-chain policy) live here.
-# https://pnpm.io/settings
-
-# Swap the upstream Svelte Vite plugin for the rsvelte compiler build.
-# This override is the core of this repository.
 overrides:
-  '@sveltejs/vite-plugin-svelte': 'npm:@rsvelte/vite-plugin-svelte@^0.4.1'
+  '@sveltejs/vite-plugin-svelte': 'npm:@rsvelte/vite-plugin-svelte@^0.5.0'
   '@rsvelte/vite-plugin-svelte-native': '^0.2.6'
 
 # Replaces onlyBuiltDependencies (removed in v11); map of name -> allowed.
