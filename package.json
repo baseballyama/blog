@@ -24,7 +24,7 @@
 	},
 	"devDependencies": {
 		"@fontsource-variable/jetbrains-mono": "^5.3.0",
-		"@rsvelte/fmt": "^0.6.2",
+		"@rsvelte/fmt": "^0.7.0",
 		"@rsvelte/lint": "^0.8.2",
 		"@rsvelte/svelte-check": "^0.4.0",
 		"@sveltejs/adapter-static": "^3.0.10",
