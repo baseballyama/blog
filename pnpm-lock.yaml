@@ -26,8 +26,8 @@ importers:
         specifier: ^5.3.0
         version: 5.3.0
       '@rsvelte/fmt':
-        specifier: ^0.6.2
-        version: 0.6.2(oxfmt@0.60.0(svelte@5.56.7))
+        specifier: ^0.7.0
+        version: 0.7.1(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)
       '@rsvelte/lint':
         specifier: ^0.8.2
         version: 0.8.2
@@ -703,35 +703,35 @@ packages:
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
 
-  '@rsvelte/fmt-darwin-arm64@0.6.2':
-    resolution: {integrity: sha512-cpOCjUtoAWHORLWPItgsiY0r5+X6XUiBEK6P1qOpVYou7y6F8ee55dmVQCqagFiSguK/Xewy5s0N06gtXqmGdg==}
+  '@rsvelte/fmt-darwin-arm64@0.7.1':
+    resolution: {integrity: sha512-AJRPDPXEirgQHRTqt1BzBQLNv9LU0T0eKyslI+iFUzYL4kQAethYboYHHwnqAdcmKNaD0EHbFPJoTGwIIWMapg==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/fmt-darwin-x64@0.6.2':
-    resolution: {integrity: sha512-yIJAGcKOLJbaP3xWjo3kVqrOYy+9hwJsRxvA+qmlTPdK0ZimI/vyhYUnGvMU/xjmEEvuxn1E7XoUqpW9phkvnA==}
+  '@rsvelte/fmt-darwin-x64@0.7.1':
+    resolution: {integrity: sha512-b7NCb6mevG79biArBM1BGnA4tx5T9LsMBejqiaEhskaW847P/DuyeC0zQs3UfHBS4GBUNUAOGF73YDxyELFVkQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/fmt-linux-arm64-gnu@0.6.2':
-    resolution: {integrity: sha512-oAptpxMB+dOTrAWojD5Bo9RN7YiwBdNEj3PKP5VltI+PgRwobI6I8+zZ8x9kPYSRTVlJQZHmNr7YYzkIUfQxNg==}
+  '@rsvelte/fmt-linux-arm64-gnu@0.7.1':
+    resolution: {integrity: sha512-H3IE8Cr4gGQWrtvP0ffWjimg1EfOX5Dy3Dj+4jlVp20Wnav5Ve1IFpo2amqSmAjNdK5cRvVEay1m5sFapk5Svg==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/fmt-linux-x64-gnu@0.6.2':
-    resolution: {integrity: sha512-XXsfNOWkJJRYQdApXtryK+kLUHOjg/6s9ID5LJLZq9JClSK+tXIvkNbwELWbeZbL8vZP9Q8dyJ2+ugubI8dOyQ==}
+  '@rsvelte/fmt-linux-x64-gnu@0.7.1':
+    resolution: {integrity: sha512-PrKpVsxtpRm0bM8zLBUkHmPNgln/PMNF+laSmmwnzLZddQOrsDhVecqPM56PphrLuGgnOuTeBQ/yODybpm5uRQ==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/fmt-win32-x64-msvc@0.6.2':
-    resolution: {integrity: sha512-PVao59l1gvO9ShtbW7aZvOgSPjxDsisaK9eVft4KdoKLwiJqL+8A7uUhOtMvnFvx89N58CnXfVnKDeA5CTnwRA==}
+  '@rsvelte/fmt-win32-x64-msvc@0.7.1':
+    resolution: {integrity: sha512-lADlR9PHkNcbj6PLBsd8XSY7RBPpDQhE8/mFP2q2fqR7EDwO2TvOahB29fRbvW/+XBV9Yybm+tV7Is85OqwY6Q==}
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/fmt@0.6.2':
-    resolution: {integrity: sha512-qCjztZ9rJPp6mAgx12zH8VmaZZS1Ip/EZb2l3zLRaC0AJqUm2NWbJzUPE1SC4TelByBtmsStJeFgyUur4edlTA==}
+  '@rsvelte/fmt@0.7.1':
+    resolution: {integrity: sha512-pG48bLnU/w9PS0HMiKoZUQJmLLlhj7s7hu0+0nmGOjHk7RrV7TFZ9dgjXQWh2wssnytopCS+TpSx+d57Bnbm1Q==}
     hasBin: true
     peerDependencies:
       oxfmt: '*'
@@ -1474,6 +1474,66 @@ packages:
     resolution: {integrity: sha512-lW616l85ucIQL+FocMmL7pQFPqBmwejrCMg+iPxyImlrANNJG9NHq/RkyCZopDhd8C3LA03PHRJDjkbGu8vvug==}
     engines: {node: ^10 || ^12 || >=14}
 
+  prettier-plugin-tailwindcss@0.8.1:
+    resolution: {integrity: sha512-iaFMYqDsE4ffdDkn5qup0j5f2aCEBFZrdrZnvu9QKTlWx/iGPeQ4HHu7b7fCPMxeo9nwQBiOAh2nSypdFYWJkw==}
+    engines: {node: '>=20.19'}
+    peerDependencies:
+      '@ianvs/prettier-plugin-sort-imports': '*'
+      '@prettier/plugin-hermes': '*'
+      '@prettier/plugin-oxc': '*'
+      '@prettier/plugin-pug': '*'
+      '@shopify/prettier-plugin-liquid': '*'
+      '@trivago/prettier-plugin-sort-imports': '*'
+      '@zackad/prettier-plugin-twig': '*'
+      prettier: ^3.0
+      prettier-plugin-astro: '*'
+      prettier-plugin-css-order: '*'
+      prettier-plugin-jsdoc: '*'
+      prettier-plugin-marko: '*'
+      prettier-plugin-multiline-arrays: '*'
+      prettier-plugin-organize-attributes: '*'
+      prettier-plugin-organize-imports: '*'
+      prettier-plugin-sort-imports: '*'
+      prettier-plugin-svelte: '*'
+    peerDependenciesMeta:
+      '@ianvs/prettier-plugin-sort-imports':
+        optional: true
+      '@prettier/plugin-hermes':
+        optional: true
+      '@prettier/plugin-oxc':
+        optional: true
+      '@prettier/plugin-pug':
+        optional: true
+      '@shopify/prettier-plugin-liquid':
+        optional: true
+      '@trivago/prettier-plugin-sort-imports':
+        optional: true
+      '@zackad/prettier-plugin-twig':
+        optional: true
+      prettier-plugin-astro:
+        optional: true
+      prettier-plugin-css-order:
+        optional: true
+      prettier-plugin-jsdoc:
+        optional: true
+      prettier-plugin-marko:
+        optional: true
+      prettier-plugin-multiline-arrays:
+        optional: true
+      prettier-plugin-organize-attributes:
+        optional: true
+      prettier-plugin-organize-imports:
+        optional: true
+      prettier-plugin-sort-imports:
+        optional: true
+      prettier-plugin-svelte:
+        optional: true
+
+  prettier@3.9.6:
+    resolution: {integrity: sha512-OpN0zzVdiaiAhxpuuj5efpIS4sY9j7bY6uR5mnj5yPzGkdkjNKSJeUThPb60Jw29QuAZgA4o+/iB49kFiaBX6g==}
+    engines: {node: '>=14'}
+    hasBin: true
+
   robust-predicates@3.0.3:
     resolution: {integrity: sha512-NS3levdsRIUOmiJ8FZWCP7LG3QpJyrs/TE0Zpf1yvZu8cAJJ6QMW92H1c7kWpdIHo8RvmLxN/o2JXTKHp74lUA==}
 
@@ -1963,29 +2023,49 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.1': {}
 
-  '@rsvelte/fmt-darwin-arm64@0.6.2':
+  '@rsvelte/fmt-darwin-arm64@0.7.1':
     optional: true
 
-  '@rsvelte/fmt-darwin-x64@0.6.2':
+  '@rsvelte/fmt-darwin-x64@0.7.1':
     optional: true
 
-  '@rsvelte/fmt-linux-arm64-gnu@0.6.2':
+  '@rsvelte/fmt-linux-arm64-gnu@0.7.1':
     optional: true
 
-  '@rsvelte/fmt-linux-x64-gnu@0.6.2':
+  '@rsvelte/fmt-linux-x64-gnu@0.7.1':
     optional: true
 
-  '@rsvelte/fmt-win32-x64-msvc@0.6.2':
+  '@rsvelte/fmt-win32-x64-msvc@0.7.1':
     optional: true
 
-  '@rsvelte/fmt@0.6.2(oxfmt@0.60.0(svelte@5.56.7))':
+  '@rsvelte/fmt@0.7.1(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)':
+    dependencies:
+      prettier-plugin-tailwindcss: 0.8.1(prettier@3.9.6)
     optionalDependencies:
-      '@rsvelte/fmt-darwin-arm64': 0.6.2
-      '@rsvelte/fmt-darwin-x64': 0.6.2
-      '@rsvelte/fmt-linux-arm64-gnu': 0.6.2
-      '@rsvelte/fmt-linux-x64-gnu': 0.6.2
-      '@rsvelte/fmt-win32-x64-msvc': 0.6.2
+      '@rsvelte/fmt-darwin-arm64': 0.7.1
+      '@rsvelte/fmt-darwin-x64': 0.7.1
+      '@rsvelte/fmt-linux-arm64-gnu': 0.7.1
+      '@rsvelte/fmt-linux-x64-gnu': 0.7.1
+      '@rsvelte/fmt-win32-x64-msvc': 0.7.1
       oxfmt: 0.60.0(svelte@5.56.7)
+    transitivePeerDependencies:
+      - '@ianvs/prettier-plugin-sort-imports'
+      - '@prettier/plugin-hermes'
+      - '@prettier/plugin-oxc'
+      - '@prettier/plugin-pug'
+      - '@shopify/prettier-plugin-liquid'
+      - '@trivago/prettier-plugin-sort-imports'
+      - '@zackad/prettier-plugin-twig'
+      - prettier
+      - prettier-plugin-astro
+      - prettier-plugin-css-order
+      - prettier-plugin-jsdoc
+      - prettier-plugin-marko
+      - prettier-plugin-multiline-arrays
+      - prettier-plugin-organize-attributes
+      - prettier-plugin-organize-imports
+      - prettier-plugin-sort-imports
+      - prettier-plugin-svelte
 
   '@rsvelte/lint-darwin-arm64@0.8.2':
     optional: true
@@ -2729,6 +2809,12 @@ snapshots:
       nanoid: 3.3.16
       picocolors: 1.1.1
       source-map-js: 1.2.1
+
+  prettier-plugin-tailwindcss@0.8.1(prettier@3.9.6):
+    dependencies:
+      prettier: 3.9.6
+
+  prettier@3.9.6: {}
 
   robust-predicates@3.0.3: {}
 
