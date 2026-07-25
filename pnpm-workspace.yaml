@@ -1,6 +1,6 @@
 overrides:
   '@sveltejs/vite-plugin-svelte': 'npm:@rsvelte/vite-plugin-svelte@^0.5.0'
-  '@rsvelte/vite-plugin-svelte-native': '^0.2.6'
+  '@rsvelte/vite-plugin-svelte-native': '^0.3.0'
 
 # Replaces onlyBuiltDependencies (removed in v11); map of name -> allowed.
 allowBuilds:
