@@ -4,61 +4,7 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script>
-			// このサイトは csr = false の MPA で、Svelte のクライアントランタイムは配信されない。
-			// テーマ (light/dark) の初期化と切り替えだけはブラウザ側の状態なので、ここに閉じた
-			// 素の JS で扱う。テーマを HTML に焼き込まずクライアント側に残すことで、エッジ
-			// キャッシュのエントリがテーマ違いで分裂しない。
-			(function () {
-				var root = document.documentElement;
-
-				function apply(theme) {
-					root.dataset.theme = theme;
-				}
-
-				// 最初のペイント前に確定させて FOUC を防ぐ
-				try {
-					var stored = localStorage.getItem('theme');
-					var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-					apply(stored || (prefersDark ? 'dark' : 'light'));
-				} catch (_) {
-					apply('light');
-				}
-
-				// トグルボタンはまだ描画されていないので、document への委譲で受ける。
-				// data-js は「JS が動いている」印で、押しても何も起きないボタンを
-				// 出さないために CSS 側で使う。
-				root.dataset.js = 'on';
-				document.addEventListener('click', function (event) {
-					var target = event.target;
-					if (!(target instanceof Element)) return;
-					if (!target.closest('[data-theme-toggle]')) return;
-
-					var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-					apply(next);
-					try {
-						localStorage.setItem('theme', next);
-					} catch (_) {
-						// localStorage が使えない環境では、そのセッション限りの切り替えになる
-					}
-				});
-			})();
-		</script>
-		<!--
-			ドキュメント遷移でも SPA 並みの体感にするための投機的プリレンダリング。
-			eagerness: moderate はリンクのホバー/ポインタダウンが起点なので、
-			無差別な先読みにはならない。未対応ブラウザでは単に無視される。
-		-->
-		<script type="speculationrules">
-			{
-				"prerender": [
-					{
-						"where": { "href_matches": "/*" },
-						"eagerness": "moderate"
-					}
-				]
-			}
-		</script>
+		%head.inline%
 		<noscript>
 			<style>
 				.prose pre.mermaid:not([data-processed]) {
