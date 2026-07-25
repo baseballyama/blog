@@ -1,5 +1,9 @@
 import { version } from '$app/environment';
 import { LOCALE_NOTICE_COOKIE, prefersJapanese } from '$lib/locale-notice';
+// app.html は Vite の minify 対象外で、書いた内容がそのまま全ページに乗る。
+// <head> のインラインスクリプトは scripts/build-head-inline.mjs が minify したものを
+// ここで差し込む（ソースと解説は src/lib/head-inline/ にあり、配信されない）。
+import headInline from '$lib/generated/head-inline.html?raw';
 import type { Handle, RequestEvent } from '@sveltejs/kit';
 
 /**
@@ -101,7 +105,8 @@ export const handle: Handle = async ({ event, resolve }) => {
 	}
 
 	const response = await resolve(event, {
-		transformPageChunk: ({ html }) => html.replace('%lang%', lang),
+		transformPageChunk: ({ html }) =>
+			html.replace('%lang%', lang).replace('%head.inline%', headInline),
 	});
 
 	// Set-Cookie が付くもの（バナーを閉じた直後の遷移など）は利用者ごとに違うので載せない。

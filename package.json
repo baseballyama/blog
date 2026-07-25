@@ -4,8 +4,8 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
-		"build:assets": "node scripts/fetch-stars.mjs && node scripts/build-ogp.mjs && node scripts/build-mermaid.mjs",
+		"dev": "node scripts/build-head-inline.mjs && vite dev",
+		"build:assets": "node scripts/fetch-stars.mjs && node scripts/build-ogp.mjs && node scripts/build-mermaid.mjs && node scripts/build-head-inline.mjs",
 		"build": "pnpm build:assets && vite build",
 		"preview": "vite preview",
 		"preview:workers": "wrangler dev",

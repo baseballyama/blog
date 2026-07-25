@@ -68,8 +68,15 @@ scripts that do not depend on Svelte:
 
 | Feature            | How                                                                                                                                                                                 |
 | ------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Theme (light/dark) | Inline script in `app.html`. Sets `data-theme` before first paint and toggles via a delegated click listener; icons swap in CSS.                                                    |
+| Theme (light/dark) | `src/lib/head-inline/theme.ts`, minified and inlined into `<head>`. Sets `data-theme` before first paint and toggles via a delegated click listener; icons swap in CSS.             |
 | mermaid diagrams   | `src/lib/mermaid-client.ts`, bundled separately by `scripts/build-mermaid.mjs` into `static/generated/`. Loaded with `<script type="module">` only on posts that contain a diagram. |
+
+> **`app.html` is never minified.** Neither SvelteKit nor Vite processes it, so
+> whatever you write there ships verbatim on every page — comments, indentation
+> and all. That is why the inline `<head>` script lives in `src/lib/head-inline/`
+> and is built by `scripts/build-head-inline.mjs` into a minified blob that
+> `hooks.server.ts` substitutes for `%head.inline%`. Writing it directly in
+> `app.html` cost ~1.5 kB per page, a third of the gzipped weight of `/blog`.
 
 The "read this in 日本語" banner used to need JavaScript (`navigator.language` +
 `localStorage`). On Workers the server reads `Accept-Language` directly, and
