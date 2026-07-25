@@ -1,4 +1,44 @@
 /*
+ * JetBrains Mono のサブセットを自分で宣言している。@fontsource-variable/jetbrains-mono を
+ * そのまま import すると cyrillic / cyrillic-ext / greek / vietnamese まで @font-face が
+ * 並ぶが、このサイトは英語と日本語しか書かない。日本語は JetBrains Mono に字形が無く
+ * --font-mono の後続 (ui-monospace 以降) へ落ちるので、実際に要るのは latin 系だけ。
+ *
+ * unicode-range が付いている以上、使わないサブセットの woff2 はそもそもダウンロード
+ * されない。にもかかわらず捨てる価値があるのは、cyrillic-ext だけが 4 KB 未満で
+ * Vite の assetsInlineLimit を下回り、**base64 で CSS 本体に埋め込まれていた**ため。
+ * レンダーブロッキングの CSS 6.4 KB のうち 2.3 KB (36%) が、絶対に描画されない
+ * キリル文字の字形だった。base64 は元データを 4/3 に膨らませたうえ gzip も効きにくい。
+ *
+ * latin-ext は残してある。ダウンロードは該当文字が出たときだけなので実質ゼロコストで、
+ * 記事や人名に出うるダイアクリティカルマークが欠けるのを防げる。
+ */
+@font-face {
+	font-family: 'JetBrains Mono Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 800;
+	src: url('@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-wght-normal.woff2')
+		format('woff2-variations');
+	unicode-range:
+		U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329,
+		U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+	font-family: 'JetBrains Mono Variable';
+	font-style: normal;
+	font-display: swap;
+	font-weight: 100 800;
+	src: url('@fontsource-variable/jetbrains-mono/files/jetbrains-mono-latin-ext-wght-normal.woff2')
+		format('woff2-variations');
+	unicode-range:
+		U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329,
+		U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F,
+		U+A720-A7FF;
+}
+
+/*
  * MPA なので遷移はすべてドキュメント遷移になる。クロスドキュメントの View Transition を
  * 有効にして、SPA ルーターを持たないまま遷移のつながりを保つ。未対応ブラウザでは
  * 単に従来どおりの遷移になる。
