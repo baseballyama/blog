@@ -17,6 +17,7 @@ export default defineConfig({
 		 * 今参照しているサブセットは 2 つとも 4 KB を超えるので現状は素通りするが、
 		 * サブセットを足したときに黙って戻るのを防ぐために明示しておく。
 		 */
-		assetsInlineLimit: (filePath) => (/\.(woff2?|ttf|otf|eot)$/i.test(filePath) ? false : undefined),
+		assetsInlineLimit: (filePath) =>
+			/\.(woff2?|ttf|otf|eot)$/i.test(filePath) ? false : undefined,
 	},
 });
