@@ -1,0 +1,28 @@
+{
+	"$schema": "./node_modules/wrangler/config-schema.json",
+	"name": "blog-baseballyama",
+	"main": ".svelte-kit/cloudflare/_worker.js",
+	"compatibility_date": "2026-07-25",
+	// SvelteKit のサーバーランタイムが AsyncLocalStorage を使う。
+	"compatibility_flags": ["nodejs_als"],
+	"assets": {
+		"binding": "ASSETS",
+		"directory": ".svelte-kit/cloudflare",
+		// run_worker_first は付けない。静的アセット (OGP 画像・CSS・mermaid のチャンク) は
+		// Worker を起動せずアセット層から直接返るのが最速で、かつ課金対象にならない。
+		// HTML はどのみちアセットに存在しないので Worker に流れてくる。
+		"not_found_handling": "none",
+	},
+	"observability": {
+		"enabled": true,
+	},
+	// *.workers.dev では公開しない。同じ内容が独自ドメインと workers.dev の 2 つの URL で
+	// 引けると重複コンテンツになるため。動作確認のために一時的に生やしたいときだけ true。
+	"workers_dev": false,
+	"routes": [
+		{
+			"pattern": "blog.baseballyama.com",
+			"custom_domain": true,
+		},
+	],
+}

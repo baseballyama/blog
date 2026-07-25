@@ -1,9 +1,15 @@
 node_modules/
 .playwright-mcp/
 
-# SvelteKit
+# SvelteKit / Cloudflare Workers
 .svelte-kit/
 build/
+.wrangler/
+
+# ビルド時に生成して static/ から配信するもの
+# (scripts/build-ogp.mjs と scripts/build-mermaid.mjs の出力)
+static/ogp/
+static/generated/
 
 # svelte-check (--tsgo / --incremental) のオーバーレイ・キャッシュ
 .svelte-check/

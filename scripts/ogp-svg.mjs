@@ -1,29 +1,7 @@
-import fs from 'node:fs';
-import path from 'node:path';
+// OGP 画像の SVG を組み立てる。resvg でラスタライズする前段で、描画そのものは
+// ここに閉じている（Node API に触らないので単体で試しやすい）。
 
-const FONT_BASE = 'https://github.com/notofonts/noto-cjk/raw/main/Sans/OTF/Japanese';
-const CACHE_DIR = path.join(process.cwd(), '.cache');
-const FONTS = [
-	{ url: `${FONT_BASE}/NotoSansCJKjp-Bold.otf`, file: 'NotoSansCJKjp-Bold.otf' },
-	{ url: `${FONT_BASE}/NotoSansCJKjp-Regular.otf`, file: 'NotoSansCJKjp-Regular.otf' },
-];
-
-export async function ensureFonts(): Promise<string[]> {
-	fs.mkdirSync(CACHE_DIR, { recursive: true });
-	return Promise.all(
-		FONTS.map(async (font) => {
-			const dest = path.join(CACHE_DIR, font.file);
-			if (!fs.existsSync(dest)) {
-				const res = await fetch(font.url);
-				if (!res.ok) throw new Error(`Failed to download font: ${res.status}`);
-				fs.writeFileSync(dest, Buffer.from(await res.arrayBuffer()));
-			}
-			return dest;
-		}),
-	);
-}
-
-function escapeXml(str: string): string {
+function escapeXml(str) {
 	return str
 		.replace(/&/g, '&amp;')
 		.replace(/</g, '&lt;')
@@ -32,7 +10,7 @@ function escapeXml(str: string): string {
 }
 
 /** 全角 = 1 とした概算幅。左寄せなので厳密でなくてよい */
-function measure(text: string): number {
+function measure(text) {
 	let width = 0;
 	for (const char of text) {
 		const code = char.codePointAt(0) ?? 0;
@@ -51,9 +29,9 @@ const KATAKANA_EDGE = /[゠-ヿ]$/;
 const KATAKANA_START = /^[゠-ヿ]/;
 
 /** 単語境界を尊重しつつ maxUnits(全角換算)で折り返す */
-function wrapTitle(title: string, maxUnits: number): string[] {
+function wrapTitle(title, maxUnits) {
 	const segmenter = new Intl.Segmenter('ja', { granularity: 'word' });
-	const words: string[] = [];
+	const words = [];
 	for (const { segment } of segmenter.segment(title)) {
 		const prev = words.at(-1);
 		if (
@@ -66,7 +44,7 @@ function wrapTitle(title: string, maxUnits: number): string[] {
 		}
 	}
 
-	const lines: string[] = [];
+	const lines = [];
 	let current = '';
 	for (const word of words) {
 		if (current && measure(current + word) > maxUnits) {
@@ -84,13 +62,12 @@ const WIDTH = 1260;
 const HEIGHT = 630;
 const MARGIN = 90;
 
-function loadAvatarDataUri(): string | null {
-	const avatarPath = path.join(process.cwd(), 'static', 'avatar.jpg');
-	if (!fs.existsSync(avatarPath)) return null;
-	return `data:image/jpeg;base64,${fs.readFileSync(avatarPath).toString('base64')}`;
-}
-
-export function buildOgpSvg(title: string, date: string): string {
+/**
+ * @param {string} title
+ * @param {string} date
+ * @param {string | null} avatarDataUri `data:image/jpeg;base64,...`。無ければ名前だけ出す
+ */
+export function buildOgpSvg(title, date, avatarDataUri) {
 	// 収まるフォントサイズを探す。72px なら 2 行まで、それ以下は 3 行まで許容する
 	let fontSize = 52;
 	let lines = [title];
@@ -111,14 +88,13 @@ export function buildOgpSvg(title: string, date: string): string {
 		)
 		.join('\n  ');
 
-	const avatar = loadAvatarDataUri();
 	const footerY = 520;
-	const avatarMarkup = avatar
+	const avatarMarkup = avatarDataUri
 		? `<clipPath id="avatar-clip"><circle cx="${MARGIN + 34}" cy="${footerY}" r="34"/></clipPath>
-  <image href="${avatar}" x="${MARGIN}" y="${footerY - 34}" width="68" height="68" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatar-clip)"/>
+  <image href="${avatarDataUri}" x="${MARGIN}" y="${footerY - 34}" width="68" height="68" preserveAspectRatio="xMidYMid slice" clip-path="url(#avatar-clip)"/>
   <circle cx="${MARGIN + 34}" cy="${footerY}" r="34" fill="none" stroke="#c1b7a3" stroke-width="1.5"/>`
 		: '';
-	const nameX = avatar ? MARGIN + 86 : MARGIN;
+	const nameX = avatarDataUri ? MARGIN + 86 : MARGIN;
 	const dateMarkup = date
 		? `<text x="${WIDTH - MARGIN}" y="${footerY + 10}" text-anchor="end" font-size="26" font-weight="400" fill="#6f685c" font-family="Noto Sans CJK JP">${escapeXml(date.replaceAll('-', '.'))}</text>`
 		: '';

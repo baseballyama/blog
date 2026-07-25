@@ -1,5 +1,6 @@
 import { Marked } from 'marked';
 import { AUTHOR } from './config';
+import { parseFrontmatter } from './frontmatter.js';
 import { DEFAULT_LOCALE, isLocale, otherLocale, type Locale } from './i18n';
 
 // mermaid コードブロックは <pre class="mermaid"> に変換し、クライアントで描画する。
@@ -35,6 +36,8 @@ export interface PostMeta {
 	description: string;
 	/** 本文から見積もった読了時間（分） */
 	readingMinutes: number;
+	/** mermaid 図を含むか。含むページだけ描画スクリプトを読む */
+	hasMermaid: boolean;
 	/** 翻訳が存在する言語 */
 	locales: Locale[];
 	/** 要求された言語が無く、別言語で代替していれば true */
@@ -44,21 +47,6 @@ export interface PostMeta {
 export interface Post extends PostMeta {
 	/** marked でレンダリング済みの本文 HTML */
 	html: string;
-	hasMermaid: boolean;
-}
-
-function parseFrontmatter(raw: string): { meta: Record<string, string>; body: string } {
-	const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-	if (!match) return { meta: {}, body: raw };
-
-	const meta: Record<string, string> = {};
-	for (const line of match[1].split('\n')) {
-		const idx = line.indexOf(':');
-		if (idx > 0) {
-			meta[line.slice(0, idx).trim()] = line.slice(idx + 1).trim();
-		}
-	}
-	return { meta, body: match[2] };
 }
 
 /** 日本語は 1 分あたりの文字数、英語は 1 分あたりの語数で見積もる */
@@ -78,7 +66,26 @@ function estimateReadingMinutes(body: string): number {
 	return Math.max(1, Math.round(chars / CJK_CHARS_PER_MINUTE + words / WORDS_PER_MINUTE));
 }
 
-type Entry = Omit<Post, 'locales' | 'isFallback'>;
+/** 本文 HTML を持たない記事本体。html は要求されたときに初めて生成する */
+interface Entry extends Omit<PostMeta, 'locales' | 'isFallback'> {
+	body: string;
+}
+
+/**
+ * Markdown → HTML の変換は記事 1 本あたり数 ms かかる。Worker のコールドスタートごとに
+ * 全記事を変換するのは無駄なので、実際に本文が要る記事だけ変換してメモ化する。
+ * 一覧ページ (getPostMetas) はここを一切踏まない。
+ */
+const htmlCache = new WeakMap<Entry, string>();
+
+function renderHtml(entry: Entry): string {
+	const cached = htmlCache.get(entry);
+	if (cached !== undefined) return cached;
+	// walkTokens で code→html を同期変換しているため parse() は同期的に文字列を返す。
+	const html = marked.parse(entry.body) as string;
+	htmlCache.set(entry, html);
+	return html;
+}
 
 /** slug → 言語 → 記事 */
 const bySlug = new Map<string, Map<Locale, Entry>>();
@@ -91,8 +98,6 @@ for (const [path, raw] of Object.entries(rawPosts)) {
 	if (!isLocale(localeName)) continue;
 
 	const { meta, body } = parseFrontmatter(raw);
-	// walkTokens で code→html を同期変換しているため parse() は同期的に文字列を返す。
-	const html = marked.parse(body) as string;
 	const description =
 		meta.description ||
 		body
@@ -108,8 +113,8 @@ for (const [path, raw] of Object.entries(rawPosts)) {
 		author: meta.author || AUTHOR,
 		description,
 		readingMinutes: estimateReadingMinutes(body),
-		html,
-		hasMermaid: html.includes('class="mermaid"'),
+		hasMermaid: /^ {0,3}`{3,}mermaid\s*$/m.test(body),
+		body,
 	};
 
 	const translations = bySlug.get(slug) ?? new Map<Locale, Entry>();
@@ -118,7 +123,7 @@ for (const [path, raw] of Object.entries(rawPosts)) {
 }
 
 /** 要求された言語で解決する。無ければ他言語にフォールバックする */
-function resolve(slug: string, locale: Locale): Post | undefined {
+function resolve(slug: string, locale: Locale): { entry: Entry; meta: PostMeta } | undefined {
 	const translations = bySlug.get(slug);
 	if (!translations) return undefined;
 
@@ -128,29 +133,26 @@ function resolve(slug: string, locale: Locale): Post | undefined {
 	const entry = translations.get(locale) ?? translations.get(otherLocale(locale));
 	if (!entry) return undefined;
 
-	return { ...entry, locales, isFallback: entry.locale !== locale };
+	const { body: _body, ...rest } = entry;
+	return { entry, meta: { ...rest, locales, isFallback: entry.locale !== locale } };
 }
 
 const slugsByDate = [...bySlug.keys()].toSorted((a, b) => {
-	const dateA = resolve(a, DEFAULT_LOCALE)?.date ?? '';
-	const dateB = resolve(b, DEFAULT_LOCALE)?.date ?? '';
+	const dateA = resolve(a, DEFAULT_LOCALE)?.meta.date ?? '';
+	const dateB = resolve(b, DEFAULT_LOCALE)?.meta.date ?? '';
 	return dateB > dateA ? 1 : dateB < dateA ? -1 : 0;
 });
 
 /** 一覧表示用のメタ情報のみ（本文 HTML を含まない）。日付の降順 */
 export function getPostMetas(locale: Locale): PostMeta[] {
 	return slugsByDate.flatMap((slug) => {
-		const post = resolve(slug, locale);
-		if (!post) return [];
-		const { html: _html, hasMermaid: _hasMermaid, ...meta } = post;
-		return [meta];
+		const resolved = resolve(slug, locale);
+		return resolved ? [resolved.meta] : [];
 	});
 }
 
 export function getPost(slug: string, locale: Locale): Post | undefined {
-	return resolve(slug, locale);
-}
-
-export function getSlugs(): string[] {
-	return slugsByDate;
+	const resolved = resolve(slug, locale);
+	if (!resolved) return undefined;
+	return { ...resolved.meta, html: renderHtml(resolved.entry) };
 }

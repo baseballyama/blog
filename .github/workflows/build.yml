@@ -8,12 +8,9 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 # ref ごとに直列化する。PR は同一ブランチへの連続 push で古い run を打ち切り、
-# main は途中キャンセルせず順番に流す。Pages への実デプロイの直列化は
-# deploy ジョブ側の concurrency (group: pages) で行う。
+# main は途中キャンセルせず順番に流す（デプロイに割り込ませないため）。
 concurrency:
   group: build-${{ github.ref }}
   cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
@@ -44,31 +41,20 @@ jobs:
       # oxfmt へ委譲する。差分があれば失敗する。
       - run: pnpm format:check
 
-      # SvelteKit (rsvelte コンパイラ経由) でビルドし、build/ に静的出力する。
-      # ビルド前に GitHub のスター数を再取得し、OGP 画像用の日本語フォントもダウンロードされる。
+      # SvelteKit (rsvelte コンパイラ経由) でビルドし、.svelte-kit/cloudflare へ
+      # Worker と静的アセットを出力する。前段で GitHub のスター数の再取得・OGP 画像の
+      # 生成 (resvg) ・mermaid バンドルの生成が走る。
       - run: pnpm build
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
       - run: pnpm check
 
-      # v4 以降はドットファイルが既定で成果物から除外されるため、static/.nojekyll を
-      # 落とさないよう明示的に含める。
-      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+      # main への push だけ Cloudflare Workers へ載せる。PR はここまで
+      # (ビルドが通ることの確認のみ)。
+      - if: github.ref == 'refs/heads/main'
+        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
         with:
-          path: build/
-          include-hidden-files: true
-
-  deploy:
-    if: github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    concurrency:
-      group: pages
-      cancel-in-progress: false
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@cd2ce8fcbc39b97be8ca5fce6e763baed58fa128 # v5.0.0
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          packageManager: pnpm

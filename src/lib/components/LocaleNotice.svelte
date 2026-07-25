@@ -1,37 +1,20 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { page } from '$app/state';
 
 	let { href, text, action }: { href: string; text: string; action: string } = $props();
-
-	const STORAGE_KEY = 'locale-notice-dismissed';
-
-	// 日本語話者が英語ページに来たときだけ出す。自動リダイレクトはしない。
-	let visible = $state(false);
-
-	onMount(() => {
-		try {
-			if (localStorage.getItem(STORAGE_KEY) === '1') return;
-			if (!navigator.language?.toLowerCase().startsWith('ja')) return;
-			visible = true;
-		} catch {
-			// localStorage が使えない環境では何も出さない
-		}
-	});
-
-	function dismiss() {
-		visible = false;
-		try {
-			localStorage.setItem(STORAGE_KEY, '1');
-		} catch {
-			// 保存できなくても閉じられればよい
-		}
-	}
 </script>
 
-{#if visible}
-	<div class="locale-notice" lang="ja">
-		<p>{text}</p>
-		<a {href}>{action}</a>
-		<button type="button" onclick={dismiss} aria-label="閉じる">×</button>
-	</div>
-{/if}
+<!--
+	日本語話者が英語ページに来たときだけ出す案内。自動リダイレクトはしない。
+	以前は navigator.language と localStorage を見るクライアント JS だったが、MPA 化に
+	あたって「出すかどうか」はサーバー (Accept-Language + cookie) が決め、「閉じる」も
+	JS 無しで動く POST フォームにした。
+-->
+<div class="locale-notice" lang="ja">
+	<p>{text}</p>
+	<a {href}>{action}</a>
+	<form method="POST" action="/locale-notice/dismiss">
+		<input type="hidden" name="redirect" value={page.url.pathname} />
+		<button type="submit" aria-label="閉じる">×</button>
+	</form>
+</div>
