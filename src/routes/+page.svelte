@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { version } from '$app/environment';
 	import { profile } from '$lib/data/profile';
 	import { projectGroups } from '$lib/data/projects';
 	import { talkYears, primaryUrl } from '$lib/data/talks';
@@ -22,9 +23,20 @@
 
 <section class="hero container wide">
 	<div class="hero-main">
+		<!--
+			scripts/build-avatar.mjs が原寸 (460px) から書き出した WebP。表示は 96px
+			(640px 以下では 76px) なので、DPR に応じてブラウザに選ばせる。原寸をそのまま
+			配ると 41KB だが、DPR 2 なら 9.5KB で済む。
+
+			?v= はデプロイごとのキャッシュバスター。/generated/* は _headers で
+			immutable / 1 年にしているが、この 3 枚はファイル名に内容ハッシュを持たない
+			ため、これが無いとアバターを差し替えても 1 年間古いままになる。
+		-->
 		<img
 			class="hero-avatar"
-			src={profile.avatar}
+			src="/generated/avatar/avatar-192.webp?v={version}"
+			srcset="/generated/avatar/avatar-96.webp?v={version} 96w, /generated/avatar/avatar-192.webp?v={version} 192w, /generated/avatar/avatar-288.webp?v={version} 288w"
+			sizes="(max-width: 640px) 76px, 96px"
 			alt={profile.name}
 			width="96"
 			height="96"

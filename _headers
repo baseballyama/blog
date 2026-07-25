@@ -8,8 +8,9 @@
 #
 # ビルド時に adapter が /_app/immutable/* 向けの指定をこのファイルの末尾へ追記する。
 
-# mermaid のバンドル。チャンク名に内容ハッシュが入り、エントリは ?v=<build version> で
-# バストするので、恒久キャッシュにしてよい。
+# ビルド時生成物。mermaid はチャンク名に内容ハッシュが入り、アバターはファイル名に
+# ハッシュを持たないが参照側が ?v=<build version> を付けるので、どちらも恒久キャッシュ
+# にしてよい。
 /generated/*
   Cache-Control: public, max-age=31536000, immutable
 
@@ -17,6 +18,8 @@
 /ogp/*
   Cache-Control: public, max-age=86400
 
+# ページからは参照していない (トップは /generated/avatar/*.webp を使う)。OGP 画像の
+# 生成元であり、共有済みの直リンクのために残している。
 /avatar.jpg
   Cache-Control: public, max-age=604800
 
@@ -26,3 +29,4 @@
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  Strict-Transport-Security: max-age=31536000; includeSubDomains

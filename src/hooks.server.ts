@@ -38,11 +38,26 @@ const EDGE_CACHE_CONTROL = `public, max-age=${EDGE_MAX_AGE}, immutable`;
 const CLIENT_MAX_AGE = 60;
 const CLIENT_CACHE_CONTROL = `private, max-age=${CLIENT_MAX_AGE}`;
 
-/** SSR したレスポンス用の防御的ヘッダ。_headers は静的アセットにしか効かない */
+/**
+ * SSR したレスポンス用の防御的ヘッダ。_headers は静的アセットにしか効かない。
+ *
+ * HSTS の `includeSubDomains` が及ぶのは blog.baseballyama.com とその配下だけで、
+ * 頂点ドメインには影響しない。`preload` は付けていない。付けるだけでは意味が無く、
+ * HSTS preload リストへの申請を伴う（かつ取り消しが難しい）ため。
+ *
+ * COOP は他オリジンのポップアップから window.opener を切る。このサイトは OAuth も
+ * 埋め込みも無く、外部リンクは既に rel="noopener" なので副作用が無い。
+ *
+ * CSP はまだ入れていない。app.html のインラインスクリプトが SvelteKit の csp 機能の
+ * ハッシュ付与対象外で、さらに記事本文の {@html} と mermaid の生成 SVG が絡むため、
+ * 雑に入れるとページが壊れる。
+ */
 const SECURITY_HEADERS: Record<string, string> = {
 	'X-Content-Type-Options': 'nosniff',
 	'Referrer-Policy': 'strict-origin-when-cross-origin',
 	'X-Frame-Options': 'DENY',
+	'Strict-Transport-Security': 'max-age=31536000; includeSubDomains',
+	'Cross-Origin-Opener-Policy': 'same-origin',
 };
 
 /**

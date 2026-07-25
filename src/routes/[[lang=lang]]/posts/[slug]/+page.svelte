@@ -51,7 +51,7 @@
 			バンドルは無く、これは scripts/build-mermaid.mjs が別に吐いた素の ESM。
 			?v= はデプロイごとのキャッシュバスターで、$app/environment の version を使う。
 		-->
-		<script type="module" src="/generated/mermaid.js?v={version}"></script>
+		<script type="module" src="/generated/mermaid/mermaid.js?v={version}"></script>
 	{/if}
 </svelte:head>
 
