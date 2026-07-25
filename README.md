@@ -143,9 +143,14 @@ _headers          # Asset response headers (project root, NOT static/)
 
 ## Deploy
 
-Pushes to `main` trigger `.github/workflows/build.yml`, which lints, builds,
-type-checks, and then deploys to Cloudflare Workers with
-`cloudflare/wrangler-action`.
+Pushes to `main` trigger `.github/workflows/build.yml`. The `build` job lints,
+builds and type-checks; a separate `deploy` job then ships the build output to
+Cloudflare Workers with `cloudflare/wrangler-action`.
+
+Deployment is a separate job so it can declare `environment:`, which is what
+makes runs show up under the repository's Deployments / Environments. Note that
+`wrangler-action` has its own GitHub Deployment support, but it is only reachable
+from a Cloudflare **Pages** deploy and never fires for Workers.
 
 Required repository secrets:
 

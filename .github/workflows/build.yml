@@ -50,10 +50,49 @@ jobs:
 
       - run: pnpm check
 
-      # main への push だけ Cloudflare Workers へ載せる。PR はここまで
-      # (ビルドが通ることの確認のみ)。
+      # deploy ジョブへ渡す。_worker.js は .svelte-kit/output/server と
+      # cloudflare-tmp/manifest.js を参照するので、cloudflare/ だけでは足りず
+      # .svelte-kit/ ごと引き渡す。
       - if: github.ref == 'refs/heads/main'
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: build-output
+          path: .svelte-kit/
+          include-hidden-files: true
+          retention-days: 7
+
+  # デプロイを別ジョブに分けているのは environment を付けるため。これで GitHub の
+  # Deployments / Environments にデプロイ履歴が残る (wrangler-action 自身も
+  # GitHub Deployment を作る機能を持つが、Cloudflare Pages の出力からしか呼ばれず
+  # Workers のデプロイでは動かない)。
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://blog.baseballyama.com
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+
+      - uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      # wrangler 本体を lockfile 固定のバージョンで入れるためだけの install。
+      # postinstall の `svelte-kit sync` が .svelte-kit/ に書くので、成果物の
+      # 展開はこの後に行う。
+      - run: pnpm install --frozen-lockfile
+
+      - uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8.0.1
+        with:
+          name: build-output
+          path: .svelte-kit/
+
+      - uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4.0.0
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
