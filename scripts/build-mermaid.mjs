@@ -35,7 +35,9 @@ await build({
 	logLevel: 'warn',
 	plugins: [forceMinify],
 	build: {
-		outDir: path.join(ROOT, 'static/generated'),
+		// emptyOutDir がここを丸ごと消すので、他の生成物と同居させない。
+		// static/generated/ 直下に置くと build-avatar.mjs の出力を巻き添えにする。
+		outDir: path.join(ROOT, 'static/generated/mermaid'),
 		emptyOutDir: true,
 		// top-level await と、mermaid が内部で使う動的 import をそのまま出す。
 		target: 'esnext',
@@ -56,4 +58,4 @@ await build({
 	},
 });
 
-console.log('[mermaid] built static/generated/mermaid.js');
+console.log('[mermaid] built static/generated/mermaid/mermaid.js');

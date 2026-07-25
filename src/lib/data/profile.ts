@@ -8,7 +8,6 @@ export interface Profile {
 	name: string;
 	handle: string;
 	/** static/ 配下のプロフィール画像 */
-	avatar: string;
 	title: string;
 	location: string;
 	facts: ProfileFact[];
@@ -17,7 +16,6 @@ export interface Profile {
 export const profile: Profile = {
 	name: 'Yuichiro Yamashita',
 	handle: 'baseballyama',
-	avatar: '/avatar.jpg',
 	title: 'Software Engineer',
 	location: 'Tokyo, Japan',
 	facts: [

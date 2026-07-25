@@ -25,7 +25,18 @@
 				<span class="project-private">private</span>
 			{/if}
 			{#if project.homepage}
-				<a class="project-docs" href={project.homepage} target="_blank" rel="noopener noreferrer">
+				<!--
+					見た目は "Docs" で揃えるが、リンク先はプロジェクトごとに違う。同じ文言の
+					リンクが並ぶとスクリーンリーダー利用者には行き先が区別できないので、
+					アクセシブル名にはプロジェクト名を含める。
+				-->
+				<a
+					class="project-docs"
+					href={project.homepage}
+					target="_blank"
+					rel="noopener noreferrer"
+					aria-label="{project.name} Docs"
+				>
 					Docs
 				</a>
 			{/if}
