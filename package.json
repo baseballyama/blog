@@ -4,9 +4,13 @@
 	"private": true,
 	"type": "module",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "node scripts/fetch-stars.mjs && vite build",
+		"dev": "node scripts/build-head-inline.mjs && vite dev",
+		"build:assets": "node scripts/fetch-stars.mjs && node scripts/build-ogp.mjs && node scripts/build-mermaid.mjs && node scripts/build-head-inline.mjs",
+		"build": "pnpm build:assets && vite build",
 		"preview": "vite preview",
+		"preview:workers": "wrangler dev",
+		"deploy": "wrangler deploy",
+		"cf-typegen": "wrangler types",
 		"prepare": "svelte-kit sync",
 		"check": "svelte-kit sync && rsvelte-check --tsgo --incremental --tsconfig ./tsconfig.json",
 		"check:legacy": "svelte-kit sync && rsvelte-check --tsconfig ./tsconfig.json",
@@ -18,16 +22,16 @@
 		"format:check": "rsvelte-fmt --check"
 	},
 	"dependencies": {
-		"@resvg/resvg-js": "^2.6.2",
 		"marked": "^18.0.0",
 		"mermaid": "^11.16.0"
 	},
 	"devDependencies": {
 		"@fontsource-variable/jetbrains-mono": "^5.3.0",
+		"@resvg/resvg-js": "^2.6.2",
 		"@rsvelte/fmt": "^0.6.2",
 		"@rsvelte/lint": "^0.8.2",
 		"@rsvelte/svelte-check": "^0.4.0",
-		"@sveltejs/adapter-static": "^3.0.10",
+		"@sveltejs/adapter-cloudflare": "^7.2.9",
 		"@sveltejs/kit": "^2.61.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
 		"@types/node": "^25.9.1",
@@ -36,7 +40,8 @@
 		"oxlint": "^1.67.0",
 		"svelte": "^5.56.0",
 		"typescript": "^6.0.0",
-		"vite": "^8.0.0"
+		"vite": "^8.0.0",
+		"wrangler": "^4.114.0"
 	},
 	"engines": {
 		"node": ">= 22.12"

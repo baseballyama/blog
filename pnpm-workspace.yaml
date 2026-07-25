@@ -15,6 +15,8 @@ allowBuilds:
   '@rsvelte/lint': true
   '@rsvelte/vite-plugin-svelte-native': true
   esbuild: true
+  # wrangler dev / deploy が使う Workers ランタイム本体
+  workerd: true
 
 # Supply-chain protection: pnpm 11 defaults minimumReleaseAge to 1440 (24h).
 # We keep the 24h gate but exclude packages this repo intentionally adopts on

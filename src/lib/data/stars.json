@@ -4,15 +4,15 @@
 	"baseballyama/hono-shaking": 4,
 	"baseballyama/jsonnet-eslint-parser": 0,
 	"baseballyama/postgresql-eslint-parser": 7,
-	"baseballyama/rsvelte": 108,
+	"baseballyama/rsvelte": 133,
 	"baseballyama/svelte-ast-print-playground": 1,
 	"baseballyama/svelte-preprocess-delegate-events": 53,
 	"baseballyama/svelte-shaker": 19,
 	"baseballyama/vite-devtools-svelte": 6,
 	"office-kit/docx": 1,
-	"office-kit/pptx": 2,
+	"office-kit/pptx": 3,
 	"office-kit/xlsx": 20,
-	"sveltejs/eslint-plugin-svelte": 399,
+	"sveltejs/eslint-plugin-svelte": 400,
 	"sveltejs/svelte-eslint-parser": 123,
 	"ubugeeei-prod/oxlint-plugins": 8
 }

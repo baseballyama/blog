@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { version } from '$app/environment';
 	import { SITE_URL, SITE_NAME } from '$lib/config';
 	import {
 		UI,
@@ -19,49 +20,6 @@
 	const t = $derived(UI[locale]);
 	const hasTranslation = $derived(post.locales.includes(other));
 	const ogImage = $derived(`${SITE_URL}/ogp/${post.locale}/${post.slug}.png`);
-
-	/** 描画待ちで隠しているブロックを、ソース表示に戻す */
-	function revealMermaidSource() {
-		for (const node of document.querySelectorAll('pre.mermaid:not([data-processed])')) {
-			node.setAttribute('data-processed', 'error');
-		}
-	}
-
-	// onMount ではなく $effect で描画する。記事間・言語間の遷移は同じルート
-	// ([[lang=lang]]/posts/[slug]) なのでコンポーネントが再マウントされず、
-	// onMount だと 2 回目以降の本文が描画されないまま隠れてしまう。
-	$effect(() => {
-		// post が変わるたびに描画し直す（本文の差し替えを追跡するため参照する）
-		const current = post;
-		if (!current.hasMermaid) return;
-
-		let cancelled = false;
-		// 読み込みが返ってこない場合に備えた保険。白紙のままにはしない。
-		const failsafe = setTimeout(revealMermaidSource, 5000);
-
-		// mermaid は自前のバンドルから動的 import する（CDN に依存しない）。
-		// 図のあるページでだけ読み込まれるよう、静的 import にはしない。
-		(async () => {
-			try {
-				const { default: mermaid } = await import('mermaid');
-				if (cancelled) return;
-				const isDark = document.documentElement.dataset.theme === 'dark';
-				mermaid.initialize({ startOnLoad: false, theme: isDark ? 'dark' : 'neutral' });
-				await mermaid.run({ querySelector: 'pre.mermaid' });
-			} catch {
-				// 握りつぶす。下の revealMermaidSource() でソースを見せる
-			} finally {
-				clearTimeout(failsafe);
-				// 描画されなかったブロックが残っていればソースを表示する
-				if (!cancelled) revealMermaidSource();
-			}
-		})();
-
-		return () => {
-			cancelled = true;
-			clearTimeout(failsafe);
-		};
-	});
 </script>
 
 <svelte:head>
@@ -87,10 +45,18 @@
 		title={SITE_NAME}
 		href="{SITE_URL}{rssPath(locale)}"
 	/>
+	{#if post.hasMermaid}
+		<!--
+			図のある記事だけが mermaid を読む。csr = false なので Svelte のクライアント
+			バンドルは無く、これは scripts/build-mermaid.mjs が別に吐いた素の ESM。
+			?v= はデプロイごとのキャッシュバスターで、$app/environment の version を使う。
+		-->
+		<script type="module" src="/generated/mermaid.js?v={version}"></script>
+	{/if}
 </svelte:head>
 
 <article class="container">
-	{#if locale === 'en' && hasTranslation}
+	{#if locale === 'en' && hasTranslation && data.suggestJa}
 		<LocaleNotice
 			href={postPath('ja', post.slug)}
 			text={UI.en.translationBannerText}

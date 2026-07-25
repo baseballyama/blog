@@ -4,18 +4,7 @@
 		<meta charset="utf-8" />
 		<link rel="icon" href="%sveltekit.assets%/favicon.png" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<script>
-			// FOUC 防止: 最初のペイント前にテーマ (light/dark) を確定させる
-			(function () {
-				try {
-					const stored = localStorage.getItem('theme');
-					const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-					document.documentElement.dataset.theme = stored || (prefersDark ? 'dark' : 'light');
-				} catch (_) {
-					document.documentElement.dataset.theme = 'light';
-				}
-			})();
-		</script>
+		%head.inline%
 		<noscript>
 			<style>
 				.prose pre.mermaid:not([data-processed]) {
@@ -25,7 +14,7 @@
 		</noscript>
 		%sveltekit.head%
 	</head>
-	<body data-sveltekit-preload-data="hover">
+	<body>
 		<div style="display: contents">%sveltekit.body%</div>
 	</body>
 </html>
