@@ -101,6 +101,15 @@ response so only the versioned key above applies.
 
 Responses carry `x-edge-cache: HIT | MISS | BYPASS` for inspection.
 
+> **Zone setting that matters.** Cloudflare strips `ETag` from `text/html`
+> responses whenever an HTML-rewriting feature is enabled on the zone —
+> **Email Address Obfuscation** is on by default and is enough to trigger it.
+> The symptom is that `/rss.xml` keeps its `ETag` while HTML pages lose theirs,
+> which costs the `304` revalidation described above (the edge cache itself is
+> unaffected). Turn off Email Address Obfuscation, and **Rocket Loader** too —
+> the latter would inject JavaScript into pages built to have none, and defer
+> the inline theme script that exists precisely to run before first paint.
+
 ### What is prerendered
 
 Nothing, in SvelteKit terms. Prerendered files are served straight from
