@@ -1,0 +1,28 @@
+# Cloudflare Workers Static Assets のヘッダ設定。
+#
+# 注意が 2 つある。
+#   1. このファイルは static/ ではなくプロジェクトルートに置く (adapter-cloudflare の
+#      仕様。static/ に置くとビルドがエラーで止まる)。
+#   2. ここでの指定が効くのは静的アセットのレスポンスだけで、Worker が SSR した
+#      HTML/RSS には効かない。そちらのヘッダは hooks.server.ts が付けている。
+#
+# ビルド時に adapter が /_app/immutable/* 向けの指定をこのファイルの末尾へ追記する。
+
+# mermaid のバンドル。チャンク名に内容ハッシュが入り、エントリは ?v=<build version> で
+# バストするので、恒久キャッシュにしてよい。
+/generated/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# OGP 画像は URL 据え置きで作り直されるので、ETag による再検証に任せる。
+/ogp/*
+  Cache-Control: public, max-age=86400
+
+/avatar.jpg
+  Cache-Control: public, max-age=604800
+
+/favicon.png
+  Cache-Control: public, max-age=604800
+
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin

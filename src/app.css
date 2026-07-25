@@ -1,3 +1,20 @@
+/*
+ * MPA なので遷移はすべてドキュメント遷移になる。クロスドキュメントの View Transition を
+ * 有効にして、SPA ルーターを持たないまま遷移のつながりを保つ。未対応ブラウザでは
+ * 単に従来どおりの遷移になる。
+ */
+@view-transition {
+	navigation: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(*),
+	::view-transition-old(*),
+	::view-transition-new(*) {
+		animation: none !important;
+	}
+}
+
 *,
 *::before,
 *::after {
@@ -158,9 +175,13 @@ main {
 	text-underline-offset: 5px;
 }
 
-/* テーマトグル */
+/*
+ * テーマトグル。csr = false なので Svelte の {#if} でアイコンを出し分けることはできず、
+ * 両方を出力しておいて :root[data-theme] で切り替える。押しても何も起きないボタンを
+ * 出さないよう、JS が動いているとき (html[data-js]) だけ表示する。
+ */
 .theme-toggle {
-	display: inline-grid;
+	display: none;
 	place-items: center;
 	width: 28px;
 	height: 28px;
@@ -170,12 +191,21 @@ main {
 	color: var(--fg-muted);
 	cursor: pointer;
 }
+[data-js] .theme-toggle {
+	display: inline-grid;
+}
 .theme-toggle:hover {
 	color: var(--fg);
 }
 .theme-toggle svg {
+	grid-area: 1 / 1;
 	width: 16px;
 	height: 16px;
+}
+/* dark のときは「light にする」太陽、light のときは「dark にする」月を出す */
+[data-theme='dark'] .theme-toggle .icon-moon,
+:root:not([data-theme='dark']) .theme-toggle .icon-sun {
+	display: none;
 }
 
 /* ヒーロー。右側に最新記事を置き、Writing がページ下部に埋もれないようにする */
@@ -502,6 +532,10 @@ a.project-name:hover {
 }
 .locale-notice a:hover {
 	color: var(--accent);
+}
+/* 「閉じる」は JS 無しで動く POST フォーム。フォーム自体はレイアウトに関与させない */
+.locale-notice form {
+	display: contents;
 }
 .locale-notice button {
 	margin-left: auto;

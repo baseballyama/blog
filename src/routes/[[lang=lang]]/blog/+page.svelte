@@ -44,7 +44,7 @@
 		<a class="lang-switch" href={blogPath(other)} hreflang={other}>{LOCALE_LABEL[other]}</a>
 	</header>
 	<div class="section-body">
-		{#if locale === 'en'}
+		{#if locale === 'en' && data.suggestJa}
 			<LocaleNotice
 				href={blogPath('ja')}
 				text={UI.en.translationBannerListText}

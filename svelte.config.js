@@ -1,4 +1,4 @@
-import adapter from '@sveltejs/adapter-static';
+import adapter from '@sveltejs/adapter-cloudflare';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 
 /** @type {import('@sveltejs/kit').Config} */
@@ -7,15 +7,9 @@ const config = {
 	// (Rust 製 rsvelte コンパイラ経由) に差し替わる。
 	preprocess: vitePreprocess(),
 	kit: {
-		// ビルド成果物は build/ に出力し、CI (GitHub Actions) から GitHub Pages にデプロイする。
-		adapter: adapter({
-			fallback: undefined,
-			precompress: false,
-			strict: true,
-		}),
-		paths: {
-			base: '',
-		},
+		// Cloudflare Workers (Static Assets) 向けに出力する。出力先と Worker の
+		// エントリは wrangler.jsonc の `main` / `assets.directory` に従う。
+		adapter: adapter(),
 	},
 };
 

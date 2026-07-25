@@ -1,12 +1,7 @@
 import { getPost, getPostMetas } from '$lib/posts';
 import { DEFAULT_LOCALE, blogPath, isLocale, postPath, rssPath } from '$lib/i18n';
 import { SITE_DESCRIPTION, SITE_NAME, SITE_URL } from '$lib/config';
-import type { EntryGenerator, RequestHandler } from './$types';
-
-export const prerender = true;
-
-// /rss.xml (en) と /ja/rss.xml の両方を静的生成する。
-export const entries: EntryGenerator = () => [{ lang: '' }, { lang: 'ja' }];
+import type { RequestHandler } from './$types';
 
 function escapeXml(value: string): string {
 	return value
@@ -51,10 +46,8 @@ ${items}
 </rss>
 `;
 
+	// Cache-Control / ETag は hooks.server.ts のエッジキャッシュ層が付ける。
 	return new Response(xml, {
-		headers: {
-			'Content-Type': 'application/xml',
-			'Cache-Control': 'public, max-age=3600',
-		},
+		headers: { 'Content-Type': 'application/xml' },
 	});
 };
