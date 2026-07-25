@@ -98,24 +98,32 @@ Content is fully determined by those three things, so:
 - a deploy changes `version`, which swaps the whole key space — no purge needed,
   and stale content is impossible;
 - entries stored at the edge get a one-year TTL;
-- browsers get `Cache-Control: no-cache` plus a strong `ETag` derived from the
-  same tuple, so repeat visits are cheap `304`s and never stale.
+- browsers get `Cache-Control: private, max-age=60`, so a repeat view is served
+  from the browser's own cache with no network round trip at all. `private` also
+  keeps the locale-specific HTML out of shared caches.
 
-`Cache-Control: no-cache` is also deliberate: `adapter-cloudflare`'s Worker has
+The `private` is load-bearing beyond privacy: `adapter-cloudflare`'s Worker has
 its own built-in Cache API layer keyed on the bare URL, which would not
-distinguish locale variants or build versions. `no-cache` makes it skip the
-response so only the versioned key above applies.
+distinguish locale variants or build versions. `private` trips that layer's
+`/(private|no-cache|no-store)/i` check, so it skips the response and only the
+versioned key above applies.
 
 Responses carry `x-edge-cache: HIT | MISS | BYPASS` for inspection.
 
-> **Zone setting that matters.** Cloudflare strips `ETag` from `text/html`
-> responses whenever an HTML-rewriting feature is enabled on the zone —
-> **Email Address Obfuscation** is on by default and is enough to trigger it.
-> The symptom is that `/rss.xml` keeps its `ETag` while HTML pages lose theirs,
-> which costs the `304` revalidation described above (the edge cache itself is
-> unaffected). Turn off Email Address Obfuscation, and **Rocket Loader** too —
-> the latter would inject JavaScript into pages built to have none, and defer
-> the inline theme script that exists precisely to run before first paint.
+> **Cloudflare strips `ETag` from `text/html`.** Measured: `/rss.xml` and images
+> keep their `ETag`, HTML pages do not, regardless of compression. Some
+> HTML-specific zone feature is responsible — **Early Hints** correlates exactly
+> (HTML is the only content type that gets a `103`), though Cloudflare does not
+> document the interaction. Conditional requests on HTML are therefore
+> unavailable, which is why the browser policy above is a short `max-age`
+> rather than `no-cache` + `ETag`: without a working `ETag`, `no-cache` would
+> re-download the whole body on every repeat view. The `ETag` is still emitted
+> because it works for non-HTML responses and would come back if the zone
+> feature were turned off.
+>
+> **Keep Rocket Loader off** (Speed → Settings → Content Optimization). It
+> injects JavaScript into pages built to have none, and defers the inline theme
+> script that exists precisely to run before first paint.
 
 ### What is prerendered
 
