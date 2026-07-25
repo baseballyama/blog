@@ -30,7 +30,7 @@
 		"@resvg/resvg-js": "^2.6.2",
 		"@rsvelte/fmt": "^0.6.2",
 		"@rsvelte/lint": "^0.8.2",
-		"@rsvelte/svelte-check": "^0.4.0",
+		"@rsvelte/svelte-check": "^0.5.0",
 		"@sveltejs/adapter-cloudflare": "^7.2.9",
 		"@sveltejs/kit": "^2.61.1",
 		"@sveltejs/vite-plugin-svelte": "^7.1.2",
