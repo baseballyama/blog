@@ -78,6 +78,13 @@ scripts that do not depend on Svelte:
 > `hooks.server.ts` substitutes for `%head.inline%`. Writing it directly in
 > `app.html` cost ~1.5 kB per page, a third of the gzipped weight of `/blog`.
 
+> **One script does reach the browser**, and it is deliberate: Cloudflare Web
+> Analytics injects `static.cloudflareinsights.com/beacon.min.js` (~11 kB) at the
+> edge. It is not part of the build and not affected by `csr = false`, so
+> "SvelteKit ships zero JavaScript" and "the page loads no JavaScript" are not
+> the same claim here. It is kept for traffic stats; turning it off is a zone
+> setting, not a code change.
+
 The "read this in 日本語" banner used to need JavaScript (`navigator.language` +
 `localStorage`). On Workers the server reads `Accept-Language` directly, and
 dismissing it is a plain `POST` form backed by a cookie — so it now works with
