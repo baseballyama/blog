@@ -33,7 +33,7 @@ importers:
         version: 0.9.2
       '@rsvelte/svelte-check':
         specifier: ^0.5.0
-        version: 0.5.1
+        version: 0.5.11
       '@sveltejs/adapter-cloudflare':
         specifier: ^7.2.9
         version: 7.2.9(@sveltejs/kit@2.70.1(@rsvelte/vite-plugin-svelte@0.5.0)(svelte@5.56.7)(typescript@6.0.3)(vite@8.1.5(@types/node@25.9.5)(esbuild@0.28.1)))(wrangler@4.114.0)
@@ -1158,35 +1158,35 @@ packages:
     resolution: {integrity: sha512-M6hPyDxV3ekjRxEBr8CompDih2YEPumojv8pK+osqLx6Sp8JgtsO42AMnYuHeF7B02hVP04ri/5g0FIkxlUFHg==}
     hasBin: true
 
-  '@rsvelte/svelte-check-darwin-arm64@0.5.1':
-    resolution: {integrity: sha512-gx83gQzki+tvFfOHatvkyE+/XHEWBXfSi5cuJsqlnw6qa3yf0IU6Tfi86AhUViKp2Cfw6Bx3vfQuL925PHu54g==}
+  '@rsvelte/svelte-check-darwin-arm64@0.5.11':
+    resolution: {integrity: sha512-LHAZMVWJ8ElTNkME3Qh13pY0rHrVI7LhcJKT8U4ITYolx2MCvPMQlyB9P8cbwMGaXHpiD6RZP4lRgMYbBHv7rw==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/svelte-check-darwin-x64@0.5.1':
-    resolution: {integrity: sha512-qFLBfqXvE7LN1HwUSOmrar+ljDphrBY2ZHbxXwlmBz/AZTC6MXHNRnj+n6ZQXlAiMk5w7MseDxGEeXbB10xxzw==}
+  '@rsvelte/svelte-check-darwin-x64@0.5.11':
+    resolution: {integrity: sha512-WX7ooX9JzNnXMpS3NxQ23m/7fph4u1HBMWFCRvxhURW4ZnNTuBaoIA9rbeb7qTz0LipS7n2s3lhmj9QkT22M3Q==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/svelte-check-linux-arm64-gnu@0.5.1':
-    resolution: {integrity: sha512-C3FVKHaeZ4N6IZudXOCk2QSAzJsn+EVBrlod5Ubax8a2+i4NJAM/83HXq2Gm1TVVhrHcI05m5OIMETM97LXTBA==}
+  '@rsvelte/svelte-check-linux-arm64-gnu@0.5.11':
+    resolution: {integrity: sha512-WyyvyYFmbK9QzPSBVAgULrr3p77a+8yufLssBvsZFT7QAoKvDlkjA4PiYtU/Y9gZWLZkkHk8rsJACiAQy1ZVNg==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/svelte-check-linux-x64-gnu@0.5.1':
-    resolution: {integrity: sha512-//va81axWdEcBjBwmUHewFPkwMpyytVDaJYU9h9LkURePRePTo6xtKnsIuGrG7tLSz7A7pgbyAumdxUGsg15SA==}
+  '@rsvelte/svelte-check-linux-x64-gnu@0.5.11':
+    resolution: {integrity: sha512-5VxTITwmyYSG756H+fpSrqcBKkI/3+AYQ2UXaBba6NAfoTqj/soPItjm0whgKiX+KT+2TFuVmXHAkCB+T7CwAw==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/svelte-check-win32-x64-msvc@0.5.1':
-    resolution: {integrity: sha512-mAobnlTRzPgKI90K1DPHe225t4u74dj0wrHHMY2j0rFuRGLeWb7vxBKOUNHbdHE+CjxQ7ksDqudNGzBAJlZgbA==}
+  '@rsvelte/svelte-check-win32-x64-msvc@0.5.11':
+    resolution: {integrity: sha512-PZSy6q7+4W4FnH0/TZo/F6DVLj4jMpSOmqG6q5BaYrLoZ8OfdGIbf8fYOLE3eKGQhmsytohnuDcWXBAzEcfqXQ==}
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/svelte-check@0.5.1':
-    resolution: {integrity: sha512-e+Z8D+LTzRMprBE4JB68ReFEy6dhMcd+q0TvrffLS2SCHutUARxBXnrhB6MEyy0355/a5rbpt1nGuuvpLfy9Zw==}
+  '@rsvelte/svelte-check@0.5.11':
+    resolution: {integrity: sha512-V/HdnBBo9F0JEsp2ZVKNes6P5TS1BVgxvrf2bazEy2iFwMoYCRq2MMjKKj5wgJ+UledkXJhQP3JDXj0vbBctBg==}
     hasBin: true
 
   '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.3.0':
@@ -2836,28 +2836,28 @@ snapshots:
       '@rsvelte/lint-linux-x64-gnu': 0.9.2
       '@rsvelte/lint-win32-x64-msvc': 0.9.2
 
-  '@rsvelte/svelte-check-darwin-arm64@0.5.1':
+  '@rsvelte/svelte-check-darwin-arm64@0.5.11':
     optional: true
 
-  '@rsvelte/svelte-check-darwin-x64@0.5.1':
+  '@rsvelte/svelte-check-darwin-x64@0.5.11':
     optional: true
 
-  '@rsvelte/svelte-check-linux-arm64-gnu@0.5.1':
+  '@rsvelte/svelte-check-linux-arm64-gnu@0.5.11':
     optional: true
 
-  '@rsvelte/svelte-check-linux-x64-gnu@0.5.1':
+  '@rsvelte/svelte-check-linux-x64-gnu@0.5.11':
     optional: true
 
-  '@rsvelte/svelte-check-win32-x64-msvc@0.5.1':
+  '@rsvelte/svelte-check-win32-x64-msvc@0.5.11':
     optional: true
 
-  '@rsvelte/svelte-check@0.5.1':
+  '@rsvelte/svelte-check@0.5.11':
     optionalDependencies:
-      '@rsvelte/svelte-check-darwin-arm64': 0.5.1
-      '@rsvelte/svelte-check-darwin-x64': 0.5.1
-      '@rsvelte/svelte-check-linux-arm64-gnu': 0.5.1
-      '@rsvelte/svelte-check-linux-x64-gnu': 0.5.1
-      '@rsvelte/svelte-check-win32-x64-msvc': 0.5.1
+      '@rsvelte/svelte-check-darwin-arm64': 0.5.11
+      '@rsvelte/svelte-check-darwin-x64': 0.5.11
+      '@rsvelte/svelte-check-linux-arm64-gnu': 0.5.11
+      '@rsvelte/svelte-check-linux-x64-gnu': 0.5.11
+      '@rsvelte/svelte-check-win32-x64-msvc': 0.5.11
 
   '@rsvelte/vite-plugin-svelte-native-darwin-arm64@0.3.0':
     optional: true
