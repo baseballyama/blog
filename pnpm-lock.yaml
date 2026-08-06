@@ -27,7 +27,7 @@ importers:
         version: 2.6.2
       '@rsvelte/fmt':
         specifier: ^0.7.0
-        version: 0.7.2(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)
+        version: 0.7.9(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)
       '@rsvelte/lint':
         specifier: ^0.9.0
         version: 0.9.2
@@ -1091,35 +1091,35 @@ packages:
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
 
-  '@rsvelte/fmt-darwin-arm64@0.7.2':
-    resolution: {integrity: sha512-6Aq+xljWl7+HzymMUkXsRCx8VvhGTzUZkMz1QhDSweI2xHEorRjV/Nl8Zoa1nL+sxlSYwM8W9eivLAhi1ySnAA==}
+  '@rsvelte/fmt-darwin-arm64@0.7.9':
+    resolution: {integrity: sha512-/N2jMunaW+L72R5u47s7rcFAsmMRa0r7b10bQNMqDhuG+a9UD1j1uZTMlAy2fpr4h6FPRd+OfIVrty3p+jaafg==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/fmt-darwin-x64@0.7.2':
-    resolution: {integrity: sha512-gPTfd/UGfPiLZ9VldKjI13hSxqNFGbv8AN0STf+KaBTgX3Z/qSOxfqJHjnB48oxdZadJOMtQ0OMFNR2NXhp8uw==}
+  '@rsvelte/fmt-darwin-x64@0.7.9':
+    resolution: {integrity: sha512-ZxixbeB0ylLdOYpdhlen9t63Wp2UFrAQ2ZqocGKurzuPCfWvpqeosiY9aspxpzeMJK3I6q050RjyWkEZJyIhtQ==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/fmt-linux-arm64-gnu@0.7.2':
-    resolution: {integrity: sha512-hIcb96hzI5zsdsODdrTbt/bo8BJhYKKUF8tpTWT5Cx2XKtJqy8xzaUO228V1oUYnxYU7k9fUAK3azk8dfkWsnQ==}
+  '@rsvelte/fmt-linux-arm64-gnu@0.7.9':
+    resolution: {integrity: sha512-gGQJ0/M2wIQLfBulNPOil6FUW1x42+CaUwmWcEa4UhQQJtLof5TMPpQad2amMf1/dTm47F5WLWedXTdSx1hF8A==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/fmt-linux-x64-gnu@0.7.2':
-    resolution: {integrity: sha512-z29oGY1XKtatjleZE3633X+wytY/6j2G4f8IIckJC1f9wkcaUSP1Oj4c/3sv3GhAO2S0VSk9IqTT++yGXj6s0A==}
+  '@rsvelte/fmt-linux-x64-gnu@0.7.9':
+    resolution: {integrity: sha512-5C+2D/17mW4DIC3tt2xhpT6J7/jkuG3SL4INJY64N3Vch4yK2F68swF437tvQWs8AwAwxQ019+0FGO4MDtZD2w==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/fmt-win32-x64-msvc@0.7.2':
-    resolution: {integrity: sha512-hn6mtAaHekbxa8VzYtpQhcC24VNYTVSnNh6/9+whCP9llfuhQjE1MHaKXyBdq1Lgpwr/yIhwTQwZks4/ZpgMFw==}
+  '@rsvelte/fmt-win32-x64-msvc@0.7.9':
+    resolution: {integrity: sha512-o9RU0Hsx1082pY7/n0pjm0ZCBW2RAk3G9+zwNSI9bfRKvFM2kyteqopusvU3K8hZOdfhvMMI0AijfOSWW+PpCw==}
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/fmt@0.7.2':
-    resolution: {integrity: sha512-SnX+Js4LVh6sH5cnKvYptkhC5Uxbik7f2DNLnUCDSbHTtXvWqRIhKAP3SeKmCCntBAadczUNnUgKTFBTuhy7nA==}
+  '@rsvelte/fmt@0.7.9':
+    resolution: {integrity: sha512-KaSEfn/+qIpWvGdeiFhNTdlFwl8ZZrRXlbNaG1IIg5CF5I3O5grc4LrLIy8biHosFHi+n9bVtI9bCvJEubaaxw==}
     hasBin: true
     peerDependencies:
       oxfmt: '*'
@@ -2769,30 +2769,30 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.1': {}
 
-  '@rsvelte/fmt-darwin-arm64@0.7.2':
+  '@rsvelte/fmt-darwin-arm64@0.7.9':
     optional: true
 
-  '@rsvelte/fmt-darwin-x64@0.7.2':
+  '@rsvelte/fmt-darwin-x64@0.7.9':
     optional: true
 
-  '@rsvelte/fmt-linux-arm64-gnu@0.7.2':
+  '@rsvelte/fmt-linux-arm64-gnu@0.7.9':
     optional: true
 
-  '@rsvelte/fmt-linux-x64-gnu@0.7.2':
+  '@rsvelte/fmt-linux-x64-gnu@0.7.9':
     optional: true
 
-  '@rsvelte/fmt-win32-x64-msvc@0.7.2':
+  '@rsvelte/fmt-win32-x64-msvc@0.7.9':
     optional: true
 
-  '@rsvelte/fmt@0.7.2(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)':
+  '@rsvelte/fmt@0.7.9(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)':
     dependencies:
       prettier-plugin-tailwindcss: 0.8.1(prettier@3.9.6)
     optionalDependencies:
-      '@rsvelte/fmt-darwin-arm64': 0.7.2
-      '@rsvelte/fmt-darwin-x64': 0.7.2
-      '@rsvelte/fmt-linux-arm64-gnu': 0.7.2
-      '@rsvelte/fmt-linux-x64-gnu': 0.7.2
-      '@rsvelte/fmt-win32-x64-msvc': 0.7.2
+      '@rsvelte/fmt-darwin-arm64': 0.7.9
+      '@rsvelte/fmt-darwin-x64': 0.7.9
+      '@rsvelte/fmt-linux-arm64-gnu': 0.7.9
+      '@rsvelte/fmt-linux-x64-gnu': 0.7.9
+      '@rsvelte/fmt-win32-x64-msvc': 0.7.9
       oxfmt: 0.60.0(svelte@5.56.7)
     transitivePeerDependencies:
       - '@ianvs/prettier-plugin-sort-imports'
