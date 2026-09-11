@@ -27,7 +27,7 @@ importers:
         version: 2.6.2
       '@rsvelte/fmt':
         specifier: ^0.7.0
-        version: 0.7.2(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)
+        version: 0.7.23(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)
       '@rsvelte/lint':
         specifier: ^0.9.0
         version: 0.9.2
@@ -1091,35 +1091,35 @@ packages:
   '@rolldown/pluginutils@1.0.1':
     resolution: {integrity: sha512-2j9bGt5Jh8hj+vPtgzPtl72j0yRxHAyumoo6TNfAjsLB04UtpSvPbPcDcBMxz7n+9CYB0c1GxQFxYRg2jimqGw==}
 
-  '@rsvelte/fmt-darwin-arm64@0.7.2':
-    resolution: {integrity: sha512-6Aq+xljWl7+HzymMUkXsRCx8VvhGTzUZkMz1QhDSweI2xHEorRjV/Nl8Zoa1nL+sxlSYwM8W9eivLAhi1ySnAA==}
+  '@rsvelte/fmt-darwin-arm64@0.7.23':
+    resolution: {integrity: sha512-Ja6kXCvQNyKYU5++SxShNBvXG1LAw10RiKW0og8sO877Dk5UXA1r3wXUhOb8NSdCwFggc3XkQUvJ9fupe0vb5g==}
     cpu: [arm64]
     os: [darwin]
 
-  '@rsvelte/fmt-darwin-x64@0.7.2':
-    resolution: {integrity: sha512-gPTfd/UGfPiLZ9VldKjI13hSxqNFGbv8AN0STf+KaBTgX3Z/qSOxfqJHjnB48oxdZadJOMtQ0OMFNR2NXhp8uw==}
+  '@rsvelte/fmt-darwin-x64@0.7.23':
+    resolution: {integrity: sha512-1so1QjwaoF0Nb3hgFAfbaH5NB8hAZbFd674BQFSuJEtsEGYpFkl7/epaEiZkt+6ifef6baokC5wuc3yeXcy7sw==}
     cpu: [x64]
     os: [darwin]
 
-  '@rsvelte/fmt-linux-arm64-gnu@0.7.2':
-    resolution: {integrity: sha512-hIcb96hzI5zsdsODdrTbt/bo8BJhYKKUF8tpTWT5Cx2XKtJqy8xzaUO228V1oUYnxYU7k9fUAK3azk8dfkWsnQ==}
+  '@rsvelte/fmt-linux-arm64-gnu@0.7.23':
+    resolution: {integrity: sha512-3qR8ybFN2sYXlsYw670x0V8VamTiMUZdnGBWpkQtuz+sKKYWby/DPw/rCvpmZ6JLe26TqNUPmc+PCCdjj401fg==}
     cpu: [arm64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/fmt-linux-x64-gnu@0.7.2':
-    resolution: {integrity: sha512-z29oGY1XKtatjleZE3633X+wytY/6j2G4f8IIckJC1f9wkcaUSP1Oj4c/3sv3GhAO2S0VSk9IqTT++yGXj6s0A==}
+  '@rsvelte/fmt-linux-x64-gnu@0.7.23':
+    resolution: {integrity: sha512-qcSDl8sZ4n9Vls35ir4oKHP6Hxy0PkeF9iYZnOkJg8joI34NK0wVtSeKja5xbUmGnRU3MapNX23JtdUOshokLA==}
     cpu: [x64]
     os: [linux]
     libc: [glibc]
 
-  '@rsvelte/fmt-win32-x64-msvc@0.7.2':
-    resolution: {integrity: sha512-hn6mtAaHekbxa8VzYtpQhcC24VNYTVSnNh6/9+whCP9llfuhQjE1MHaKXyBdq1Lgpwr/yIhwTQwZks4/ZpgMFw==}
+  '@rsvelte/fmt-win32-x64-msvc@0.7.23':
+    resolution: {integrity: sha512-wSRiC9l7nchsceV5OWEu+zRxzatfY/REFCyxcHvx0CAVa8eqSXaUyucMrFq1ipvcdqOeV/J6kC6CmuJ1h9YJ3g==}
     cpu: [x64]
     os: [win32]
 
-  '@rsvelte/fmt@0.7.2':
-    resolution: {integrity: sha512-SnX+Js4LVh6sH5cnKvYptkhC5Uxbik7f2DNLnUCDSbHTtXvWqRIhKAP3SeKmCCntBAadczUNnUgKTFBTuhy7nA==}
+  '@rsvelte/fmt@0.7.23':
+    resolution: {integrity: sha512-fosr25jAJg8cw55s9igQIjOFH0mw+3qeNSUIT/tll4X7MRVqCJo6uMZbHRwf1SNlq/dtV7WfJCsWj8BWrTwb0g==}
     hasBin: true
     peerDependencies:
       oxfmt: '*'
@@ -2769,30 +2769,30 @@ snapshots:
 
   '@rolldown/pluginutils@1.0.1': {}
 
-  '@rsvelte/fmt-darwin-arm64@0.7.2':
+  '@rsvelte/fmt-darwin-arm64@0.7.23':
     optional: true
 
-  '@rsvelte/fmt-darwin-x64@0.7.2':
+  '@rsvelte/fmt-darwin-x64@0.7.23':
     optional: true
 
-  '@rsvelte/fmt-linux-arm64-gnu@0.7.2':
+  '@rsvelte/fmt-linux-arm64-gnu@0.7.23':
     optional: true
 
-  '@rsvelte/fmt-linux-x64-gnu@0.7.2':
+  '@rsvelte/fmt-linux-x64-gnu@0.7.23':
     optional: true
 
-  '@rsvelte/fmt-win32-x64-msvc@0.7.2':
+  '@rsvelte/fmt-win32-x64-msvc@0.7.23':
     optional: true
 
-  '@rsvelte/fmt@0.7.2(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)':
+  '@rsvelte/fmt@0.7.23(oxfmt@0.60.0(svelte@5.56.7))(prettier@3.9.6)':
     dependencies:
       prettier-plugin-tailwindcss: 0.8.1(prettier@3.9.6)
     optionalDependencies:
-      '@rsvelte/fmt-darwin-arm64': 0.7.2
-      '@rsvelte/fmt-darwin-x64': 0.7.2
-      '@rsvelte/fmt-linux-arm64-gnu': 0.7.2
-      '@rsvelte/fmt-linux-x64-gnu': 0.7.2
-      '@rsvelte/fmt-win32-x64-msvc': 0.7.2
+      '@rsvelte/fmt-darwin-arm64': 0.7.23
+      '@rsvelte/fmt-darwin-x64': 0.7.23
+      '@rsvelte/fmt-linux-arm64-gnu': 0.7.23
+      '@rsvelte/fmt-linux-x64-gnu': 0.7.23
+      '@rsvelte/fmt-win32-x64-msvc': 0.7.23
       oxfmt: 0.60.0(svelte@5.56.7)
     transitivePeerDependencies:
       - '@ianvs/prettier-plugin-sort-imports'
